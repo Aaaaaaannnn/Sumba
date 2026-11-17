@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.7.1-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.8.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,11 +20,13 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V7 |
+| Perfil | Funcionalidades do protótipo V8 |
 |---|---|
-| Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra e apoio |
-| Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos e rascunhos de campanhas |
-| Empresa | Registo empresarial demo, painel, diretório e favoritos de fornecedores, compras por stock, cotações com propostas e aceitação local, pedidos e perfil comercial |
+| Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
+| Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
+| Empresa | Registo empresarial demo, painel, fornecedores, compras, cotações, subscrição, estatísticas, campanhas e comprovativos |
+| Administração | Painel local, moderação, revisão de campanhas, configuração de preços, despacho, auditoria e comprovativos |
+| Entregador | Painel, entregas atribuídas, aceitação, recolha, transporte, conclusão e comprovativos |
 
 ## Bancadas digitais
 
@@ -32,14 +34,23 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 ## Modelo de negócio proposto
 
-- Taxa de exposição de produtos e bancadas, com preço ainda por definir.
-- Opções de destaque e promoção de produtos.
-- Divulgação através de anúncios Facebook e Instagram com links diretos para a plataforma.
-- Futuras ferramentas empresariais e serviços logísticos.
+A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com preços iniciais **hipotéticos, não aprovados comercialmente** e editáveis na Administração.
 
-A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
+| Perfil | Plano | Preço mensal indicativo |
+|---|---|---:|
+| Produtor | Demonstração | 0 Kz |
+| Produtor | Exposição | 5.000 Kz |
+| Produtor | Exposição Pro | 12.000 Kz |
+| Empresa | Essencial | 0 Kz |
+| Empresa | Empresa Pro | 7.500 Kz |
 
-## Estado do projeto — V0.7.1
+- Taxa mensal de exposição de bancada e catálogo.
+- Destaques e ferramentas profissionais propostos.
+- Orçamento de publicidade Meta separado da subscrição; rascunhos, revisão administrativa e links UTM.
+- Logística futura com custo e remuneração a definir; não há cobrança ativa.
+- Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
+
+## Estado do projeto — V0.8.0
 
 | Área | Estado |
 |---|---|
@@ -50,7 +61,7 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Confirmação e histórico de encomendas agrupadas | Implementados localmente |
 | Endereços, entrega/levantamento e preferências de horário | Simulação local, sem logística ativa |
 | Cupão de teste, histórico, recompra e apoio | Implementados localmente; sem cobrança ou envio |
-| Três perfis com navegação independente | Protótipo implementado |
+| Cinco perfis com navegação independente | Protótipo implementado |
 | Entrada, registo e login do cliente | Demonstração local; sem credenciais reais |
 | Preferências e tutorial guiado | Implementados localmente |
 | Perfis de bancadas vistos pelo cliente | Página dedicada com capa, avatar e catálogo |
@@ -68,22 +79,37 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Diretório de fornecedores, filtros de stock e fornecedores guardados | Implementados localmente |
 | Cotações empresariais, respostas do fornecedor e aceitação de proposta | Fluxo demonstrativo local, sem contrato |
 | Promoções e links UTM | Rascunhos locais |
+| Subscrições, preços e histórico | Simulação local, sem cobrança |
+| Estatísticas comerciais e gráficos de seis meses | Calculados com operações locais |
+| Gestão e revisão de campanhas | Fluxo demo, não publicado |
+| Comprovativos digitais PDF | Gerados no navegador; sem validade fiscal |
+| Administração e despacho | Área demo, sem permissões reais |
+| Entregador e estados de entrega | Fluxo local, sem GPS ou prova de identidade |
 | Autenticação e permissões | Pendente |
 | Base de dados e armazenamento partilhados | Pendente |
 | Pagamentos, faturação e integração Meta | Pendente |
 | Rastreamento logístico real | Pendente |
 
-**Importante:** a V7 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+**Importante:** a V8 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
 
 ## Evolução do ecossistema
 
 A referência pública estudada foi o [Sbzee](https://sbzee.com/): comércio de frescos, compras por localização, carrinho, entregas programadas, apoio e operações de parceiros. Ver [estudo e arquitetura proposta](docs/ecossistema.md). A ZUNGA mantém marca, bancadas e modelo de exposição próprios.
 
-- **ZUNGA:** aplicação de consumo (Início, Categorias, Carrinho, Pedidos, Perfil).
-- **ZUNGA Negócios** (nome provisório): aplicação futura de produtores e empresas, com áreas de venda e compras profissionais.
-- Ambas deverão partilhar autenticação, dados, catálogo e encomendas, com permissões no servidor.
+- **ZUNGA:** aplicação de consumo.
+- **ZUNGA Negócios:** área de produtores e empresas.
+- **ZUNGA Administração:** área restrita futura, para gestão, moderação, finanças e logística.
+- **ZUNGA Entregas:** área de entregadores e acompanhamento operacional.
 
-Por enquanto há um único protótipo: os acessos de teste de Produtor e Empresa ficam no Perfil do Cliente.
+As quatro aplicações previstas deverão partilhar um backend com autorização real no servidor. Atualmente são cinco perfis demonstrativos num único protótipo. Os acessos diretos apenas selecionam a interface; não criam aplicações independentes nem concedem privilégios reais.
+
+| Ambiente | Acesso de demonstração |
+|---|---|
+| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=080) |
+| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=080) |
+| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=080) |
+| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=080) |
+| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=080) |
 
 ## Arquitetura atual
 
@@ -115,7 +141,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.7.1 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.8.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -129,11 +155,12 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 8. **V0.6.2 — concluído no código:** cartões com botão Comprar, preço e ação alinhados, fotografias arredondadas nos quatro cantos e animações mais visíveis.
 9. **V0.7.0 — concluído no código:** atalhos de descoberta do cliente, categorias sem seleção duplicada, área empresarial e fluxo de cotações fornecedor–empresa.
 10. **V0.7.1 — concluído no código:** seletores próprios da ZUNGA em toda a aplicação.
-11. **Próxima etapa:** testes em telemóvel, separar módulos de cliente/negócios e preparar infraestrutura partilhada.
-12. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-13. Pedidos, stock, cotações e estatísticas persistentes.
-14. Monetização, moderação e integração de campanhas.
-15. Logística, rastreamento e evolução para PWA.
+11. **V0.8.0 — concluído no código:** subscrições, estatísticas, gestão de anúncios, comprovativos PDF, administração e entregas em demonstração.
+12. **Próxima etapa:** backend seguro, autenticação real, permissões de administração e entregador, separação física dos aplicativos.
+13. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+14. Pedidos, stock, cotações e estatísticas persistentes.
+15. Monetização, moderação e integração de campanhas.
+16. Logística, rastreamento e evolução para PWA.
 
 Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
 
@@ -148,6 +175,16 @@ No Início do cliente, os acessos Bancadas, Promoções e Favoritos ficam imedia
 ## Seletores da ZUNGA (V0.7.1)
 
 Os campos de seleção usam um painel próprio da ZUNGA: bottom sheet no telemóvel, janela no computador, pesquisa em listas longas, opção atual destacada e animação de entrada/saída. Os valores continuam associados aos formulários e filtros existentes. O controlo HTML original é preservado para dados e compatibilidade, não sendo aberto pelo toque quando a interface personalizada está disponível. Aplica-se a cliente, fornecedor e empresa.
+
+## Testar operações V0.8
+
+1. Como produtor, selecione um plano demo, consulte estatísticas, crie uma campanha e envie-a para revisão.
+2. Em Administração, aprove a campanha em demonstração ou altere os preços propostos. Pode ocultar/restaurar produtos.
+3. Crie um produto na bancada local, faça uma compra de teste como cliente com entrega e endereço fictício. No fornecedor, avance o pedido até Em preparação.
+4. Em Administração > Entregas, atribua o pedido ao entregador. Em Entregador > Entregas, aceite, confirme recolha e conclusão. O estado do pedido é atualizado no mesmo navegador.
+5. Descarregue os PDFs em Comprovativos, na confirmação ou nos detalhes dos pedidos. Cliente, fornecedor e empresa têm documentos das operações correspondentes ao perfil. Os PDFs são registos demonstrativos, sem validade fiscal, assinatura digital ou prova de pagamento.
+
+Use sempre o mesmo navegador e origem para a demonstração do fluxo entre perfis. Não introduza informações reais: não existe autenticação, isolamento de dados, faturação, pagamento, GPS ou comunicação entre dispositivos.
 
 ## Fotografias e licenças
 
