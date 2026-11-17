@@ -2,6 +2,28 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.10.0] — 2026-11-17
+
+### Adicionado
+- Estatísticas para fornecedor, empresa, administrador e entregador; períodos diário, semanal e de 1, 2, 3, 6 e 12 meses, com gráficos de barras, linhas, área e circular.
+- Escolha do formato ao gerar relatório; gráficos incorporados em PDF, Excel e Word, CSV só dados.
+- Fichas operacionais por perfil, edição, comprovativos e exportação PDF/Excel/Word.
+- Chat local entre perfis, respostas automáticas por regras e fila de operador.
+- Avaliações recíprocas de participantes de pedidos concluídos, estrelas, comentários, revisão administrativa e testemunhos públicos selecionados.
+- Edição de perfil e foto nos cinco perfis, galeria e vídeo de bancada com armazenamento local.
+- Termos demo com aceitação no registo, filtro de linguagem e revisão de ocorrências.
+- Eventos de visualização datados a partir da V0.10.
+
+### Validação
+- Sintaxe JavaScript e testes simulados dos gráficos, filtros por período, estrutura de PDF/Office, fichas, chat, fila, moderação, avaliações, perfis e termos.
+- HTML raiz e public sincronizados.
+
+### Limitações
+- Assistente por regras, não IA real. Sem comunicação entre dispositivos, autenticação ou autorização real.
+- Fichas manuais não alteram stock. Gráficos Office são imagens incorporadas, com tabelas editáveis; CSV não comporta gráficos.
+- Vídeos, fotografias e downloads dependem do armazenamento e navegador. Abertura em Office, vídeo, UX em Android e deploy ainda por confirmar.
+- Filtro de palavras limitado; avaliações e termos são demonstrativos, não validam identidade nem substituem revisão jurídica ou política de privacidade definitiva.
+
 ## [0.9.0] — 2026-11-17
 
 ### Alterado
