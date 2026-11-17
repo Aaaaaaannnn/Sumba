@@ -2,6 +2,15 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.10.2] — 2026-11-17
+
+- Perfil do cliente unificado, com uma única identidade, funções agrupadas e um único seletor de tipo de acesso.
+- Removidos acessos repetidos nos perfis profissionais e em Mais; dados pessoais separados dos dados da bancada.
+- Reforçado o fecho dos modais por toque exterior, preservando toques internos; retorno do formulário de endereço à lista de endereços e ícones SVG.
+- Avaliar fornecedor na bancada e nos pedidos concluídos, estrelas interativas e comentários editáveis.
+- Opiniões sem encomenda concluída são não verificadas e privadas; testemunhos selecionados exigem encomenda concluída e aprovação.
+- Testes simulados aprovados para modais, perfil, avaliação e visibilidade. A publicação e o teste em Android real ainda não foram verificados.
+
 ## [0.10.1] — 2026-11-17
 
 ### Corrigido
