@@ -6,6 +6,7 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 - Nova área real separada do protótipo V0.11, mantendo a interface demonstrativa.
 - Fluxos de registo, login, confirmação, recuperação, onboarding e edição de perfil via Supabase JS; configuração vazia/desativada bloqueia credenciais.
+- RLS adicional impede sessões anónimas de ler/escrever dados privados, mesmo se o login anónimo for ativado por engano.
 - SQL inicial para perfis, bancadas, empresas, RLS, grants por coluna e avatares privados. Auto-registo não concede admin/entregador.
 - Diretório real de bancadas publicadas, sem importação de exemplos.
 - Guia de ativação e testes em docs/fundacao-real.md.
