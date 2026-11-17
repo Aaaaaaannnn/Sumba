@@ -50,7 +50,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 - Logística futura com custo e remuneração a definir; não há cobrança ativa.
 - Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
 
-## Estado do projeto — V0.11.0
+## Estado do projeto — V0.11.0 (demo) + V0.12.0 (fundação real preparada)
 
 | Área | Estado |
 |---|---|
@@ -113,6 +113,17 @@ As quatro aplicações previstas deverão partilhar um backend com autorização
 | Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0110) |
 | Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0110) |
 
+## V0.12.0 — Fundação real, ainda não ativada
+
+A interface demonstrativa V0.11 continua intacta e disponibiliza um acesso à nova área em `/real/`. O código da V0.12 prepara:
+- autenticação Supabase por email/palavra-passe, confirmação, recuperação e logout;
+- onboarding de cliente, fornecedor ou empresa, aceitação de termos piloto e perfil persistente;
+- esquema PostgreSQL para perfis, bancadas e empresas, com RLS e grants por coluna para proteger o papel e o proprietário;
+- avatares privados em Storage e diretório de bancadas publicadas;
+- configuração desativada por defeito, sem dados fictícios e sem credenciais de serviço.
+
+**Bloqueio:** não existe projeto Supabase dedicado ZUNGA na organização ligada. Os projetos existentes não foram alterados. Para ativar, escolher uma organização, criar projeto dedicado sem custos adicionais, aplicar e testar `supabase/setup-v012.sql`, configurar Auth/SMTP e publicar a área real em origem HTTPS separada do demo. Ver [procedimento e matriz de testes](docs/fundacao-real.md). Testes reais de RLS, autenticação e sincronização entre dispositivos ainda pendentes.
+
 ## Arquitetura atual
 
 - HTML, CSS e JavaScript, sem bibliotecas externas; fotografias ilustrativas carregadas da Wikimedia Commons.
@@ -160,7 +171,7 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 11. **V0.8.0 — concluído no código:** subscrições, estatísticas, gestão de anúncios, comprovativos PDF, administração e entregas em demonstração.
 12. **V0.9.0 — concluído no código:** navegação estável, botão Voltar e retorno do navegador, organização profissional, comprovativos contextuais e relatórios multi-formato.
 13. **V0.10.0 — concluído no código:** gráficos e relatórios por período, fichas, perfis, galeria, mensagens, avaliações e termos demo.
-14. **Próxima etapa:** validação em Android e backend seguro, autenticação real, permissões, armazenamento, mensagens reais e separação física dos aplicativos.
+14. **V0.12.0 — preparado no código:** fundação de Auth, perfis, bancadas, empresas e RLS; ativação dependente de projeto dedicado e testes reais.
 14. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
 15. Pedidos, stock, cotações e estatísticas persistentes.
 16. Monetização, moderação e integração de campanhas.
