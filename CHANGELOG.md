@@ -2,6 +2,15 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.11.0] — 2026-11-18
+
+- Dez bancadas de exemplo e 25 produtos fixos, três produtos locais de teste.
+- Onze fotografias novas com créditos, capas de bancadas, destaque no feed e descoberta horizontal.
+- Animações de conteúdo e microinterações, sem deslocar a barra inferior.
+- Dataset inicial interligado: 37 pedidos, 21 avaliações, 18 mensagens, 16 entregas, seis cotações, três campanhas, três fichas e 90 eventos de visualização.
+- Diretório fictício, perfis vazios de exemplo e controlo de carregamento/remoção sem duplicar IDs ou eliminar operações manuais.
+- Testes simulados aprovados para referências, feed, comentários, estatísticas, diretório e remoção. Deploy, fotografias remotas e teste visual ainda por confirmar.
+
 ## [0.10.2] — 2026-11-17
 
 - Perfil do cliente unificado, com uma única identidade, funções agrupadas e um único seletor de tipo de acesso.
