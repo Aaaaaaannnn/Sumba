@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.3.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.4.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,15 +20,15 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V3 |
+| Perfil | Funcionalidades do protótipo V4 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial guiado, feed fotográfico, perfis de bancadas, ofertas, pesquisa, favoritos e pedidos |
-| Produtor | Painel operacional, gestão de catálogo e stock, fotografias, pedidos, perfil da bancada e rascunhos de campanhas |
+| Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos e rascunhos de campanhas |
 | Empresa | Painel de compras, pesquisa de fornecedores, cotações, acompanhamento de pedidos e perfil empresarial |
 
 ## Bancadas digitais
 
-Cada produtor poderá gerir uma bancada com identificação, descrição, fotografia, localização, contacto e catálogo. A versão atual permite experimentar estas operações localmente.
+Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, tipo de produtor, descrição, foto de perfil, capa independente, localização, contacto, horário, modalidade de entrega e catálogo. O painel mostra a percentagem de preenchimento e permite pré-visualizar o perfil apresentado aos clientes.
 
 ## Modelo de negócio proposto
 
@@ -39,7 +39,7 @@ Cada produtor poderá gerir uma bancada com identificação, descrição, fotogr
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.3.0
+## Estado do projeto — V0.4.0
 
 | Área | Estado |
 |---|---|
@@ -50,6 +50,10 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Perfis de bancadas vistos pelo cliente | Página dedicada com capa, avatar e catálogo |
 | Fotografias do catálogo e onboarding | Wikimedia Commons; imagens ilustrativas |
 | Catálogo, fotografias e bancadas | Registos locais |
+| Entrada e registo do produtor | Demonstração local |
+| Perfil comercial, capa, avatar e dados de atendimento | Implementados localmente |
+| Inventário, pausa de anúncios e stock por unidade | Implementados localmente |
+| Quantidade mínima e validação de stock nos pedidos | Implementadas localmente |
 | Pesquisa por palavras-chave, região, categoria, preço e stock | Implementada localmente |
 | Recomendações e indicadores | Calculados a partir de dados locais |
 | Pedidos e acompanhamento de estados | Simulação local, sem GPS |
@@ -60,7 +64,7 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Pagamentos, faturação e integração Meta | Pendente |
 | Rastreamento logístico real | Pendente |
 
-**Importante:** a V3 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+**Importante:** a V4 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
 
 ## Arquitetura atual
 
@@ -90,7 +94,7 @@ Abra `public/index.html` num navegador ou utilize um servidor HTTP local.
 python -m http.server 8000 --directory public
 ```
 
-Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. Utilize o seletor de perfil para testar Cliente, Produtor e Empresa. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
+Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. Utilize o seletor de perfil para testar Cliente, Produtor e Empresa. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
 Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. O endereço público definitivo será documentado quando confirmado.
 
@@ -99,11 +103,12 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 1. **V0.1.0 — concluído:** primeiro catálogo agrícola e publicação inicial.
 2. **V0.2.0 — concluído:** experiência multi-perfil, bancadas, catálogo, pesquisa, painéis e simulações.
 3. **V0.3.0 — concluído no código:** sessão do cliente, onboarding, registo demo, preferências, tutorial e perfil visual das bancadas.
-4. **Próxima etapa:** experiência do produtor, gestão de perfil/capa da bancada, depois autenticação Supabase e permissões reais.
-5. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-6. Pedidos, stock, cotações e estatísticas persistentes.
-7. Monetização, moderação e integração de campanhas.
-8. Logística, rastreamento e evolução para PWA.
+4. **V0.4.0 — concluído no código:** sessão do produtor, identidade da bancada, inventário, indicadores e promoção local.
+5. **Próxima etapa:** experiência empresarial, compras a grosso e cotações; depois autenticação Supabase e permissões reais.
+6. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+7. Pedidos, stock, cotações e estatísticas persistentes.
+8. Monetização, moderação e integração de campanhas.
+9. Logística, rastreamento e evolução para PWA.
 
 ## Fotografias e licenças
 
