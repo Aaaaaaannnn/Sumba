@@ -2,6 +2,17 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.10.1] — 2026-11-17
+
+### Corrigido
+- Toque no fundo escurecido fecha janelas e seletores personalizados; toques internos e gestos iniciados no conteúdo não fecham.
+- Botão de retorno circular com seta SVG e botão de seleção com ícone SVG de fechar.
+- Animação de fecho também no retorno do telefone, com movimento reduzido respeitado.
+
+### Validação
+- Sintaxe JavaScript e testes simulados de toque exterior, interior, arrasto, cancelamento e reabertura.
+- Entradas HTML sincronizadas; teste em Android e deploy ainda por confirmar.
+
 ## [0.10.0] — 2026-11-17
 
 ### Adicionado
