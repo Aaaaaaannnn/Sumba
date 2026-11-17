@@ -2,6 +2,27 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.3.0] — 2026-11-17
+
+### Adicionado
+- Entrada do cliente, três telas de introdução, login e registo em três passos com dados fictícios.
+- Sessão demonstrativa, visitante, recuperação simulada e edição de preferências.
+- Tutorial guiado em cinco passos com destaque, dedo, opção de saltar e repetição pelo perfil.
+- Feed personalizado por categorias e localização, fotografias ilustrativas e categorias visuais.
+- Página de perfil da bancada para o cliente: capa, avatar, localização, catálogo e partilha.
+- Créditos e licenças das fotografias.
+
+### Validação
+- Sintaxe JavaScript validada.
+- Testes simulados: entrada, etapas de registo, login válido/inválido, feed com fotografias, perfil de bancada, tutorial, painéis de produtor/empresa e pesquisa.
+- Entradas HTML sincronizadas; publicação e teste completo em navegador por confirmar.
+
+### Limitações
+- Não existe autenticação real. O registo utiliza email fictício .test e palavra-passe demo fixa, não persistida.
+- Dados guardados localmente; sem recuperação real por email, pagamentos, GPS ou comunicação entre dispositivos.
+- Fotografias externas de Wikimedia Commons são ilustrativas, não imagens verificadas dos vendedores. Carregamento real no navegador ainda por confirmar.
+- Área do produtor/empresa preservada; edição de capa e perfil completo da bancada pelo produtor fica para a próxima etapa.
+
 ## [0.2.0] — 2026-11-17
 
 ### Adicionado
