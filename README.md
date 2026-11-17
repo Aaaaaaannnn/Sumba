@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.6.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.6.1-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -39,12 +39,12 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.6.0
+## Estado do projeto — V0.6.1
 
 | Área | Estado |
 |---|---|
 | Interface adaptada a telemóveis e computadores | Protótipo implementado |
-| Feed em blocos/empilhado, descrição opcional e microanimações | Implementados localmente |
+| Feed em Blocos/Fila, descrição opcional e microanimações | Implementados localmente |
 | Cesta Básica, sete produtos de exemplo | Catálogo demonstrativo, fotografias ilustrativas |
 | Carrinho multibancada e checkout em três etapas | Implementados localmente |
 | Confirmação e histórico de encomendas agrupadas | Implementados localmente |
@@ -121,16 +121,17 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 3. **V0.3.0 — concluído no código:** sessão do cliente, onboarding, registo demo, preferências, tutorial e perfil visual das bancadas.
 4. **V0.4.0 — concluído no código:** sessão do produtor, identidade da bancada, inventário, indicadores e promoção local.
 5. **V0.5.0 — concluído no código:** experiência de compras inspirada no Sbzee, carrinho e checkout local.
-6. **V0.6.0 — concluído no código:** simplificação do feed, visualização em blocos ou empilhada, animações leves, cesta básica e fluxo de compra organizado.
-7. **Próxima etapa:** validar e aperfeiçoar a experiência do cliente em telemóvel; desenvolver compras empresariais e preparar a infraestrutura partilhada.
-8. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-9. Pedidos, stock, cotações e estatísticas persistentes.
-10. Monetização, moderação e integração de campanhas.
-11. Logística, rastreamento e evolução para PWA.
+6. **V0.6.0 — concluído no código:** simplificação do feed, visualização em Blocos ou Fila, animações leves, cesta básica e fluxo de compra organizado.
+7. **V0.6.1 — concluído no código:** refinamento de movimento, fades, cantos squircle e renomeação de Empilhados para Fila.
+8. **Próxima etapa:** validar e aperfeiçoar a experiência do cliente em telemóvel; desenvolver compras empresariais e preparar a infraestrutura partilhada.
+9. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+10. Pedidos, stock, cotações e estatísticas persistentes.
+11. Monetização, moderação e integração de campanhas.
+12. Logística, rastreamento e evolução para PWA.
 
-Para testar compras: no Início, alterne Blocos/Empilhados e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
+Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
 
-As animações de 130–220 ms nas principais interações e a confirmação animada respeitam a preferência de movimento reduzido do dispositivo. As preferências de layout e descrição são persistidas no navegador.
+As microinterações duram cerca de 240–260 ms, a navegação 380–390 ms, as janelas 430 ms na abertura e 260 ms no fecho, a entrada de fotografias 500 ms e a confirmação 540 ms. Curvas de desaceleração, fades seletivos e cantos squircle criam uma experiência mais suave. O CSS utiliza corner-shape:squircle quando suportado, com cantos arredondados como alternativa. As animações respeitam a preferência de movimento reduzido do dispositivo. As preferências de layout e descrição são persistidas no navegador, mantendo a compatibilidade com a opção interna stacked das versões anteriores. Os botões de quantidade atualizam os cartões sem substituir o feed inteiro.
 
 ## Fotografias e licenças
 
