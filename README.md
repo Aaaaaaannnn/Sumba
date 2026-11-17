@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.7.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.7.1-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -39,7 +39,7 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.7.0
+## Estado do projeto — V0.7.1
 
 | Área | Estado |
 |---|---|
@@ -115,7 +115,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.7.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.7.1 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -128,11 +128,12 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 7. **V0.6.1 — concluído no código:** refinamento de movimento, fades, cantos squircle e renomeação de Empilhados para Fila.
 8. **V0.6.2 — concluído no código:** cartões com botão Comprar, preço e ação alinhados, fotografias arredondadas nos quatro cantos e animações mais visíveis.
 9. **V0.7.0 — concluído no código:** atalhos de descoberta do cliente, categorias sem seleção duplicada, área empresarial e fluxo de cotações fornecedor–empresa.
-10. **Próxima etapa:** testes em telemóvel, separar módulos de cliente/negócios e preparar infraestrutura partilhada.
-11. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-12. Pedidos, stock, cotações e estatísticas persistentes.
-13. Monetização, moderação e integração de campanhas.
-14. Logística, rastreamento e evolução para PWA.
+10. **V0.7.1 — concluído no código:** seletores próprios da ZUNGA em toda a aplicação.
+11. **Próxima etapa:** testes em telemóvel, separar módulos de cliente/negócios e preparar infraestrutura partilhada.
+12. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+13. Pedidos, stock, cotações e estatísticas persistentes.
+14. Monetização, moderação e integração de campanhas.
+15. Logística, rastreamento e evolução para PWA.
 
 Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
 
@@ -143,6 +144,10 @@ A navegação usa transições horizontais de 480 ms; cartões entram com movime
 No perfil do cliente, selecione Empresa e entre com `empresa@zunga.test` e `ZungaDemo123!`. Consulte fornecedores, guarde uma bancada, crie uma cotação (por exemplo, Arroz, 3 sacos, destino Lubango) e abra-a. Pode simular uma proposta de catálogo compatível. Mude para Produtor, entre na área Cotações e responda com preço unitário e prazo. Volte à Empresa, compare as propostas e aceite uma delas. Todos os registos ficam no mesmo navegador. Aceitar uma proposta não cria um contrato, não reserva stock e não gera pagamento.
 
 No Início do cliente, os acessos Bancadas, Promoções e Favoritos ficam imediatamente abaixo da pesquisa. Categorias mostra apenas um seletor; após escolher uma categoria, aparece uma opção de voltar a todas.
+
+## Seletores da ZUNGA (V0.7.1)
+
+Os campos de seleção usam um painel próprio da ZUNGA: bottom sheet no telemóvel, janela no computador, pesquisa em listas longas, opção atual destacada e animação de entrada/saída. Os valores continuam associados aos formulários e filtros existentes. O controlo HTML original é preservado para dados e compatibilidade, não sendo aberto pelo toque quando a interface personalizada está disponível. Aplica-se a cliente, fornecedor e empresa.
 
 ## Fotografias e licenças
 
