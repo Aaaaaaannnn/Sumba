@@ -2,6 +2,27 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.9.0] — 2026-11-17
+
+### Alterado
+- Barra inferior fixa e independente da rolagem no telemóvel, com altura e área segura reservadas; animação de página sem deslocamento do menu.
+- Botão Voltar e histórico interno da sessão, restauração de posição de rolagem, retorno do navegador e tratamento de janelas, seletores, onboarding e checkout.
+- Ícones específicos das funções de cada perfil; fornecedor e empresa com abas Dados e Plano, funções secundárias em Mais.
+- Painéis comerciais mais compactos, histórico de entregas separado de tarefas pendentes e arquivo de documentos acessível em Mais.
+- Comprovativos junto aos pedidos e cotações, e confirmação contextual de subscrição, campanha, proposta, mudança de estado, compra e entrega.
+- Relatórios de estatísticas em Excel (.xlsx), Word (.docx), PDF e CSV com indicadores e operações detalhadas.
+
+### Validação
+- Sintaxe JavaScript e testes simulados de navegação, retorno do navegador, modais, recuperação de rolagem, abas, ícones, relatórios, dados e comprovativos.
+- Verificada a estrutura básica ZIP/Open XML dos relatórios Excel e Word e tratamento de fórmulas em CSV.
+- HTML raiz e public sincronizados.
+
+### Limitações
+- Teste visual da barra no Android, botão físico no navegador real, abertura em Office e downloads reais ainda por confirmar.
+- Histórico interno dura a sessão; a saída a partir do início permanece possível.
+- Dados locais demonstrativos; não há autenticação segura, cobranças ou faturação fiscal.
+- Publicação Cloudflare V0.9.0 ainda por confirmar.
+
 ## [0.8.0] — 2026-11-17
 
 ### Adicionado
