@@ -2,6 +2,28 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.5.0] — 2026-11-17
+
+### Adicionado
+- Interface de compras do cliente inspirada na experiência pública do Sbzee, com identidade ZUNGA própria.
+- Navegação inferior: Início, Categorias, Carrinho, Pedidos e Perfil; bancadas acessíveis pelo feed e categorias.
+- Cabeçalho de localização, pesquisa, promoções, categorias fotográficas e cartões com controlo direto de quantidades.
+- Carrinho multibancada persistido localmente, resumo, checkout, endereços guardados, entrega a combinar ou levantamento, preferência de horário e cupão demo.
+- Histórico, filtros de pedidos, recompra e registos locais de apoio, substituição e reembolso.
+- Acesso de teste aos perfis de negócio no Perfil do Cliente.
+- Estudo das funcionalidades públicas do Sbzee e arquitetura proposta de dois aplicativos.
+
+### Validação
+- Sintaxe JavaScript validada.
+- Testes simulados de adição de produtos de duas bancadas, quantidade, subtotal, cupão, validação de endereço, criação de pedidos, total final, limpeza do carrinho, perfil, histórico e preservação dos painéis de produtor e empresa.
+- HTML da raiz e public sincronizados.
+
+### Limitações
+- Checkout e apoio são simulações locais. Cada produto gera um registo de pedido, ligado a um identificador de compra comum; agrupamento comercial definitivo por vendedor fica para a infraestrutura real.
+- Sem pagamentos, disponibilidade logística, janelas garantidas, autenticação real ou envio de solicitações.
+- Fotografias externas, publicação Cloudflare e experiência visual em navegador real ainda por validar.
+- Os dois aplicativos não foram separados fisicamente nesta versão.
+
 ## [0.4.0] — 2026-11-17
 
 ### Adicionado
