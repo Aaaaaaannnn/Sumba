@@ -2,6 +2,31 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.7.0] — 2026-11-17
+
+### Cliente
+- Atalhos de Bancadas, Promoções e Favoritos imediatamente abaixo da pesquisa.
+- Uma única seleção de categorias; seleção individual com retorno a todas e limpeza de filtros.
+- Feed mais curto, sem repetir acessos de promoção e bancadas no final.
+- Filtros de província e ordenação sincronizados, com reset ao entrar nas categorias.
+
+### Negócios
+- Registo e login empresarial demonstrativos, perfil comercial com endereço.
+- Diretório pesquisável de fornecedores, fornecedores guardados e catálogo com filtros de stock.
+- Cotações abertas ou dirigidas, rascunhos editáveis, abertura e encerramento.
+- Inbox de cotações no painel do produtor, respostas com preço por unidade e prazo.
+- Propostas de exemplo apenas para produtos, unidades e stock compatíveis; comparação por preço e aceitação local.
+- Navegação de fornecedor e empresa com ícones consistentes.
+
+### Validação
+- Sintaxe JavaScript e testes simulados: atalhos, seleção única, categoria individual, promoções, favoritos, registo empresarial, diretório, stock, abertura de cotação, proposta de exemplo, resposta do produtor, aceitação e persistência.
+- Corrigida durante os testes a exclusão da quarta bancada de exemplo nas propostas.
+- HTML raiz e public sincronizados.
+
+### Limitações
+- Um único protótipo com dados locais e contas demonstrativas. As cotações não são enviadas entre dispositivos, a aceitação não gera contrato nem reserva stock e não existem pagamentos.
+- Teste visual em navegador real e publicação Cloudflare ainda por confirmar.
+
 ## [0.6.2] — 2026-11-17
 
 ### Corrigido
