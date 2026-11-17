@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.4.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.5.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,9 +20,9 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V4 |
+| Perfil | Funcionalidades do protótipo V5 |
 |---|---|
-| Cliente | Entrada e registo demo, preferências, tutorial guiado, feed fotográfico, perfis de bancadas, ofertas, pesquisa, favoritos e pedidos |
+| Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico, perfis de bancadas, categorias, carrinho, checkout, endereços, favoritos, pedidos, recompra e apoio |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos e rascunhos de campanhas |
 | Empresa | Painel de compras, pesquisa de fornecedores, cotações, acompanhamento de pedidos e perfil empresarial |
 
@@ -39,11 +39,14 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.4.0
+## Estado do projeto — V0.5.0
 
 | Área | Estado |
 |---|---|
 | Interface adaptada a telemóveis e computadores | Protótipo implementado |
+| Carrinho multibancada, quantidades nos cartões, checkout | Implementados localmente |
+| Endereços, entrega/levantamento e preferências de horário | Simulação local, sem logística ativa |
+| Cupão de teste, histórico, recompra e apoio | Implementados localmente; sem cobrança ou envio |
 | Três perfis com navegação independente | Protótipo implementado |
 | Entrada, registo e login do cliente | Demonstração local; sem credenciais reais |
 | Preferências e tutorial guiado | Implementados localmente |
@@ -64,7 +67,17 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Pagamentos, faturação e integração Meta | Pendente |
 | Rastreamento logístico real | Pendente |
 
-**Importante:** a V4 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+**Importante:** a V5 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+
+## Evolução do ecossistema
+
+A referência pública estudada foi o [Sbzee](https://sbzee.com/): comércio de frescos, compras por localização, carrinho, entregas programadas, apoio e operações de parceiros. Ver [estudo e arquitetura proposta](docs/ecossistema.md). A ZUNGA mantém marca, bancadas e modelo de exposição próprios.
+
+- **ZUNGA:** aplicação de consumo (Início, Categorias, Carrinho, Pedidos, Perfil).
+- **ZUNGA Negócios** (nome provisório): aplicação futura de produtores e empresas, com áreas de venda e compras profissionais.
+- Ambas deverão partilhar autenticação, dados, catálogo e encomendas, com permissões no servidor.
+
+Por enquanto há um único protótipo: os acessos de teste de Produtor e Empresa ficam no Perfil do Cliente.
 
 ## Arquitetura atual
 
@@ -94,7 +107,7 @@ Abra `public/index.html` num navegador ou utilize um servidor HTTP local.
 python -m http.server 8000 --directory public
 ```
 
-Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. Utilize o seletor de perfil para testar Cliente, Produtor e Empresa. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
+Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
 Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. O endereço público definitivo será documentado quando confirmado.
 
@@ -104,11 +117,14 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 2. **V0.2.0 — concluído:** experiência multi-perfil, bancadas, catálogo, pesquisa, painéis e simulações.
 3. **V0.3.0 — concluído no código:** sessão do cliente, onboarding, registo demo, preferências, tutorial e perfil visual das bancadas.
 4. **V0.4.0 — concluído no código:** sessão do produtor, identidade da bancada, inventário, indicadores e promoção local.
-5. **Próxima etapa:** experiência empresarial, compras a grosso e cotações; depois autenticação Supabase e permissões reais.
-6. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-7. Pedidos, stock, cotações e estatísticas persistentes.
-8. Monetização, moderação e integração de campanhas.
-9. Logística, rastreamento e evolução para PWA.
+5. **V0.5.0 — concluído no código:** experiência de compras inspirada no Sbzee, carrinho e checkout local.
+6. **Próxima etapa:** aperfeiçoar experiência empresarial, compras a grosso e cotações; preparar separação dos aplicativos e infraestrutura partilhada.
+7. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+8. Pedidos, stock, cotações e estatísticas persistentes.
+9. Monetização, moderação e integração de campanhas.
+10. Logística, rastreamento e evolução para PWA.
+
+Para testar compras: adicione produtos de duas bancadas, abra o carrinho, escolha levantamento ou entrega, experimente o cupão fictício `ZUNGADEMO` (5%) e confirme o pedido local. Não há pagamentos nem envio ao fornecedor.
 
 ## Fotografias e licenças
 
