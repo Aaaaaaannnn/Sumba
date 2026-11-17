@@ -2,6 +2,27 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.6.0] — 2026-11-17
+
+### Adicionado
+- Preferências persistidas de visualização em blocos ou empilhada, com descrição opcional.
+- Animações leves de navegação, abertura de janelas, botões, quantidades e confirmação; suporte a movimento reduzido.
+- Feed simplificado, sem repetir as ofertas em várias secções.
+- Categoria Cesta Básica com arroz, massa, fuba de milho, sal, leite, óleo e açúcar; embalagens, fotografias ilustrativas e preços fictícios.
+- Checkout em três passos: carrinho, recebimento e revisão/confirmar, com cupão opcional.
+- Confirmação com referência de compra, histórico agrupado por encomenda, detalhes por bancada e recompra.
+- Unidades adicionais para produtos embalados.
+
+### Validação
+- Sintaxe JavaScript validada.
+- Testes simulados: modos de layout e persistência, descrição, oferta única, sete produtos da cesta básica, adição de produtos de duas bancadas, etapas do checkout, desconto e total, validação de endereço, criação agrupada de pedidos, confirmação, histórico, detalhes e preservação dos painéis de produtor e empresa.
+- HTML raiz e public sincronizados.
+
+### Limitações
+- Fotografias ilustrativas de Wikimedia Commons, com créditos atualizados; carregamento no navegador ainda por confirmar.
+- Preços, produtos de exemplo e compras são demonstrativos. Sem cobrança, envio ao fornecedor, autenticação real ou logística ativa.
+- Publicação Cloudflare e testes visuais em telemóvel ainda por confirmar.
+
 ## [0.5.0] — 2026-11-17
 
 ### Adicionado
