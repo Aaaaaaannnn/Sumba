@@ -2,7 +2,7 @@
 (() => {
 const $=id=>document.getElementById(id), cfg=window.ZUNGA_REAL_CONFIG||{}, roles={buyer:'Cliente',producer:'Fornecedor',company:'Empresa',courier:'Entregador',admin:'Administração'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const validConfig=c=>/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(c.url||'')&&/^sb_publishable_[A-Za-z0-9_-]+$/.test(c.publishableKey||'');
+const validConfig=c=>c.enabled===true&&c.origin===location.origin&&/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(c.url||'')&&/^sb_publishable_[A-Za-z0-9_-]+$/.test(c.publishableKey||'')&&location.origin!=='https://zunga.stivenluanda04.workers.dev';
 const redirect=location.origin+'/real/';
 let client,user=null,profile=null,recovery=false,busy=false,generation=0;
 const notice=(s='',error=false)=>{$('notice').textContent=s;$('notice').classList.toggle('error',error)};
@@ -66,7 +66,7 @@ async function execute(f){
  }else if(f.id==='company'&&profile.role==='company'){
   const data={name:s('name'),sector:s('sector'),province:s('province'),city:s('city')};const table=client.from('zunga_companies');checked(await(f.dataset.exists==='true'?table.update(data).eq('owner_id',user.id).select('owner_id').single():table.insert({...data,owner_id:user.id}).select('owner_id').single()))
  }else return;
- await load();notice('Alterações guardadas no servidor.');
+ await load();if(profile)notice('Alterações guardadas no servidor.');
 }
 async function run(work){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);try{await work()}catch(e){notice(e?.message||'Não foi possível concluir. Tenta novamente.',true)}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false)}}
 document.addEventListener('submit',e=>{if(!['authForm','onboarding','editProfile','stall','company','recovery'].includes(e.target.id))return;e.preventDefault();run(()=>execute(e.target))});
