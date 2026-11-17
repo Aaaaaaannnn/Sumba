@@ -2,6 +2,16 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.12.0] — 2026-11-18 (pré-ativação)
+
+- Nova área real separada do protótipo V0.11, mantendo a interface demonstrativa.
+- Fluxos de registo, login, confirmação, recuperação, onboarding e edição de perfil via Supabase JS; configuração vazia/desativada bloqueia credenciais.
+- SQL inicial para perfis, bancadas, empresas, RLS, grants por coluna e avatares privados. Auto-registo não concede admin/entregador.
+- Diretório real de bancadas publicadas, sem importação de exemplos.
+- Guia de ativação e testes em docs/fundacao-real.md.
+- Verificada sintaxe JavaScript e bloqueio de configuração em DOM simulado; HTML raiz e public sincronizados.
+- Projeto Supabase ZUNGA não criado: organização precisa de confirmação. Nenhum banco existente foi alterado; SQL não executado, deploy, SMTP, segurança RLS e testes reais pendentes.
+
 ## [0.11.0] — 2026-11-18
 
 - Dez bancadas de exemplo e 25 produtos fixos, três produtos locais de teste.
