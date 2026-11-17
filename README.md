@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.1-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.2-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -50,7 +50,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 - Logística futura com custo e remuneração a definir; não há cobrança ativa.
 - Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
 
-## Estado do projeto — V0.10.1
+## Estado do projeto — V0.10.2
 
 | Área | Estado |
 |---|---|
@@ -107,11 +107,11 @@ As quatro aplicações previstas deverão partilhar um backend com autorização
 
 | Ambiente | Acesso de demonstração |
 |---|---|
-| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0101) |
-| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0101) |
-| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0101) |
-| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0101) |
-| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0101) |
+| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0102) |
+| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0102) |
+| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0102) |
+| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0102) |
+| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0102) |
 
 ## Arquitetura atual
 
@@ -143,7 +143,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.1 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.2 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -225,6 +225,14 @@ Todos os perfis podem editar nome, email fictício, localização, bio e fotogra
 ## V0.10.1 — janelas e navegação
 
 As janelas de detalhes, endereços, formulários, comprovativos e seletores fecham com um toque no fundo escurecido, no botão de retorno/fecho com ícone SVG ou no retorno do telefone. Toques dentro da janela e gestos iniciados no conteúdo não acionam o fecho pelo fundo. A animação de saída e a preferência de movimento reduzido são preservadas. Campos não guardados numa janela dispensada não são gravados. Validação de eventos simulada; teste visual e gestual no Android ainda pendente.
+
+## V0.10.2 — perfil, modais e avaliações
+
+- Cliente: um único cartão de identidade e uma única entrada Alterar tipo de acesso, que abre a escolha de ambientes demonstrativos. Compras, preferências, avaliações, comprovativos, apoio e privacidade estão agrupados. Limpeza de dados em opções avançadas.
+- Perfis profissionais: escolha de ambiente apenas no seletor do cabeçalho; dados pessoais e comerciais distintos. Removida a repetição de acessos em Mais e no perfil.
+- Modais e seletores fecham ao tocar no fundo, sem fechar quando se toca dentro do conteúdo. O formulário de endereço aberto a partir da lista regressa à lista. Controlos de retorno usam SVG.
+- Avaliar fornecedor está disponível na bancada e nos pedidos concluídos. Estrelas selecionáveis por toque e comentário, com edição da avaliação existente. Quando não há encomenda concluída, a opinião de conta demo é marcada como não verificada, não sendo publicada como testemunho. As entidades envolvidas e a administração têm acesso às avaliações correspondentes; o cliente consulta as que escreveu.
+- Testes simulados de toque dentro/fora, retorno da lista de endereços, perfil sem duplicação, avaliações verificadas e não verificadas. Deploy e teste visual Android ainda pendentes.
 
 ## Fotografias e licenças
 
