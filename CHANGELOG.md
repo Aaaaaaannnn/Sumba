@@ -2,6 +2,27 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.6.1] — 2026-11-17
+
+### Alterado
+- Nome visível do modo Empilhados para Fila, mantendo a compatibilidade com preferências guardadas.
+- Curvas de movimento mais suaves, duração de 240–260 ms nas microinterações, 380–390 ms na navegação, 430 ms na abertura de janelas, 260 ms no fecho, 500 ms na entrada de fotografias e 540 ms na confirmação.
+- Transições de layout com pequeno escalonamento, navegação de retorno e abertura suave de onboarding.
+- Atualização localizada das quantidades, sem reconstrução integral do feed.
+- Fades fotográficos no onboarding, banner, capas de bancadas e cartões em Fila; entrada animada de fotografias apenas na primeira carga bem-sucedida de cada URL.
+- Cantos squircle progressivos nas superfícies do cliente, com fallback de cantos arredondados.
+- Preferência de movimento reduzido preservada.
+
+### Validação
+- Sintaxe JavaScript validada.
+- Testes simulados: rótulo Fila, descrição e layout, atualização localizada de quantidade, durações das animações, fade único por imagem, movimento reduzido, carrinho, checkout e pedidos, preservação dos painéis de negócio.
+- HTML da raiz e public sincronizados.
+
+### Limitações
+- A fluidez e aparência dependem do navegador e do dispositivo; ainda não foram verificadas num telemóvel real.
+- Suporte a corner-shape varia entre navegadores; o fallback mantém cantos arredondados.
+- Deploy Cloudflare ainda por confirmar. Nenhum serviço pago, autenticação real ou transação financeira foi ativado.
+
 ## [0.6.0] — 2026-11-17
 
 ### Adicionado
