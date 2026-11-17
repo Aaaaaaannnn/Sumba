@@ -2,6 +2,28 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.8.0] — 2026-11-17
+
+### Adicionado
+- Planos mensais demonstrativos de exposição e serviços empresariais, preços iniciais hipotéticos e histórico de subscrições.
+- Painéis de estatísticas comerciais, consultas, visitas à bancada, valores solicitados/entregues, cotações e gráfico de seis meses.
+- Gestão de campanhas, orçamento, duração, canal, objetivo, revisão administrativa, pausa e links UTM; sem compra de anúncios.
+- Comprovativos PDF no navegador para compras, vendas, cotações, seleção de planos, campanhas e entregas concluídas, com aviso de demonstração.
+- Administração demo com moderação de produtos, revisão de campanhas, configuração de preços, despacho e atividade.
+- Entregador demo com atribuição, aceitação, recolha e conclusão, atualizando o estado do pedido.
+- Cinco perfis e URLs de entrada para as quatro futuras aplicações.
+
+### Validação
+- Sintaxe JavaScript e testes simulados de subscrições, estatísticas, revisão de campanha, moderação, despacho, entrega e seleção dos documentos por perfil.
+- Estrutura PDF testada, incluindo referências xref e múltiplas páginas.
+- Entradas HTML sincronizadas.
+
+### Limitações
+- Preços propostos não aprovados comercialmente. Não há cobrança, benefícios pagos efetivos, integração Meta ativa, faturação fiscal, autenticação ou autorização real.
+- Acesso administrativo é explicitamente demonstrativo e não deve ser usado com dados reais.
+- Entregas locais sem GPS, roteamento, remuneração ou prova de identidade.
+- Os quatro aplicativos ainda compartilham um único protótipo; a separação física, backend seguro, teste visual e deploy Cloudflare continuam pendentes.
+
 ## [0.7.1] — 2026-11-17
 
 ### Alterado
