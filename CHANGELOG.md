@@ -2,6 +2,28 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.4.0] — 2026-11-17
+
+### Adicionado
+- Entrada e registo demonstrativo de produtor, com configuração inicial da bancada.
+- Perfil comercial com fotografia de perfil e capa independentes, contacto, endereço, horário, modalidade de entrega e pré-visualização.
+- Indicador de completude do perfil.
+- Painel com produtos ativos, visualizações locais, pedidos em curso, valor entregue simulado e stock agrupado por unidade.
+- Inventário com pesquisa, filtros, pausa/ativação de anúncios, ajuste de stock e alerta de stock baixo.
+- Quantidade mínima por pedido, data opcional de colheita e validação de disponibilidade.
+- Painel de promoções com rascunhos, orçamento planeado e links UTM.
+
+### Validação
+- Sintaxe JavaScript validada.
+- Testes simulados de entrada, registo, configuração, login válido/inválido, perfil, painel, catálogo, exclusão de produtos pausados do mercado, promoções e preservação das interfaces Cliente/Empresa.
+- Entradas HTML sincronizadas.
+- Teste real de navegador, envio de fotografias e publicação Cloudflare ainda por confirmar.
+
+### Limitações
+- Contas, produtos e pedidos são locais ao navegador; sem autenticação real ou isolamento entre utilizadores.
+- Taxa de exposição por definir, sem pagamento, sem publicação de campanhas Meta e sem métricas externas.
+- Não existe rastreamento GPS nem confirmação de receita financeira.
+
 ## [0.3.0] — 2026-11-17
 
 ### Adicionado
