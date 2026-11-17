@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.9.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V9 |
+| Perfil | Funcionalidades do protótipo V10 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -50,7 +50,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 - Logística futura com custo e remuneração a definir; não há cobrança ativa.
 - Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
 
-## Estado do projeto — V0.9.0
+## Estado do projeto — V0.10.0
 
 | Área | Estado |
 |---|---|
@@ -92,7 +92,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 | Pagamentos, faturação e integração Meta | Pendente |
 | Rastreamento logístico real | Pendente |
 
-**Importante:** a V9 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+**Importante:** a V10 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
 
 ## Evolução do ecossistema
 
@@ -107,11 +107,11 @@ As quatro aplicações previstas deverão partilhar um backend com autorização
 
 | Ambiente | Acesso de demonstração |
 |---|---|
-| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=090) |
-| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=090) |
-| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=090) |
-| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=090) |
-| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=090) |
+| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0100) |
+| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0100) |
+| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0100) |
+| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0100) |
+| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0100) |
 
 ## Arquitetura atual
 
@@ -143,7 +143,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.9.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -159,7 +159,8 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 10. **V0.7.1 — concluído no código:** seletores próprios da ZUNGA em toda a aplicação.
 11. **V0.8.0 — concluído no código:** subscrições, estatísticas, gestão de anúncios, comprovativos PDF, administração e entregas em demonstração.
 12. **V0.9.0 — concluído no código:** navegação estável, botão Voltar e retorno do navegador, organização profissional, comprovativos contextuais e relatórios multi-formato.
-13. **Próxima etapa:** validação em Android e backend seguro, autenticação real, permissões e separação física dos aplicativos.
+13. **V0.10.0 — concluído no código:** gráficos e relatórios por período, fichas, perfis, galeria, mensagens, avaliações e termos demo.
+14. **Próxima etapa:** validação em Android e backend seguro, autenticação real, permissões, armazenamento, mensagens reais e separação física dos aplicativos.
 14. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
 15. Pedidos, stock, cotações e estatísticas persistentes.
 16. Monetização, moderação e integração de campanhas.
@@ -200,6 +201,26 @@ Use sempre o mesmo navegador e origem para a demonstração do fluxo entre perfi
 A área Mais reúne funções secundárias, como cotações, publicidade, fornecedores, perfil e arquivo. Os comprovativos continuam acessíveis junto de cada operação comercial e na confirmação, quando existe documento correspondente. Entregas concluídas têm histórico separado. A barra inferior mantém a posição e apenas o conteúdo da aplicação rola no telemóvel. O botão Voltar recupera o ecrã anterior e posição de rolagem; o retorno do navegador usa uma entrada de histórico e trata primeiro os seletores, janelas, onboarding e checkout. No início, o retorno seguinte pode sair normalmente. O histórico é mantido durante a sessão, não é persistente após fechar o navegador.
 
 Em Dados, fornecedor e empresa podem gerar relatórios Excel (.xlsx), Word (.docx), PDF e CSV. Os ficheiros Office usam pacotes Open XML sem bibliotecas externas; os números no Excel são valores numéricos. Incluem indicadores, evolução de seis meses, pedidos detalhados, campanhas, cotações e inventário para fornecedor. Não são relatórios fiscais. A validação automatizada simulou navegação e verificou dados e estrutura dos ficheiros; a abertura em aplicações Office reais, download no Android e a posição da barra ainda precisam de teste visual em dispositivo.
+
+## V0.10 — dados e colaboração
+
+### Estatísticas e relatórios
+Fornecedor, empresa, administração e entregador têm acesso a Dados. Períodos: hoje, últimos sete dias, mês atual, dois, três, seis e doze meses (incluindo o mês atual). Tipos: barras, linhas, área e circular. O gráfico circular distribui por estado ou tipo de visualização. Os restantes mostram evolução temporal. Pedidos são filtrados pela criação e entregas pela atribuição; estados são atuais. Eventos de visualização com data começam na V0.10; contagens anteriores permanecem acumuladas. Gerar relatório abre escolha Excel, PDF, Word ou CSV. Excel e Word incluem uma imagem do gráfico e dados editáveis, PDF inclui gráfico vetorial e CSV contém só dados. Não são métricas financeiras reais.
+
+### Fichas operacionais
+- Fornecedor: armazenagem, entradas, saídas, inventário e expedição.
+- Empresa: receção, entradas, saídas, inventário e armazenagem.
+- Entregador: recolha, transporte, entrega e ocorrências.
+- Administração: inspeção, ocorrências e auditoria; consulta de fichas locais.
+As fichas manuais podem ser editadas e exportadas em PDF, Excel e Word. Não atualizam stock, não substituem guias legais, documentos fiscais ou prova de entrega.
+
+### Comunicação e reputação
+Cliente tem aba Chat; os restantes perfis têm acesso por Mais e pelo ícone no cabeçalho. Mensagens e pedidos de operador são locais. O assistente responde por regras simples sobre catálogo, pedidos e pagamentos, e pode encaminhar à fila local. Não há modelo de IA nem entrega de mensagens entre aparelhos. Fornecedor ou administração podem assumir as conversas elegíveis.
+
+Avaliações de 1 a 5 estrelas com comentário são associadas às operações concluídas, com avaliação recíproca dos participantes elegíveis. A área profissional mostra avaliações relevantes completas, a administração revê e pode aprovar ou ocultar. Bancadas apresentam apenas testemunhos favoráveis aprovados, explicitamente identificados como seleção, sem representar a distribuição total. O cliente pode consultar as próprias avaliações. Não existe verificação de identidade real.
+
+### Perfis, galeria e termos
+Todos os perfis podem editar nome, email fictício, localização, bio e fotografia. Fornecedor pode adicionar até quatro imagens de 350 KB e um vídeo MP4/WebM até 15 MB, armazenado localmente em IndexedDB. Não há upload para servidor. Termos demo 1.0 exigem concordância no registo e são consultáveis no perfil; contas de acesso rápido continuam demonstrativas. O filtro de palavras é uma heurística limitada, com ocorrências locais para revisão, não moderação abrangente. Termos e política de privacidade definitivos requerem revisão antes de lançamento.
 
 ## Fotografias e licenças
 
