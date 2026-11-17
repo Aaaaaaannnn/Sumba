@@ -2,6 +2,20 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.6.2] — 2026-11-17
+
+### Corrigido
+- Botão principal Comprar em vez de + Adicionar, com quantidade após adicionar ao carrinho.
+- Preço e botão na mesma linha no modo Fila; layout compacto nos Blocos e adaptação a ecrãs estreitos.
+- Fotografias com quatro cantos arredondados, recorte independente do cartão e suporte progressivo a squircle.
+- Transições horizontais de 480 ms, entrada dos cartões durante a rolagem, fade das fotografias de 650 ms, transições dos controlos de 320 ms e janelas de 520 ms.
+- Gradientes suaves de imagens e indicação visível da versão no rodapé.
+
+### Validação
+- Sintaxe JavaScript e testes simulados de Comprar, Fila, descrição, quantidade localizada, tempos de animação, movimento reduzido e criação de pedido.
+- HTML da raiz e public sincronizados.
+- Endereço de teste indicado pelo responsável; a ferramenta de verificação não conseguiu abrir o endereço. Deploy V0.6.2 e aparência real em telemóvel ainda por confirmar.
+
 ## [0.6.1] — 2026-11-17
 
 ### Alterado
