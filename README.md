@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.1-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -50,7 +50,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 - Logística futura com custo e remuneração a definir; não há cobrança ativa.
 - Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
 
-## Estado do projeto — V0.10.0
+## Estado do projeto — V0.10.1
 
 | Área | Estado |
 |---|---|
@@ -107,11 +107,11 @@ As quatro aplicações previstas deverão partilhar um backend com autorização
 
 | Ambiente | Acesso de demonstração |
 |---|---|
-| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0100) |
-| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0100) |
-| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0100) |
-| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0100) |
-| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0100) |
+| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0101) |
+| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0101) |
+| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0101) |
+| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0101) |
+| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0101) |
 
 ## Arquitetura atual
 
@@ -143,7 +143,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.1 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -221,6 +221,10 @@ Avaliações de 1 a 5 estrelas com comentário são associadas às operações c
 
 ### Perfis, galeria e termos
 Todos os perfis podem editar nome, email fictício, localização, bio e fotografia. Fornecedor pode adicionar até quatro imagens de 350 KB e um vídeo MP4/WebM até 15 MB, armazenado localmente em IndexedDB. Não há upload para servidor. Termos demo 1.0 exigem concordância no registo e são consultáveis no perfil; contas de acesso rápido continuam demonstrativas. O filtro de palavras é uma heurística limitada, com ocorrências locais para revisão, não moderação abrangente. Termos e política de privacidade definitivos requerem revisão antes de lançamento.
+
+## V0.10.1 — janelas e navegação
+
+As janelas de detalhes, endereços, formulários, comprovativos e seletores fecham com um toque no fundo escurecido, no botão de retorno/fecho com ícone SVG ou no retorno do telefone. Toques dentro da janela e gestos iniciados no conteúdo não acionam o fecho pelo fundo. A animação de saída e a preferência de movimento reduzido são preservadas. Campos não guardados numa janela dispensada não são gravados. Validação de eventos simulada; teste visual e gestual no Android ainda pendente.
 
 ## Fotografias e licenças
 
