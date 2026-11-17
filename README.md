@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.5.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.6.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,9 +20,9 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V5 |
+| Perfil | Funcionalidades do protótipo V6 |
 |---|---|
-| Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico, perfis de bancadas, categorias, carrinho, checkout, endereços, favoritos, pedidos, recompra e apoio |
+| Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra e apoio |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos e rascunhos de campanhas |
 | Empresa | Painel de compras, pesquisa de fornecedores, cotações, acompanhamento de pedidos e perfil empresarial |
 
@@ -39,12 +39,15 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.5.0
+## Estado do projeto — V0.6.0
 
 | Área | Estado |
 |---|---|
 | Interface adaptada a telemóveis e computadores | Protótipo implementado |
-| Carrinho multibancada, quantidades nos cartões, checkout | Implementados localmente |
+| Feed em blocos/empilhado, descrição opcional e microanimações | Implementados localmente |
+| Cesta Básica, sete produtos de exemplo | Catálogo demonstrativo, fotografias ilustrativas |
+| Carrinho multibancada e checkout em três etapas | Implementados localmente |
+| Confirmação e histórico de encomendas agrupadas | Implementados localmente |
 | Endereços, entrega/levantamento e preferências de horário | Simulação local, sem logística ativa |
 | Cupão de teste, histórico, recompra e apoio | Implementados localmente; sem cobrança ou envio |
 | Três perfis com navegação independente | Protótipo implementado |
@@ -67,7 +70,7 @@ A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. N
 | Pagamentos, faturação e integração Meta | Pendente |
 | Rastreamento logístico real | Pendente |
 
-**Importante:** a V5 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
+**Importante:** a V6 é um protótipo navegável. Os dados fictícios são identificados como exemplos e os dados introduzidos pelo utilizador ficam no navegador. Trocar de perfil não equivale a autenticação. Não existem transações reais nem comunicação entre dispositivos.
 
 ## Evolução do ecossistema
 
@@ -118,13 +121,16 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 3. **V0.3.0 — concluído no código:** sessão do cliente, onboarding, registo demo, preferências, tutorial e perfil visual das bancadas.
 4. **V0.4.0 — concluído no código:** sessão do produtor, identidade da bancada, inventário, indicadores e promoção local.
 5. **V0.5.0 — concluído no código:** experiência de compras inspirada no Sbzee, carrinho e checkout local.
-6. **Próxima etapa:** aperfeiçoar experiência empresarial, compras a grosso e cotações; preparar separação dos aplicativos e infraestrutura partilhada.
-7. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-8. Pedidos, stock, cotações e estatísticas persistentes.
-9. Monetização, moderação e integração de campanhas.
-10. Logística, rastreamento e evolução para PWA.
+6. **V0.6.0 — concluído no código:** simplificação do feed, visualização em blocos ou empilhada, animações leves, cesta básica e fluxo de compra organizado.
+7. **Próxima etapa:** validar e aperfeiçoar a experiência do cliente em telemóvel; desenvolver compras empresariais e preparar a infraestrutura partilhada.
+8. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+9. Pedidos, stock, cotações e estatísticas persistentes.
+10. Monetização, moderação e integração de campanhas.
+11. Logística, rastreamento e evolução para PWA.
 
-Para testar compras: adicione produtos de duas bancadas, abra o carrinho, escolha levantamento ou entrega, experimente o cupão fictício `ZUNGADEMO` (5%) e confirme o pedido local. Não há pagamentos nem envio ao fornecedor.
+Para testar compras: no Início, alterne Blocos/Empilhados e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
+
+As animações de 130–220 ms nas principais interações e a confirmação animada respeitam a preferência de movimento reduzido do dispositivo. As preferências de layout e descrição são persistidas no navegador.
 
 ## Fotografias e licenças
 
