@@ -2,6 +2,18 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.7.1] — 2026-11-17
+
+### Alterado
+- Seletores de escolha única substituídos visualmente por controlos próprios da ZUNGA nos três perfis.
+- Bottom sheet mobile e janela desktop com animação, pesquisa em listas longas, seleção destacada e fecho ao tocar fora, cancelar ou selecionar.
+- Preservação dos valores e eventos dos formulários HTML, foco acessível e fallback nativo quando o diálogo não é suportado.
+
+### Validação
+- Sintaxe JavaScript e testes simulados de abertura, pesquisa sem acento, escolha e eventos input/change, cancelamento, opções desativadas e preservação dos painéis.
+- HTML da raiz e public sincronizados.
+- Deploy Cloudflare e teste visual em navegador real ainda por confirmar.
+
 ## [0.7.0] — 2026-11-17
 
 ### Cliente
