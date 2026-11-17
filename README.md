@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.10.2-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.11.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -50,7 +50,7 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 - Logística futura com custo e remuneração a definir; não há cobrança ativa.
 - Não há checkout de subscrição real, renovação, ativação de benefícios pagos, publicação automática de anúncios ou cobrança. As métricas financeiras são valores locais solicitados/projetados, nunca receitas recebidas.
 
-## Estado do projeto — V0.10.2
+## Estado do projeto — V0.11.0
 
 | Área | Estado |
 |---|---|
@@ -107,11 +107,11 @@ As quatro aplicações previstas deverão partilhar um backend com autorização
 
 | Ambiente | Acesso de demonstração |
 |---|---|
-| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0102) |
-| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0102) |
-| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0102) |
-| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0102) |
-| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0102) |
+| Cliente | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=client&v=0110) |
+| Produtor | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=business&v=0110) |
+| Empresa | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=company&v=0110) |
+| Administração | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=admin&v=0110) |
+| Entregador | [Abrir](https://zunga.stivenluanda04.workers.dev/?app=courier&v=0110) |
 
 ## Arquitetura atual
 
@@ -143,7 +143,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.10.2 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.11.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -233,6 +233,16 @@ As janelas de detalhes, endereços, formulários, comprovativos e seletores fech
 - Modais e seletores fecham ao tocar no fundo, sem fechar quando se toca dentro do conteúdo. O formulário de endereço aberto a partir da lista regressa à lista. Controlos de retorno usam SVG.
 - Avaliar fornecedor está disponível na bancada e nos pedidos concluídos. Estrelas selecionáveis por toque e comentário, com edição da avaliação existente. Quando não há encomenda concluída, a opinião de conta demo é marcada como não verificada, não sendo publicada como testemunho. As entidades envolvidas e a administração têm acesso às avaliações correspondentes; o cliente consulta as que escreveu.
 - Testes simulados de toque dentro/fora, retorno da lista de endereços, perfil sem duplicação, avaliações verificadas e não verificadas. Deploy e teste visual Android ainda pendentes.
+
+## V0.11.0 — experiência visual e dados de demonstração
+
+- Dez bancadas fictícias de várias províncias, 25 produtos fixos de exemplo e três produtos de teste para a bancada local.
+- Onze fotografias novas de Wikimedia Commons, créditos em `public/photo-credits.html`. São ilustrativas e não identificam os fornecedores fictícios.
+- Destaque editorial no Início, cartões de bancada com capa, descoberta horizontal de produtores, transições de conteúdo, microinterações e respeito à preferência de movimento reduzido. A barra inferior não é animada.
+- Conjunto inicial: 37 pedidos, 21 avaliações, 18 mensagens, 16 entregas concluídas, seis cotações e respetivas propostas, três campanhas, três fichas e 90 eventos de visualização. Diretório de oito identidades fictícias; perfis vazios de empresa, entregador e administração preenchidos com exemplos.
+- Os registos de exemplo são identificados por IDs e marcações próprias. Perfil do cliente > Ambiente de teste > Dados de demonstração permite carregar ou remover exemplos. Carregar novamente não duplica IDs; a remoção preserva registos manuais e as suas dependências. Bancadas fixas e dados de perfil permanecem.
+- Validação simulada de referências, carregamento sem duplicação, remoção, feed, comentários, estatísticas e diretório. Fotografias remotas, transições e deploy ainda necessitam de confirmação em navegador real.
+- Não há novas contas autenticadas, mensagens entre dispositivos, transações reais ou pagamentos. Os dados e testemunhos são fictícios.
 
 ## Fotografias e licenças
 
