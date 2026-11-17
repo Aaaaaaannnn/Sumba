@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.6.1-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.6.2-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -39,7 +39,7 @@ Cada produtor pode experimentar a gestão da sua bancada local: nome comercial, 
 
 A V2 gera links com parâmetros UTM e permite preparar rascunhos de campanhas. Não efetua cobranças nem compra anúncios. A publicidade paga depende de orçamento próprio.
 
-## Estado do projeto — V0.6.1
+## Estado do projeto — V0.6.2
 
 | Área | Estado |
 |---|---|
@@ -112,7 +112,7 @@ python -m http.server 8000 --directory public
 
 Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. O endereço público definitivo será documentado quando confirmado.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.6.2 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -123,15 +123,16 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 5. **V0.5.0 — concluído no código:** experiência de compras inspirada no Sbzee, carrinho e checkout local.
 6. **V0.6.0 — concluído no código:** simplificação do feed, visualização em Blocos ou Fila, animações leves, cesta básica e fluxo de compra organizado.
 7. **V0.6.1 — concluído no código:** refinamento de movimento, fades, cantos squircle e renomeação de Empilhados para Fila.
-8. **Próxima etapa:** validar e aperfeiçoar a experiência do cliente em telemóvel; desenvolver compras empresariais e preparar a infraestrutura partilhada.
-9. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
-10. Pedidos, stock, cotações e estatísticas persistentes.
-11. Monetização, moderação e integração de campanhas.
-12. Logística, rastreamento e evolução para PWA.
+8. **V0.6.2 — concluído no código:** cartões com botão Comprar, preço e ação alinhados, fotografias arredondadas nos quatro cantos e animações mais visíveis.
+9. **Próxima etapa:** validar e aperfeiçoar a experiência do cliente em telemóvel; desenvolver compras empresariais e preparar a infraestrutura partilhada.
+10. Base de dados partilhada, armazenamento de fotografias e segurança por linha.
+11. Pedidos, stock, cotações e estatísticas persistentes.
+12. Monetização, moderação e integração de campanhas.
+13. Logística, rastreamento e evolução para PWA.
 
 Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
 
-As microinterações duram cerca de 240–260 ms, a navegação 380–390 ms, as janelas 430 ms na abertura e 260 ms no fecho, a entrada de fotografias 500 ms e a confirmação 540 ms. Curvas de desaceleração, fades seletivos e cantos squircle criam uma experiência mais suave. O CSS utiliza corner-shape:squircle quando suportado, com cantos arredondados como alternativa. As animações respeitam a preferência de movimento reduzido do dispositivo. As preferências de layout e descrição são persistidas no navegador, mantendo a compatibilidade com a opção interna stacked das versões anteriores. Os botões de quantidade atualizam os cartões sem substituir o feed inteiro.
+A navegação usa transições horizontais de 480 ms; cartões entram com movimento e fade de 480 ms durante a rolagem, fotografias têm fade de 650 ms, e os controlos de quantidade usam 320 ms. As janelas abrem em 520 ms. O modo Fila tem fotografias arredondadas nos quatro cantos, com clipping e alternativa para navegadores sem squircle. O botão Comprar fica junto ao preço em Fila e numa linha compacta nos Blocos em ecrãs estreitos. Após a compra, transforma-se em controlos de quantidade. O feed mantém a posição e evita reconstrução integral ao alterar quantidades. A preferência de movimento reduzido continua respeitada.
 
 ## Fotografias e licenças
 
