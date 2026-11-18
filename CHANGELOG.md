@@ -7,6 +7,13 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 
 
+
+## [0.20.0] — 2026-11-18
+- Área real isolada: registo, códigos por email, login por código/password, recuperação por código, reenvio, Google/Facebook OAuth e vinculação. Templates de autenticação e segurança, configuração Worker dedicado, headers de segurança, instruções de activação em docs/autenticacao-v020.md.
+- Supabase dedicado confirmado saudável, RLS activa nas três tabelas, 10 políticas, role protegido, bucket avatar privado. Não executada migração nem modificações de settings. Sem envio real, configuração OAuth ou deploy confirmado. Não há acesso real aos módulos do protótipo; nenhuma credencial sensível publicada.
+
+- 11 verificações estáticas e sintaxe aprovadas; teste real pendente.
+
 ## [0.19.0] — 2026-11-18
 
 - Arquitectura alvo completa em [docs/arquitectura-cross-docking.md](docs/arquitectura-cross-docking.md): DER, tabelas/relacionamentos, RBAC, estados, APIs, eventos, segurança e plano de migração.

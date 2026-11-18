@@ -37,3 +37,6 @@ Criar duas contas de teste distintas e confirmar email. Em dois navegadores:
 | Android/desktop e ligação instável | Erros claros; sem falsa confirmação |
 
 A instalação e os advisors foram verificados; SMTP, teste de isolamento com contas reais, deploy e teste de dois dispositivos estão pendentes. Não executar novamente o SQL inicial: já foi aplicado. Os testes locais apenas verificam sintaxe e bloqueio por configuração. Próxima fase: migrar catálogo, pedidos e restantes módulos gradualmente sem misturar exemplos com produção.
+
+
+Actualização V0.20: ver [autenticacao-v020.md](autenticacao-v020.md). A origem separada planeada serve a área real na raiz; a origem demonstrativa continua bloqueada.

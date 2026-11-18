@@ -348,3 +348,9 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Validação: sintaxe JS e 29 testes de lógica (consolidação, estados, autorização simulada, horários e conservação financeira). Sem execução de migração Supabase ou activação de serviços; validação de navegador e deploy pendentes.
 
 - Complemento: triagem individual por sub-etiqueta com rejeição de duplicados, POD por paragem/linha em sequência B2B prioritária, quantidade recusada e cálculo proporcional do ajuste, bloqueio da liquidação até mediação. 8 testes adicionais de POD e 20 verificações do fluxo integrado com DOM simulado. Não substituem teste de navegador.
+
+## V0.20.0 — Autenticação real, OTP e acesso social (preparação)
+- Área real isolada: registo, códigos por email, login por código/password, recuperação por código, reenvio, Google/Facebook OAuth e vinculação. Templates de autenticação e segurança, configuração Worker dedicado, headers de segurança, instruções de activação em docs/autenticacao-v020.md.
+- Supabase dedicado confirmado saudável, RLS activa nas três tabelas, 10 políticas, role protegido, bucket avatar privado. Não executada migração nem modificações de settings. Sem envio real, configuração OAuth ou deploy confirmado. Não há acesso real aos módulos do protótipo; nenhuma credencial sensível publicada.
+
+- 11 verificações estáticas de integração e sintaxe JavaScript aprovadas. Testes de navegador, envio OTP e OAuth pendentes.

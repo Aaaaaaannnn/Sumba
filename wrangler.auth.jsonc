@@ -1,0 +1,8 @@
+{
+  "name": "zunga-auth",
+  "compatibility_date": "2026-11-18",
+  "assets": {
+    "directory": "./public/real",
+    "not_found_handling": "none"
+  }
+}
