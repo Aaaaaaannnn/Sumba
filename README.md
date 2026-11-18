@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.16.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.17.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V16 |
+| Perfil | Funcionalidades do protótipo V17 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -315,3 +315,12 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Validação: sintaxe de scripts, 28 testes unitários de parâmetros, repartição e guardas de estados, 30 pontos de integração textual; teste de navegador e publicação ainda pendentes. A administração continua demonstrativa, não é autorização real.
 
 - Complemento de validação: 12 testes de integração de tarifas, permissões locais de inventário, snapshot financeiro e suspensão. A administração também cria armazéns, regista e movimenta lotes, edita categoria/descrição e apresenta etiqueta de verificação demo; movimento desligado também no JavaScript. Sem teste visual real.
+
+
+## V0.17.0 — Administração profissional (protótipo)
+
+- Interface administrativa independente: menu lateral por áreas, recolhível no desktop e gaveta no mobile, topo com pesquisa global, alertas, perfil e tema claro/escuro; navegação de cliente preservada.
+- Páginas de administração inline para utilizadores, catálogo, pedidos, inventário, tesouraria, parâmetros visuais/comerciais e auditoria; formulários de edição continuam em janelas. Cotações em consulta administrativa; suporte, logística, moderação, documentos e relatórios ligados ao menu.
+- Dashboard com período de 7/30/90/180 dias, KPIs com comparação, gráfico de volume de produtos, estados, alertas, top produtos/bancadas/províncias, atividade, previsão indicativa baseada em semanas completas e exportação Excel. Sem valores inventados além do dataset demo; previsão é ocultada com histórico insuficiente.
+- Tabelas de encomendas, produtos, entidades e cotações com ordenação, paginação e controlos anteriores; pesquisa global por módulo, produto, pedido e entidade. Operações em massa, permissões reais e reconciliação ficam para fases seguintes.
+- Validação: sintaxe JavaScript, 18 verificações de lógica e integração textual, HTML raiz/public sincronizado. Teste visual de navegador e publicação não confirmados. Sem alterações ao Supabase, sem serviços pagos, sem segurança ou transações reais.

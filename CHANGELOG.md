@@ -4,6 +4,15 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 
 
+
+## [0.17.0] — 2026-11-18
+
+- Interface administrativa independente: menu lateral por áreas, recolhível no desktop e gaveta no mobile, topo com pesquisa global, alertas, perfil e tema claro/escuro; navegação de cliente preservada.
+- Páginas de administração inline para utilizadores, catálogo, pedidos, inventário, tesouraria, parâmetros visuais/comerciais e auditoria; formulários de edição continuam em janelas. Cotações em consulta administrativa; suporte, logística, moderação, documentos e relatórios ligados ao menu.
+- Dashboard com período de 7/30/90/180 dias, KPIs com comparação, gráfico de volume de produtos, estados, alertas, top produtos/bancadas/províncias, atividade, previsão indicativa baseada em semanas completas e exportação Excel. Sem valores inventados além do dataset demo; previsão é ocultada com histórico insuficiente.
+- Tabelas de encomendas, produtos, entidades e cotações com ordenação, paginação e controlos anteriores; pesquisa global por módulo, produto, pedido e entidade. Operações em massa, permissões reais e reconciliação ficam para fases seguintes.
+- Validação: sintaxe JavaScript, 18 verificações de lógica e integração textual, HTML raiz/public sincronizado. Teste visual de navegador e publicação não confirmados. Sem alterações ao Supabase, sem serviços pagos, sem segurança ou transações reais.
+
 ## [0.16.0] — 2026-11-18
 
 - Painel ADM transversal: catálogo, utilizadores e bancadas, fluxo de encomendas, stock e armazéns, tesouraria simulada e auditoria.
