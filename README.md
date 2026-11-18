@@ -313,3 +313,5 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Repartição financeira simulada: comissão, processamento deduzido do fornecedor, parcela logística, líquido por fornecedor, marcação de liquidação de pedidos novos concluídos e exportação Excel. Regras fixadas nos novos pedidos; pedidos antigos são estimativas, sem liquidação. Nenhuma cobrança, custódia ou transferência real.
 - Exportação de parâmetros JSON, auditoria Excel, motivo obrigatório e restauro de parâmetros padrão. Sem execução de código arbitrário, sem alteração do Supabase e sem serviços externos.
 - Validação: sintaxe de scripts, 28 testes unitários de parâmetros, repartição e guardas de estados, 30 pontos de integração textual; teste de navegador e publicação ainda pendentes. A administração continua demonstrativa, não é autorização real.
+
+- Complemento de validação: 12 testes de integração de tarifas, permissões locais de inventário, snapshot financeiro e suspensão. A administração também cria armazéns, regista e movimenta lotes, edita categoria/descrição e apresenta etiqueta de verificação demo; movimento desligado também no JavaScript. Sem teste visual real.

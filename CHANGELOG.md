@@ -13,6 +13,9 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Exportação de parâmetros JSON, auditoria Excel, motivo obrigatório e restauro de parâmetros padrão. Sem execução de código arbitrário, sem alteração do Supabase e sem serviços externos.
 - Validação: sintaxe de scripts, 28 testes unitários de parâmetros, repartição e guardas de estados, 30 pontos de integração textual; teste de navegador e publicação ainda pendentes. A administração continua demonstrativa, não é autorização real.
 
+
+- Complemento de validação: 12 testes de integração de tarifas, permissões locais de inventário, snapshot financeiro e suspensão. A administração também cria armazéns, regista e movimenta lotes, edita categoria/descrição e apresenta etiqueta de verificação demo; movimento desligado também no JavaScript. Sem teste visual real.
+
 ## [0.15.0] — 2026-11-18
 
 - Administração: gestão pesquisável de encomendas, central de apoio com resposta e encerramento, auditoria local e indicadores operacionais.
