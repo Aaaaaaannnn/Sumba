@@ -5,6 +5,15 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 
 
+
+## [0.18.0] — 2026-11-18
+
+- Fornecedor: interface simples e prioritariamente mobile, tarefas e pedidos destacados, catálogo com preço/stock e opções avançadas recolhidas, alertas e acessos a cotações e armazéns. Estados de pedido com linguagem orientada a tarefas.
+- Empresa: central de abastecimento com KPIs, gráfico de compras, fornecedores guardados, cotações por estado, encomendas com pesquisa/filtros/tabelas e orçamento mensal persistente (alerta não bloqueante), exportação Excel.
+- Entregador: disponibilidade local, tarefas por estado, remuneração nas fichas, histórico e ganhos previstos/a receber/liquidados demo, exportação Excel; valores fixados pelo snapshot financeiro da compra, registos antigos sem valor fixado não recebem valor inventado, isolamento por entregador simulado.
+- Tema claro/escuro persistente e independente para cada perfil, navegação especializada no desktop e mobile, cliente e ADM preservados. Novas funcionalidades continuam locais; sem autenticação real, GPS, pagamentos ou transferências. Não foram alteradas as percentagens financeiras existentes.
+- Validação: sintaxe JavaScript, 15 testes de lógica e integração textual; testes visuais e publicação pendentes. Sem alterações Supabase ou custos externos.
+
 ## [0.17.0] — 2026-11-18
 
 - Interface administrativa independente: menu lateral por áreas, recolhível no desktop e gaveta no mobile, topo com pesquisa global, alertas, perfil e tema claro/escuro; navegação de cliente preservada.

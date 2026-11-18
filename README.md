@@ -326,3 +326,12 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Validação: sintaxe JavaScript, 18 verificações de lógica e integração textual, HTML raiz/public sincronizado. Teste visual de navegador e publicação não confirmados. Sem alterações ao Supabase, sem serviços pagos, sem segurança ou transações reais.
 
 - Validação complementar: 11 testes com DOM simulado para dashboard, menu, captura de módulos, manutenção de modais de edição, cotações, apoio, tabela e retorno ao cliente. Melhorado foco/inert do menu em ecrãs pequenos. Não substitui teste visual em navegador.
+
+
+## V0.18.0 — Espaços profissionais por perfil (protótipo)
+
+- Fornecedor: interface simples e prioritariamente mobile, tarefas e pedidos destacados, catálogo com preço/stock e opções avançadas recolhidas, alertas e acessos a cotações e armazéns. Estados de pedido com linguagem orientada a tarefas.
+- Empresa: central de abastecimento com KPIs, gráfico de compras, fornecedores guardados, cotações por estado, encomendas com pesquisa/filtros/tabelas e orçamento mensal persistente (alerta não bloqueante), exportação Excel.
+- Entregador: disponibilidade local, tarefas por estado, remuneração nas fichas, histórico e ganhos previstos/a receber/liquidados demo, exportação Excel; valores fixados pelo snapshot financeiro da compra, registos antigos sem valor fixado não recebem valor inventado, isolamento por entregador simulado.
+- Tema claro/escuro persistente e independente para cada perfil, navegação especializada no desktop e mobile, cliente e ADM preservados. Novas funcionalidades continuam locais; sem autenticação real, GPS, pagamentos ou transferências. Não foram alteradas as percentagens financeiras existentes.
+- Validação: sintaxe JavaScript, 15 testes de lógica e integração textual; testes visuais e publicação pendentes. Sem alterações Supabase ou custos externos.
