@@ -268,3 +268,7 @@ O objetivo é manter custos iniciais de desenvolvimento e alojamento dentro dos 
 ---
 
 **ZUNGA · Do campo ao mercado · Angola 🇦🇴**
+
+
+### Fundação real — atualização 18/11/2026
+Projeto dedicado Zunga `asxyjhaujsowmdrpkcqc` conectado. Migração inicial aplicada; perfis, bancadas, empresas e bucket de avatares privado existem, RLS ativo. Chave pública configurada, ativação da interface bloqueada até origem HTTPS dedicada e configuração Auth. Ver [guia](docs/fundacao-real.md). Dados comerciais continuam demonstrativos.
