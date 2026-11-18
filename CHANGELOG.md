@@ -388,3 +388,5 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Primeiro deploy Cloudflare concluído, conforme captura fornecida pelo responsável do projeto.
 
 - Complemento: triagem individual por sub-etiqueta com rejeição de duplicados, POD por paragem/linha em sequência B2B prioritária, quantidade recusada e cálculo proporcional do ajuste, bloqueio da liquidação até mediação. 8 testes adicionais de POD e 20 verificações do fluxo integrado com DOM simulado. Não substituem teste de navegador.
+
+- Configurador assistido de Auth por Management API, separado por email, Google e Facebook; modo de planeamento, confirmação e verificação do Worker, sem segredos. 10 testes de lógica de configuração aprovados. Não executado contra a API de gestão; SMTP e OAuth permanecem pendentes.

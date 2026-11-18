@@ -20,3 +20,12 @@
 
 ## Estado
 Supabase dedicado saudável. RLS activa nas 3 tabelas; 10 políticas, acesso anónimo a perfis negado, authenticated não pode alterar role e bucket avatar privado. Nenhuma alteração de SQL executada. Não há ferramenta disponível nesta sessão para mudar configurações Auth no dashboard ou fazer deploy Cloudflare; não considerar SMTP, OAuth, URLs ou envio reais activos até teste.
+
+## Configurador assistido — V0.20
+`scripts/configure-zunga-auth.mjs` permite configurar SMTP Brevo e OTP, templates e depois Google/Facebook pela Management API oficial, sem guardar os segredos no repositório. Node 20+; ambiente local autenticado, variáveis de ambiente fornecidas em terminal seguro, não por mensagens, ficheiros Git ou argumentos de linha de comando. A conta Brevo deve ter remetente autorizado e permissão para envio transacional. O script não cria contas externas nem publica Cloudflare.
+
+Primeiro publicar o Worker dedicado (`npx wrangler deploy --config wrangler.auth.jsonc` a partir do checkout). O script verifica a página, configuração e CSP desse Worker antes de qualquer escrita. Por omissão só imprime plano; `--apply` exige token de gestão com Auth config read/write e project admin permissions, mais confirmação literal ZUNGA. Não usar service_role ou chave pública como token de gestão. A configuração de email restringe redirects à origem dedicada; a lista anterior, se não vazia, é assinalada antes da confirmação. Não altera nenhum outro projecto.
+
+Modo email: variáveis `SUPABASE_ACCESS_TOKEN`, `ZUNGA_SMTP_EMAIL` (remetente verificado), `ZUNGA_SMTP_USER` (login SMTP Brevo), `ZUNGA_SMTP_KEY` (chave SMTP, não API key). Executar `node scripts/configure-zunga-auth.mjs email --apply`. Modo social: após email, configurar o cliente OAuth no fornecedor e usar `ZUNGA_GOOGLE_ID` / `ZUNGA_GOOGLE_SECRET` ou `ZUNGA_FACEBOOK_ID` / `ZUNGA_FACEBOOK_SECRET`; executar `node scripts/configure-zunga-auth.mjs google --apply` ou `facebook --apply`. O token permanece apenas no ambiente local; remover as variáveis e revogar token temporário após uso. Nunca usar um terminal partilhado.
+
+O script não confirma a entrega de emails ou OAuth, apenas a configuração via GET. Testes de envio, callbacks e isolamento continuam obrigatórios. Antes de abrir ao público: CAPTCHA/anti-abuso, revisão de domínio/remetente, consentimento, limites e disponibilidade do plano. No telemóvel, é preferível configurar directamente pelo Dashboard, sem terminal.

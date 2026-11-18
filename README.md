@@ -356,3 +356,5 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - 11 verificações estáticas de integração e sintaxe JavaScript aprovadas. Testes de navegador, envio OTP e OAuth pendentes.
 
 - Complemento: 15 verificações do fluxo com SDK e DOM simulados (registo, reenvio, verificação, recuperação, logout), correção de confirmação do logout e captura do erro OAuth. Não são testes de entrega de email ou login real.
+
+- Configurador assistido de Auth por Management API, separado por email, Google e Facebook; modo de planeamento, confirmação e verificação do Worker, sem segredos. 10 testes de lógica de configuração aprovados. Não executado contra a API de gestão; SMTP e OAuth permanecem pendentes.
