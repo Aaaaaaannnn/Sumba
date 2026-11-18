@@ -2,6 +2,15 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+
+## [0.15.0] — 2026-11-18
+
+- Administração: gestão pesquisável de encomendas, central de apoio com resposta e encerramento, auditoria local e indicadores operacionais.
+- Logística: três entregadores fictícios, disponibilidade, atribuição e reatribuição, janela e instruções, filtros, ocorrências e resolução administrativa.
+- Entregador: seleção explícita de identidade demo, tarefas e histórico separados, confirmação manual de recolha e entrega. Comprador consulta o histórico nos detalhes.
+- Estados e apoio ficam neste navegador; não há GPS, prova real, autenticação, notificações externas ou pagamentos. A base Supabase não foi alterada.
+- Validação: análise sintática dos scripts e 10 testes de transição (incluindo lote vencido, ocorrência aberta, cancelamento e conclusão duplicada). Teste visual/deploy pendentes.
+
 ## [0.14.0] — 2026-11-18
 
 - Cancelamento visível nos pedidos antigos e novos, agrupado ou por item; filtro Cancelados e reposição só quando existe reserva comprovada.

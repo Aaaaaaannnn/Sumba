@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.14.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.15.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V14 |
+| Perfil | Funcionalidades do protótipo V15 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -294,3 +294,12 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Fichas de movimentos de lote e sem lote geradas no mesmo registo de stock; exportação PDF, Excel e Word, arquivo e fichas operacionais. Fichas manuais continuam sem alterar stock. Ajustes diretos de catálogo não substituem movimentações de lote.
 - Dados antigos mantidos, sem migrações Supabase nem autenticação real. Armazéns e lotes desta fase pertencem à bancada local do fornecedor; inventário independente de empresas e contabilização de receções ficam pendentes.
 - Sintaxe e 19 verificações de lógica no DOM simulado da versão final. HTML público e raiz sincronizados; deploy e teste real em Android ainda por confirmar.
+
+
+## V0.15.0 — Administração e logística profissional (demo)
+
+- Administração: gestão pesquisável de encomendas, central de apoio com resposta e encerramento, auditoria local e indicadores operacionais.
+- Logística: três entregadores fictícios, disponibilidade, atribuição e reatribuição, janela e instruções, filtros, ocorrências e resolução administrativa.
+- Entregador: seleção explícita de identidade demo, tarefas e histórico separados, confirmação manual de recolha e entrega. Comprador consulta o histórico nos detalhes.
+- Estados e apoio ficam neste navegador; não há GPS, prova real, autenticação, notificações externas ou pagamentos. A base Supabase não foi alterada.
+- Validação: análise sintática dos scripts e 10 testes de transição (incluindo lote vencido, ocorrência aberta, cancelamento e conclusão duplicada). Teste visual/deploy pendentes.
