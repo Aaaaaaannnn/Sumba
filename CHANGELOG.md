@@ -14,6 +14,9 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 - 11 verificações estáticas e sintaxe aprovadas; teste real pendente.
 
+
+- Complemento: 15 verificações do fluxo com SDK e DOM simulados (registo, reenvio, verificação, recuperação, logout), correção de confirmação do logout e captura do erro OAuth. Não são testes de entrega de email ou login real.
+
 ## [0.19.0] — 2026-11-18
 
 - Arquitectura alvo completa em [docs/arquitectura-cross-docking.md](docs/arquitectura-cross-docking.md): DER, tabelas/relacionamentos, RBAC, estados, APIs, eventos, segurança e plano de migração.

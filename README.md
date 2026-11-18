@@ -354,3 +354,5 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Supabase dedicado confirmado saudável, RLS activa nas três tabelas, 10 políticas, role protegido, bucket avatar privado. Não executada migração nem modificações de settings. Sem envio real, configuração OAuth ou deploy confirmado. Não há acesso real aos módulos do protótipo; nenhuma credencial sensível publicada.
 
 - 11 verificações estáticas de integração e sintaxe JavaScript aprovadas. Testes de navegador, envio OTP e OAuth pendentes.
+
+- Complemento: 15 verificações do fluxo com SDK e DOM simulados (registo, reenvio, verificação, recuperação, logout), correção de confirmação do logout e captura do erro OAuth. Não são testes de entrega de email ou login real.
