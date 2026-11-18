@@ -1,4 +1,4 @@
-# Ecossistema ZUNGA — estudo de referência Sbzee
+# Ecossistema SUMBA — estudo de referência Sbzee
 
 ## Referências públicas consultadas
 - [Sbzee — site oficial](https://sbzee.com/)
@@ -16,7 +16,7 @@ A análise é baseada em descrições e imagens públicas, não na inspeção do
 Sbzee organiza a compra de frescos por comunidades residenciais, fornecedores selecionados e horários de entrega. A experiência comercial utiliza categorias, fotografias, preços claros, quantidades, cesto, promoções, acompanhamento e apoio. Os parceiros e operadores de entrega dispõem de aplicativos próprios; Captain contempla inventário, entregas e vendas presenciais. A operação utiliza seleção e preparação de produtos e distribuição local. Não há evidência pública suficiente para reconstruir todos os processos internos.
 
 ## Adaptação para Angola
-ZUNGA é um marketplace de bancadas, não uma cópia do modelo indiano. Preserva a escolha de produtores, vendas a retalho e compras empresariais, e a taxa de exposição proposta. Não promete entrega diária sem capacidade operacional. Deve validar zonas de cobertura, custos, prazos, qualidade e regras de reembolso antes de operar.
+SUMBA é um marketplace de bancadas, não uma cópia do modelo indiano. Preserva a escolha de produtores, vendas a retalho e compras empresariais, e a taxa de exposição proposta. Não promete entrega diária sem capacidade operacional. Deve validar zonas de cobertura, custos, prazos, qualidade e regras de reembolso antes de operar.
 
 | Área | V0.5 | Evolução |
 |---|---|---|
@@ -27,8 +27,8 @@ ZUNGA é um marketplace de bancadas, não uma cópia do modelo indiano. Preserva
 | Administração | Ainda não implementada | Moderação, verificação, qualidade, suporte e disputas |
 
 ## Dois aplicativos — arquitetura proposta
-- ZUNGA: cliente final. Interface simples com cinco abas.
-- ZUNGA Negócios (nome provisório): produtor e comprador empresarial. Navegação e permissões dependem do tipo de conta.
+- SUMBA: cliente final. Interface simples com cinco abas.
+- SUMBA Negócios (nome provisório): produtor e comprador empresarial. Navegação e permissões dependem do tipo de conta.
 - Um backend partilhado, com autenticação, autorização no servidor e políticas de segurança por linha; não confiar no seletor de perfil.
 - Entidades: profiles, businesses, stalls, products, inventory, addresses, carts, orders, order_items, order_events, quotes, campaigns, support_requests.
 - Compras devem ser agrupadas por vendedor, reservar stock atomicamente, manter eventos de estado e calcular totais no servidor. Pagamentos e entrega devem ter estados separados.

@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌱 ZUNGA
+# 🌱 SUMBA
 
 **Do campo ao mercado.**
 
@@ -16,7 +16,7 @@ Marketplace agrícola digital para Angola — conectando produtores, consumidore
 
 ## Visão
 
-A ZUNGA pretende reduzir a distância entre a produção agrícola e os compradores, facilitar a descoberta de fornecedores e criar oportunidades de comercialização para agricultores angolanos. O foco inicial é a Huíla, com expansão prevista para as restantes províncias.
+A SUMBA pretende reduzir a distância entre a produção agrícola e os compradores, facilitar a descoberta de fornecedores e criar oportunidades de comercialização para agricultores angolanos. O foco inicial é a Huíla, com expansão prevista para as restantes províncias.
 
 ## Para quem é?
 
@@ -96,12 +96,12 @@ A V0.8 introduz subscrições mensais demonstrativas e gestão de campanhas, com
 
 ## Evolução do ecossistema
 
-A referência pública estudada foi o [Sbzee](https://sbzee.com/): comércio de frescos, compras por localização, carrinho, entregas programadas, apoio e operações de parceiros. Ver [estudo e arquitetura proposta](docs/ecossistema.md). A ZUNGA mantém marca, bancadas e modelo de exposição próprios.
+A referência pública estudada foi o [Sbzee](https://sbzee.com/): comércio de frescos, compras por localização, carrinho, entregas programadas, apoio e operações de parceiros. Ver [estudo e arquitetura proposta](docs/ecossistema.md). A SUMBA mantém marca, bancadas e modelo de exposição próprios.
 
-- **ZUNGA:** aplicação de consumo.
-- **ZUNGA Negócios:** área de produtores e empresas.
-- **ZUNGA Administração:** área restrita futura, para gestão, moderação, finanças e logística.
-- **ZUNGA Entregas:** área de entregadores e acompanhamento operacional.
+- **SUMBA:** aplicação de consumo.
+- **SUMBA Negócios:** área de produtores e empresas.
+- **SUMBA Administração:** área restrita futura, para gestão, moderação, finanças e logística.
+- **SUMBA Entregas:** área de entregadores e acompanhamento operacional.
 
 As quatro aplicações previstas deverão partilhar um backend com autorização real no servidor. Atualmente são cinco perfis demonstrativos num único protótipo. Os acessos diretos apenas selecionam a interface; não criam aplicações independentes nem concedem privilégios reais.
 
@@ -122,7 +122,7 @@ A interface demonstrativa V0.11 continua intacta e disponibiliza um acesso à no
 - avatares privados em Storage e diretório de bancadas publicadas;
 - configuração desativada por defeito, sem dados fictícios e sem credenciais de serviço.
 
-**Bloqueio:** não existe projeto Supabase dedicado ZUNGA na organização ligada. Os projetos existentes não foram alterados. Para ativar, escolher uma organização, criar projeto dedicado sem custos adicionais, aplicar e testar `supabase/setup-v012.sql`, configurar Auth/SMTP e publicar a área real em origem HTTPS separada do demo. Ver [procedimento e matriz de testes](docs/fundacao-real.md). Testes reais de RLS, autenticação e sincronização entre dispositivos ainda pendentes.
+**Bloqueio:** não existe projeto Supabase dedicado SUMBA na organização ligada. Os projetos existentes não foram alterados. Para ativar, escolher uma organização, criar projeto dedicado sem custos adicionais, aplicar e testar `supabase/setup-v012.sql`, configurar Auth/SMTP e publicar a área real em origem HTTPS separada do demo. Ver [procedimento e matriz de testes](docs/fundacao-real.md). Testes reais de RLS, autenticação e sincronização entre dispositivos ainda pendentes.
 
 ## Arquitetura atual
 
@@ -133,7 +133,7 @@ A interface demonstrativa V0.11 continua intacta e disponibiliza um acesso à no
 - Supabase Free previsto para autenticação, PostgreSQL, armazenamento e políticas de acesso.
 
 ```text
-Zunga/
+Sumba/
 ├── public/
 │   ├── index.html     # Aplicação servida pela Cloudflare
 │   └── photo-credits.html # Créditos e licenças das fotografias
@@ -152,9 +152,9 @@ Abra `public/index.html` num navegador ou utilize um servidor HTTP local.
 python -m http.server 8000 --directory public
 ```
 
-Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@zunga.test` e a palavra-passe demonstrativa `ZungaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@zunga.test` e `ZungaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
+Depois aceda a `http://localhost:8000`. Na primeira utilização, explore como visitante ou entre com a conta de teste `demo@sumba.test` e a palavra-passe demonstrativa `SumbaDemo123!`. Para criar uma conta simulada, use um email fictício terminado em `.test` e a mesma palavra-passe demo. Não use dados ou credenciais reais. Nenhuma palavra-passe é persistida. No perfil do cliente, entre na Área de negócios para testar Produtor ou Empresa. O seletor permanece nessas áreas. Para o produtor, entre com `produtor@sumba.test` e `SumbaDemo123!`, ou crie uma conta de teste com email `.test`. Crie um produto como produtor, troque para cliente e experimente os pedidos locais.
 
-Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.11.0 pode ser identificada no rodapé do feed e na meta tag zunga-version. A publicação desta versão ainda não foi confirmada.
+Para publicar através da Cloudflare, use a branch `main`, sem comando de build, e o comando `npx wrangler deploy`. Endereço de teste fornecido pelo responsável: [zunga.stivenluanda04.workers.dev](https://zunga.stivenluanda04.workers.dev/). A versão V0.11.0 pode ser identificada no rodapé do feed e na meta tag sumba-version. A publicação desta versão ainda não foi confirmada.
 
 ## Roadmap
 
@@ -167,7 +167,7 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 7. **V0.6.1 — concluído no código:** refinamento de movimento, fades, cantos squircle e renomeação de Empilhados para Fila.
 8. **V0.6.2 — concluído no código:** cartões com botão Comprar, preço e ação alinhados, fotografias arredondadas nos quatro cantos e animações mais visíveis.
 9. **V0.7.0 — concluído no código:** atalhos de descoberta do cliente, categorias sem seleção duplicada, área empresarial e fluxo de cotações fornecedor–empresa.
-10. **V0.7.1 — concluído no código:** seletores próprios da ZUNGA em toda a aplicação.
+10. **V0.7.1 — concluído no código:** seletores próprios da SUMBA em toda a aplicação.
 11. **V0.8.0 — concluído no código:** subscrições, estatísticas, gestão de anúncios, comprovativos PDF, administração e entregas em demonstração.
 12. **V0.9.0 — concluído no código:** navegação estável, botão Voltar e retorno do navegador, organização profissional, comprovativos contextuais e relatórios multi-formato.
 13. **V0.10.0 — concluído no código:** gráficos e relatórios por período, fichas, perfis, galeria, mensagens, avaliações e termos demo.
@@ -177,19 +177,19 @@ Para publicar através da Cloudflare, use a branch `main`, sem comando de build,
 16. Monetização, moderação e integração de campanhas.
 17. Logística, rastreamento e evolução para PWA.
 
-Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `ZUNGADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
+Para testar compras: no Início, alterne Blocos/Fila e ative Mostrar descrição. Abra Cesta Básica, adicione produtos de duas bancadas, revise o carrinho, escolha o recebimento, reveja o resumo e confirme. O cupão fictício `SUMBADEMO` (5%) está disponível na revisão. O histórico agrupa os produtos por compra. Não há pagamentos nem envio ao fornecedor.
 
 A navegação usa transições horizontais de 480 ms; cartões entram com movimento e fade de 480 ms durante a rolagem, fotografias têm fade de 650 ms, e os controlos de quantidade usam 320 ms. As janelas abrem em 520 ms. O modo Fila tem fotografias arredondadas nos quatro cantos, com clipping e alternativa para navegadores sem squircle. O botão Comprar fica junto ao preço em Fila e numa linha compacta nos Blocos em ecrãs estreitos. Após a compra, transforma-se em controlos de quantidade. O feed mantém a posição e evita reconstrução integral ao alterar quantidades. A preferência de movimento reduzido continua respeitada.
 
 ## Testar o fluxo de negócios
 
-No perfil do cliente, selecione Empresa e entre com `empresa@zunga.test` e `ZungaDemo123!`. Consulte fornecedores, guarde uma bancada, crie uma cotação (por exemplo, Arroz, 3 sacos, destino Lubango) e abra-a. Pode simular uma proposta de catálogo compatível. Mude para Produtor, entre na área Cotações e responda com preço unitário e prazo. Volte à Empresa, compare as propostas e aceite uma delas. Todos os registos ficam no mesmo navegador. Aceitar uma proposta não cria um contrato, não reserva stock e não gera pagamento.
+No perfil do cliente, selecione Empresa e entre com `empresa@sumba.test` e `SumbaDemo123!`. Consulte fornecedores, guarde uma bancada, crie uma cotação (por exemplo, Arroz, 3 sacos, destino Lubango) e abra-a. Pode simular uma proposta de catálogo compatível. Mude para Produtor, entre na área Cotações e responda com preço unitário e prazo. Volte à Empresa, compare as propostas e aceite uma delas. Todos os registos ficam no mesmo navegador. Aceitar uma proposta não cria um contrato, não reserva stock e não gera pagamento.
 
 No Início do cliente, os acessos Bancadas, Promoções e Favoritos ficam imediatamente abaixo da pesquisa. Categorias mostra apenas um seletor; após escolher uma categoria, aparece uma opção de voltar a todas.
 
-## Seletores da ZUNGA (V0.7.1)
+## Seletores da SUMBA (V0.7.1)
 
-Os campos de seleção usam um painel próprio da ZUNGA: bottom sheet no telemóvel, janela no computador, pesquisa em listas longas, opção atual destacada e animação de entrada/saída. Os valores continuam associados aos formulários e filtros existentes. O controlo HTML original é preservado para dados e compatibilidade, não sendo aberto pelo toque quando a interface personalizada está disponível. Aplica-se a cliente, fornecedor e empresa.
+Os campos de seleção usam um painel próprio da SUMBA: bottom sheet no telemóvel, janela no computador, pesquisa em listas longas, opção atual destacada e animação de entrada/saída. Os valores continuam associados aos formulários e filtros existentes. O controlo HTML original é preservado para dados e compatibilidade, não sendo aberto pelo toque quando a interface personalizada está disponível. Aplica-se a cliente, fornecedor e empresa.
 
 ## Testar operações V0.8
 
@@ -267,11 +267,11 @@ O objetivo é manter custos iniciais de desenvolvimento e alojamento dentro dos 
 
 ---
 
-**ZUNGA · Do campo ao mercado · Angola 🇦🇴**
+**SUMBA · Do campo ao mercado · Angola 🇦🇴**
 
 
 ### Fundação real — atualização 18/11/2026
-Projeto dedicado Zunga `asxyjhaujsowmdrpkcqc` conectado. Migração inicial aplicada; perfis, bancadas, empresas e bucket de avatares privado existem, RLS ativo. Chave pública configurada, ativação da interface bloqueada até origem HTTPS dedicada e configuração Auth. Ver [guia](docs/fundacao-real.md). Dados comerciais continuam demonstrativos.
+Projeto dedicado Sumba `asxyjhaujsowmdrpkcqc` conectado. Migração inicial aplicada; perfis, bancadas, empresas e bucket de avatares privado existem, RLS ativo. Chave pública configurada, ativação da interface bloqueada até origem HTTPS dedicada e configuração Auth. Ver [guia](docs/fundacao-real.md). Dados comerciais continuam demonstrativos.
 
 
 ## V0.13 — Comércio e armazém demonstrativos
@@ -365,3 +365,10 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Validação: sintaxe JS, 87 testes de configuração dos guias, identidade e posicionamento em ecrãs simulados. Navegador real, dimensões efectivas e deploy não confirmados.
 
 - Complemento: 20 verificações de fluxo com DOM simulado — primeira entrada, repetição manual, saída/restauro, memória independente por perfil, convidado/conta, entregador, hub e ADM, bloqueio durante autenticação. Melhorado estado activo do menu, medição da janela e isolamento da preferência de convidado.
+
+## V0.21.1 — Rebranding SUMBA
+- Marca pública SUMBA nos perfis, tutoriais, títulos, textos, exportações, autenticação real, templates de email e documentação. Contas exclusivamente demo: demo@sumba.test, produtor@sumba.test, empresa@sumba.test / SumbaDemo123!; cupão SUMBADEMO. Aliases das credenciais e cupão antigos preservados; migração restrita a identidades incorporadas e preferência de tutorial, sem alterar histórico de encomendas.
+- Compatibilidade: nomes físicos das tabelas, bucket privado, storageKey Auth, localStorage/IndexedDB, DOM IDs, endereços e nomes dos Workers mantidos; meta de versão antiga continua como alias. Não alterar URLs sem migração coordenada. O nome do repositório GitHub ainda precisa de alteração em Settings > General > Repository name; o conector não disponibiliza rename. Não modificar histórico Git. A origem real ainda não foi publicada; templates alterados no repositório, não no dashboard Supabase. O projecto Supabase mantém nome técnico anterior até alteração manual, sem recriar a base.
+- Comando recomendado: scripts/configure-sumba-auth.mjs; caminho antigo mantido como shim. Variáveis de ambiente legadas preservadas para não quebrar configuração. Confirmação de aplicação agora SUMBA.
+
+- Validação: 46 verificações de marca, aliases, preservação de identidades, tutorial, SQL e configuração, além de sintaxe JS. Sem teste em navegador ou deploy confirmado.

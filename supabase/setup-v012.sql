@@ -1,4 +1,4 @@
--- ZUNGA V0.12 — run ONLY on a dedicated ZUNGA project.
+-- SUMBA V0.12 — run ONLY on a dedicated SUMBA project.
 -- Initial schema, not a migration applied to an existing project.
 begin;
 create table public.zunga_profiles (

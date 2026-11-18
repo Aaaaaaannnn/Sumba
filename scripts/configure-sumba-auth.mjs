@@ -33,7 +33,7 @@ function validateDeployed(html,csp,config){
 }
 async function checkSite(){
  const [page,cfg]=await Promise.all([fetch(SITE,{redirect:'error',signal:AbortSignal.timeout(15000)}),fetch(SITE+'config.js',{redirect:'error',signal:AbortSignal.timeout(15000)})]);
- if(!page.ok||!cfg.ok||!validateDeployed(await page.text(),page.headers.get('content-security-policy')||'',await cfg.text()))throw Error('Worker isolado não confirmado. Publica zunga-auth primeiro, sem alterar o Worker sumba.');
+ if(!page.ok||!cfg.ok||!validateDeployed(await page.text(),page.headers.get('content-security-policy')||'',await cfg.text()))throw Error('Worker isolado não confirmado. Publica zunga-auth primeiro, sem alterar o Worker zunga.');
 }
 async function api(token,method,body){
  const r=await fetch(API,{method,redirect:'error',signal:AbortSignal.timeout(30000),headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});

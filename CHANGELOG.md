@@ -1,4 +1,11 @@
-# Histórico de versões — ZUNGA
+# Histórico de versões — SUMBA
+
+
+## [0.21.1] — 2026-11-18 — Rebranding SUMBA
+- Marca pública SUMBA nos perfis, tutoriais, títulos, textos, exportações, autenticação real, templates de email e documentação. Contas exclusivamente demo: demo@sumba.test, produtor@sumba.test, empresa@sumba.test / SumbaDemo123!; cupão SUMBADEMO. Aliases das credenciais e cupão antigos preservados; migração restrita a identidades incorporadas e preferência de tutorial, sem alterar histórico de encomendas.
+- Compatibilidade: nomes físicos das tabelas, bucket privado, storageKey Auth, localStorage/IndexedDB, DOM IDs, endereços e nomes dos Workers mantidos; meta de versão antiga continua como alias. Não alterar URLs sem migração coordenada. O nome do repositório GitHub ainda precisa de alteração em Settings > General > Repository name; o conector não disponibiliza rename. Não modificar histórico Git. A origem real ainda não foi publicada; templates alterados no repositório, não no dashboard Supabase. O projecto Supabase mantém nome técnico anterior até alteração manual, sem recriar a base.
+- Comando recomendado: scripts/configure-sumba-auth.mjs; caminho antigo mantido como shim. Variáveis de ambiente legadas preservadas para não quebrar configuração. Confirmação de aplicação agora SUMBA.
+
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
@@ -103,7 +110,7 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Diretório real de bancadas publicadas, sem importação de exemplos.
 - Guia de ativação e testes em docs/fundacao-real.md.
 - Verificada sintaxe JavaScript e bloqueio de configuração em DOM simulado; HTML raiz e public sincronizados.
-- Projeto dedicado Zunga autorizado; migração inicial aplicada, três tabelas RLS e bucket privado verificados; advisor de segurança sem avisos. Avisos de desempenho RLS permanecem. Chave pública configurada, interface desativada até origem dedicada, SMTP, redirects e testes reais.
+- Projeto dedicado Sumba autorizado; migração inicial aplicada, três tabelas RLS e bucket privado verificados; advisor de segurança sem avisos. Avisos de desempenho RLS permanecem. Chave pública configurada, interface desativada até origem dedicada, SMTP, redirects e testes reais.
 
 ## [0.11.0] — 2026-11-18
 
@@ -202,7 +209,7 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 ## [0.7.1] — 2026-11-17
 
 ### Alterado
-- Seletores de escolha única substituídos visualmente por controlos próprios da ZUNGA nos três perfis.
+- Seletores de escolha única substituídos visualmente por controlos próprios da SUMBA nos três perfis.
 - Bottom sheet mobile e janela desktop com animação, pesquisa em listas longas, seleção destacada e fecho ao tocar fora, cancelar ou selecionar.
 - Preservação dos valores e eventos dos formulários HTML, foco acessível e fallback nativo quando o diálogo não é suportado.
 
@@ -295,7 +302,7 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 ## [0.5.0] — 2026-11-17
 
 ### Adicionado
-- Interface de compras do cliente inspirada na experiência pública do Sbzee, com identidade ZUNGA própria.
+- Interface de compras do cliente inspirada na experiência pública do Sbzee, com identidade SUMBA própria.
 - Navegação inferior: Início, Categorias, Carrinho, Pedidos e Perfil; bancadas acessíveis pelo feed e categorias.
 - Cabeçalho de localização, pesquisa, promoções, categorias fotográficas e cartões com controlo direto de quantidades.
 - Carrinho multibancada persistido localmente, resumo, checkout, endereços guardados, entrega a combinar ou levantamento, preferência de horário e cupão demo.
@@ -399,3 +406,5 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Complemento: triagem individual por sub-etiqueta com rejeição de duplicados, POD por paragem/linha em sequência B2B prioritária, quantidade recusada e cálculo proporcional do ajuste, bloqueio da liquidação até mediação. 8 testes adicionais de POD e 20 verificações do fluxo integrado com DOM simulado. Não substituem teste de navegador.
 
 - Configurador assistido de Auth por Management API, separado por email, Google e Facebook; modo de planeamento, confirmação e verificação do Worker, sem segredos. 10 testes de lógica de configuração aprovados. Não executado contra a API de gestão; SMTP e OAuth permanecem pendentes.
+
+- Validação: 46 verificações de marca, aliases, preservação de identidades, tutorial, SQL e configuração, além de sintaxe JS. Sem teste em navegador ou deploy confirmado.

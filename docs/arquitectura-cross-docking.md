@@ -1,4 +1,4 @@
-# ZUNGA — Arquitectura Farm-to-Table / Cross-Docking
+# SUMBA — Arquitectura Farm-to-Table / Cross-Docking
 ## ADR-019 — proposta de arquitectura alvo, 18-11-2026
 
 **Estado:** especificação técnica, não migração executada. A fundação Supabase V0.12 contém apenas perfis, bancadas e empresas; preservar identificadores, migrar por etapas e manter autenticação real adiada até autorização. V0.19 é um laboratório local separado das encomendas V0.18, não uma operação real. Piloto Huíla, fuso Africa/Luanda, moeda AOA, valores em unidades monetárias mínimas inteiras no backend (não floats). Horários abaixo são exemplos configuráveis, não promessas de serviço.
