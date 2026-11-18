@@ -324,3 +324,5 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Dashboard com período de 7/30/90/180 dias, KPIs com comparação, gráfico de volume de produtos, estados, alertas, top produtos/bancadas/províncias, atividade, previsão indicativa baseada em semanas completas e exportação Excel. Sem valores inventados além do dataset demo; previsão é ocultada com histórico insuficiente.
 - Tabelas de encomendas, produtos, entidades e cotações com ordenação, paginação e controlos anteriores; pesquisa global por módulo, produto, pedido e entidade. Operações em massa, permissões reais e reconciliação ficam para fases seguintes.
 - Validação: sintaxe JavaScript, 18 verificações de lógica e integração textual, HTML raiz/public sincronizado. Teste visual de navegador e publicação não confirmados. Sem alterações ao Supabase, sem serviços pagos, sem segurança ou transações reais.
+
+- Validação complementar: 11 testes com DOM simulado para dashboard, menu, captura de módulos, manutenção de modais de edição, cotações, apoio, tabela e retorno ao cliente. Melhorado foco/inert do menu em ecrãs pequenos. Não substitui teste visual em navegador.

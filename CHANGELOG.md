@@ -13,6 +13,9 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Tabelas de encomendas, produtos, entidades e cotações com ordenação, paginação e controlos anteriores; pesquisa global por módulo, produto, pedido e entidade. Operações em massa, permissões reais e reconciliação ficam para fases seguintes.
 - Validação: sintaxe JavaScript, 18 verificações de lógica e integração textual, HTML raiz/public sincronizado. Teste visual de navegador e publicação não confirmados. Sem alterações ao Supabase, sem serviços pagos, sem segurança ou transações reais.
 
+
+- Validação complementar: 11 testes com DOM simulado para dashboard, menu, captura de módulos, manutenção de modais de edição, cotações, apoio, tabela e retorno ao cliente. Melhorado foco/inert do menu em ecrãs pequenos. Não substitui teste visual em navegador.
+
 ## [0.16.0] — 2026-11-18
 
 - Painel ADM transversal: catálogo, utilizadores e bancadas, fluxo de encomendas, stock e armazéns, tesouraria simulada e auditoria.
