@@ -14,6 +14,9 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Tema claro/escuro persistente e independente para cada perfil, navegação especializada no desktop e mobile, cliente e ADM preservados. Novas funcionalidades continuam locais; sem autenticação real, GPS, pagamentos ou transferências. Não foram alteradas as percentagens financeiras existentes.
 - Validação: sintaxe JavaScript, 15 testes de lógica e integração textual; testes visuais e publicação pendentes. Sem alterações Supabase ou custos externos.
 
+
+- Complemento: catálogo e directório de compras da empresa em tabelas ordenáveis/paginadas com ações preservadas; validação de cotação respeita parâmetros B2B. 14 testes de renderização e isolamento com DOM simulado; modo escuro e responsividade ainda requerem verificação visual.
+
 ## [0.17.0] — 2026-11-18
 
 - Interface administrativa independente: menu lateral por áreas, recolhível no desktop e gaveta no mobile, topo com pesquisa global, alertas, perfil e tema claro/escuro; navegação de cliente preservada.

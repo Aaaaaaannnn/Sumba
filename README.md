@@ -335,3 +335,5 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Entregador: disponibilidade local, tarefas por estado, remuneração nas fichas, histórico e ganhos previstos/a receber/liquidados demo, exportação Excel; valores fixados pelo snapshot financeiro da compra, registos antigos sem valor fixado não recebem valor inventado, isolamento por entregador simulado.
 - Tema claro/escuro persistente e independente para cada perfil, navegação especializada no desktop e mobile, cliente e ADM preservados. Novas funcionalidades continuam locais; sem autenticação real, GPS, pagamentos ou transferências. Não foram alteradas as percentagens financeiras existentes.
 - Validação: sintaxe JavaScript, 15 testes de lógica e integração textual; testes visuais e publicação pendentes. Sem alterações Supabase ou custos externos.
+
+- Complemento: catálogo e directório de compras da empresa em tabelas ordenáveis/paginadas com ações preservadas; validação de cotação respeita parâmetros B2B. 14 testes de renderização e isolamento com DOM simulado; modo escuro e responsividade ainda requerem verificação visual.
