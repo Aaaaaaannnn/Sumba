@@ -337,3 +337,12 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Validação: sintaxe JavaScript, 15 testes de lógica e integração textual; testes visuais e publicação pendentes. Sem alterações Supabase ou custos externos.
 
 - Complemento: catálogo e directório de compras da empresa em tabelas ordenáveis/paginadas com ações preservadas; validação de cotação respeita parâmetros B2B. 14 testes de renderização e isolamento com DOM simulado; modo escuro e responsividade ainda requerem verificação visual.
+
+
+## V0.19.0 — Farm-to-Table e cross-docking
+
+- Arquitectura alvo completa em [docs/arquitectura-cross-docking.md](docs/arquitectura-cross-docking.md): DER, tabelas/relacionamentos, RBAC, estados, APIs, eventos, segurança e plano de migração.
+- V0.18 já disponibiliza os painéis Empresa, Fornecedor e Entregador e tema escuro individual. V0.19 acrescenta área de ensaio a cada perfil e Torre de Controlo / consola Hub no ADM.
+- Laboratório separado dos pedidos existentes: cenário fictício com três compras validadas e uma pendente; consolidação por produtor, SKU e unidade, corte manual simulado, etiqueta mestre/sub-etiquetas textuais, prioridade B2B por segmento/zona, transporte primário, check-in, triagem, expedição e última milha, código POD fixo demo, recusa parcial por valor e mediação, split simulado após prova/resolução. Não altera stock, encomendas ou pagamentos reais nem de demonstração do fluxo V0.18.
+- Política configurável de horários e percentagens para novos ensaios; não é agendamento real, optimização GPS, scan QR, foto/POD real, PSP, escrow, emissão fiscal, sincronização multi-dispositivo nem RBAC real. Hub é uma consola ADM de ensaio, não uma sexta conta autenticada.
+- Validação: sintaxe JS e 29 testes de lógica (consolidação, estados, autorização simulada, horários e conservação financeira). Sem execução de migração Supabase ou activação de serviços; validação de navegador e deploy pendentes.

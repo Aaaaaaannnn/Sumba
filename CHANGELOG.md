@@ -6,6 +6,15 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 
 
+
+## [0.19.0] — 2026-11-18
+
+- Arquitectura alvo completa em [docs/arquitectura-cross-docking.md](docs/arquitectura-cross-docking.md): DER, tabelas/relacionamentos, RBAC, estados, APIs, eventos, segurança e plano de migração.
+- V0.18 já disponibiliza os painéis Empresa, Fornecedor e Entregador e tema escuro individual. V0.19 acrescenta área de ensaio a cada perfil e Torre de Controlo / consola Hub no ADM.
+- Laboratório separado dos pedidos existentes: cenário fictício com três compras validadas e uma pendente; consolidação por produtor, SKU e unidade, corte manual simulado, etiqueta mestre/sub-etiquetas textuais, prioridade B2B por segmento/zona, transporte primário, check-in, triagem, expedição e última milha, código POD fixo demo, recusa parcial por valor e mediação, split simulado após prova/resolução. Não altera stock, encomendas ou pagamentos reais nem de demonstração do fluxo V0.18.
+- Política configurável de horários e percentagens para novos ensaios; não é agendamento real, optimização GPS, scan QR, foto/POD real, PSP, escrow, emissão fiscal, sincronização multi-dispositivo nem RBAC real. Hub é uma consola ADM de ensaio, não uma sexta conta autenticada.
+- Validação: sintaxe JS e 29 testes de lógica (consolidação, estados, autorização simulada, horários e conservação financeira). Sem execução de migração Supabase ou activação de serviços; validação de navegador e deploy pendentes.
+
 ## [0.18.0] — 2026-11-18
 
 - Fornecedor: interface simples e prioritariamente mobile, tarefas e pedidos destacados, catálogo com preço/stock e opções avançadas recolhidas, alertas e acessos a cotações e armazéns. Estados de pedido com linguagem orientada a tarefas.
