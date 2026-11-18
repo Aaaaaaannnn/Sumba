@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.11.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.13.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V10 |
+| Perfil | Funcionalidades do protótipo V13 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -272,3 +272,15 @@ O objetivo é manter custos iniciais de desenvolvimento e alojamento dentro dos 
 
 ### Fundação real — atualização 18/11/2026
 Projeto dedicado Zunga `asxyjhaujsowmdrpkcqc` conectado. Migração inicial aplicada; perfis, bancadas, empresas e bucket de avatares privado existem, RLS ativo. Chave pública configurada, ativação da interface bloqueada até origem HTTPS dedicada e configuração Auth. Ver [guia](docs/fundacao-real.md). Dados comerciais continuam demonstrativos.
+
+
+## V0.13 — Comércio e armazém demonstrativos
+
+- Preço por quantidade: até dois escalões opcionais definidos pelo produtor, aplicados à quantidade inteira; os produtos fictícios do catálogo também têm escalões demonstrativos.
+- Carrinho: cálculo com preço unitário por escalão, cupão demonstrativo e estimativa de entrega por bancada (1 500 Kz no mesmo município, 3 500 Kz noutro município da mesma província, 8 000 Kz entre províncias). Valores fictícios, não são tarifas reais.
+- Reservas: novas encomendas reduzem a disponibilidade; cancelamento antes da preparação, sem entrega atribuída, repõe o stock uma única vez. Encomendas anteriores não são recalculadas.
+- Compras B2B: uma cotação aceite pode originar uma única encomenda, se o produto, fornecedor, unidade, quantidade e stock forem compatíveis. O preço negociado fica registado.
+- Armazém: disponível, reservado e total em mãos por produto, entradas, saídas, histórico e bloqueio de stock negativo. Acesso em Fornecedor > Mais > Armazém.
+- Comprovativos: preços unitários, descontos, cancelamentos e estimativa de transporte registados localmente.
+
+Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simulado. Ficheiros `index.html` e `public/index.html` sincronizados. Sem pagamentos, sincronização de stock entre dispositivos, tarifas reais, contagem física, autenticação real ou migrações adicionais nesta versão. Teste visual em navegador e confirmação da publicação continuam pendentes.
