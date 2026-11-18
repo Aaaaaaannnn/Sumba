@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.15.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.16.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V15 |
+| Perfil | Funcionalidades do protótipo V16 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -303,3 +303,13 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Entregador: seleção explícita de identidade demo, tarefas e histórico separados, confirmação manual de recolha e entrega. Comprador consulta o histórico nos detalhes.
 - Estados e apoio ficam neste navegador; não há GPS, prova real, autenticação, notificações externas ou pagamentos. A base Supabase não foi alterada.
 - Validação: análise sintática dos scripts e 10 testes de transição (incluindo lote vencido, ocorrência aberta, cancelamento e conclusão duplicada). Teste visual/deploy pendentes.
+
+
+## V0.16.0 — Centro de controlo avançado (protótipo)
+
+- Painel ADM transversal: catálogo, utilizadores e bancadas, fluxo de encomendas, stock e armazéns, tesouraria simulada e auditoria.
+- Parâmetros aplicados ao protótipo: cor principal/destaque, cantos, movimento, destaque da loja, aviso global, disponibilidade de novas compras B2C/B2B, novas entregas e publicação, valor mínimo, cupão, três tarifas de entrega e alertas de inventário.
+- Administração pode verificar/suspender entidades de demonstração, ocultar produtos, editar preço e mínimo, ajustar stock não reservado sem afetar lotes, avançar e cancelar pedidos antes da recolha respeitando reservas e despacho. Verificação de pessoas fictícias é apenas uma etiqueta local.
+- Repartição financeira simulada: comissão, processamento deduzido do fornecedor, parcela logística, líquido por fornecedor, marcação de liquidação de pedidos novos concluídos e exportação Excel. Regras fixadas nos novos pedidos; pedidos antigos são estimativas, sem liquidação. Nenhuma cobrança, custódia ou transferência real.
+- Exportação de parâmetros JSON, auditoria Excel, motivo obrigatório e restauro de parâmetros padrão. Sem execução de código arbitrário, sem alteração do Supabase e sem serviços externos.
+- Validação: sintaxe de scripts, 28 testes unitários de parâmetros, repartição e guardas de estados, 30 pontos de integração textual; teste de navegador e publicação ainda pendentes. A administração continua demonstrativa, não é autorização real.
