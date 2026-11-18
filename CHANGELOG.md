@@ -2,6 +2,13 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.14.0] — 2026-11-18
+
+- Cancelamento visível nos pedidos antigos e novos, agrupado ou por item; filtro Cancelados e reposição só quando existe reserva comprovada.
+- Gestão de armazéns, lotes, validade, alertas, perdas e transferências; reservas por validade e reposição dos lotes.
+- Fichas de movimento com exportação PDF, XLSX e DOCX; bloqueio de expedição de lote vencido.
+- 19 testes de lógica na versão final, HTML sincronizado. Ambiente local; sem deploy confirmado, autenticação real ou alteração ao Supabase.
+
 ## [0.13.0] — 2026-11-18
 
 - Escalões de preço por quantidade e subtotal coerente no carrinho e checkout.
