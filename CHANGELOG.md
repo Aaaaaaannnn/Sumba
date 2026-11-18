@@ -8,6 +8,12 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
 
 
+
+## [0.21.0] — 2026-11-18
+- 28 guias, 81 passos, seis percursos (cliente, fornecedor, empresa, entregador, ADM e consola de hub). Introdução automática apenas na primeira entrada de cada identidade demo/perfil neste navegador; saltar ou concluir memoriza a visita. Clientes que concluíram o tutorial anterior mantêm a preferência. Guias manuais no menu lateral/perfil/mais, central com instruções e indicação de vídeo a adicionar; nenhum vídeo fictício. Hub continua consola ADM, não conta independente. Tutorial não altera pedidos, stock, pagamentos ou parâmetros e restaura página, scroll e histórico ao terminar.
+- Layout: tamanho intrínseco e overflow, pesquisa, filtros, grelhas, quantidades, menus, modal e zona ADM no mobile, cartões e cabeçalhos; animações discretas de cliente e respeito por movimento reduzido. Sem alterações aos dados do Supabase ou à autenticação isolada V0.20.
+- Validação: sintaxe JS, 87 testes de configuração dos guias, identidade e posicionamento em ecrãs simulados. Navegador real, dimensões efectivas e deploy não confirmados.
+
 ## [0.20.0] — 2026-11-18
 - Área real isolada: registo, códigos por email, login por código/password, recuperação por código, reenvio, Google/Facebook OAuth e vinculação. Templates de autenticação e segurança, configuração Worker dedicado, headers de segurança, instruções de activação em docs/autenticacao-v020.md.
 - Supabase dedicado confirmado saudável, RLS activa nas três tabelas, 10 políticas, role protegido, bucket avatar privado. Não executada migração nem modificações de settings. Sem envio real, configuração OAuth ou deploy confirmado. Não há acesso real aos módulos do protótipo; nenhuma credencial sensível publicada.

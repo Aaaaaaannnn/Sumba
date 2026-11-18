@@ -358,3 +358,8 @@ Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simul
 - Complemento: 15 verificações do fluxo com SDK e DOM simulados (registo, reenvio, verificação, recuperação, logout), correção de confirmação do logout e captura do erro OAuth. Não são testes de entrega de email ou login real.
 
 - Configurador assistido de Auth por Management API, separado por email, Google e Facebook; modo de planeamento, confirmação e verificação do Worker, sem segredos. 10 testes de lógica de configuração aprovados. Não executado contra a API de gestão; SMTP e OAuth permanecem pendentes.
+
+## V0.21.0 — Tutoriais por operador e refinamento de interface
+- 28 guias, 81 passos, seis percursos (cliente, fornecedor, empresa, entregador, ADM e consola de hub). Introdução automática apenas na primeira entrada de cada identidade demo/perfil neste navegador; saltar ou concluir memoriza a visita. Clientes que concluíram o tutorial anterior mantêm a preferência. Guias manuais no menu lateral/perfil/mais, central com instruções e indicação de vídeo a adicionar; nenhum vídeo fictício. Hub continua consola ADM, não conta independente. Tutorial não altera pedidos, stock, pagamentos ou parâmetros e restaura página, scroll e histórico ao terminar.
+- Layout: tamanho intrínseco e overflow, pesquisa, filtros, grelhas, quantidades, menus, modal e zona ADM no mobile, cartões e cabeçalhos; animações discretas de cliente e respeito por movimento reduzido. Sem alterações aos dados do Supabase ou à autenticação isolada V0.20.
+- Validação: sintaxe JS, 87 testes de configuração dos guias, identidade e posicionamento em ecrãs simulados. Navegador real, dimensões efectivas e deploy não confirmados.
