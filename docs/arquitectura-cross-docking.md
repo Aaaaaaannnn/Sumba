@@ -162,7 +162,7 @@ Recorrência: geração de proposta ou pedido em data prevista, preço/disponibi
 order.validated -> wave.closed -> harvest.requested -> harvest.ready -> primary.collected -> hub.received -> package.sorted -> lastmile.dispatched -> delivery.accepted / delivery.partial -> dispute.resolved -> settlement.prepared -> payout.confirmed. Outbox at-least-once, inbox dedup, sequência por agregado, retry/backoff/DLQ, alertas de atraso, reconciliação periódica. Logs estruturados, métricas de SLA, fill-rate, avaria, dwell time, OTIF, custo/kg, margem e divergências; health e rastreio por correlation id.
 
 ## 4. Implementação incremental
-- V0.19 laboratório: simulação independente, horários, consolidação por origem/SKU/unidade, etiquetas textuais, check-in/triagem/despacho, duas pernas, POD código demo e split simulado. Sem alterar compras, stock ou dinheiro V0.18.
+- V0.19 laboratório: simulação independente, horários, consolidação por origem/SKU/unidade, etiquetas textuais, check-in/triagem/despacho, duas pernas, POD código demo por paragem/linha, recusa por quantidade e split simulado. Sem alterar compras, stock ou dinheiro V0.18.
 - V0.20: schema/RBAC/RLS, migração explícita de V0.12 e testes transaccionais; autenticação real somente quando autorizado. Entidades farm, hub e carrier; área hub real.
 - V0.21: disponibilidade por safra, reservas e cut-off idempotente, ordens reais e etiquetas QR com token; testes de concorrência.
 - V0.22: WMS cross-docking, scans, rotas/atribuições por perna, prova/ocorrências, rastreio e offline.
