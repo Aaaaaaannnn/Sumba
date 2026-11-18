@@ -1460,7 +1460,7 @@ function installV21(){
  const identity=r=>r==='buyer'?(account.guest?'guest':account.email||'buyer-demo'):r==='producer'?producerAccount.email||'producer-demo':r==='company'?business.email||'company-demo':r==='courier'?ops.v15?.driver||'d1':r==='hub'?'hub-console':'admin-demo';
  const scope=()=>role==='admin'&&tab==='hubdemo'?'hub':role;
  const seenId=r=>v21SeenKey(r,identity(r));
- const mark=r=>{seen[seenId(r)]=true;persist();if(r==='buyer'){account.tutorial=true;saveAccount()}};
+ const mark=r=>{seen[seenId(r)]=true;persist();if(r==='buyer'&&!account.guest){account.tutorial=true;saveAccount()}};
  const first=r=>!seen[seenId(r)]&&!(r==='buyer'&&account.tutorial&&!account.guest);
  const visible=el=>{if(!el)return false;const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(el).visibility!=='hidden'};
  const authHidden=()=>$('#auth').classList.contains('hide');
@@ -1479,9 +1479,9 @@ function installV21(){
   if(!tour)return;const step=tour.steps[tour.index],overlay=$('#coach');if(!step)return finish();
   const node=targetFor(step[1]);if(node){const r=node.getBoundingClientRect();if(r.top<72||r.bottom>innerHeight-80)node.scrollIntoView({block:'center',inline:'nearest',behavior:'instant'})}
   const raw=node?.getBoundingClientRect(),ww=Math.max(1,innerWidth),hh=Math.max(1,innerHeight);
-  const rect=raw&&raw.width<ww*.95&&raw.height<hh*.55&&raw.bottom>0&&raw.top<hh?{left:Math.max(4,raw.left-5),top:Math.max(4,raw.top-5),width:Math.min(ww-8,raw.width+10),height:Math.min(hh-8,raw.height+10),bottom:Math.min(hh-4,raw.bottom+5)}:null;
+  const rect=raw&&raw.left>=0&&raw.right<=ww&&raw.top>=0&&raw.bottom<=hh&&raw.width<ww*.95&&raw.height<hh*.55?{left:Math.max(4,raw.left-5),top:Math.max(4,raw.top-5),width:Math.min(ww-8,raw.width+10),height:Math.min(hh-8,raw.height+10),bottom:Math.min(hh-4,raw.bottom+5)}:null;
   overlay.innerHTML='<div class="z21-shade"></div><div class="z21-hole" hidden></div><div class="z21-coachcard" role="document"><div class="z21-coachhead"><span>'+esc(labels[tour.scope])+' · '+(tour.index+1)+'/'+tour.steps.length+'</span><button type="button" class="z21-coachclose" data-z21="exit" aria-label="Fechar tutorial">'+svg('close')+'</button></div><div class="z21-progress"><i style="width:'+((tour.index+1)/tour.steps.length*100)+'%"></i></div><h2 id="z21CoachTitle">'+esc(step[2])+'</h2><p>'+esc(step[3])+'</p><div class="z21-coachactions"><button type="button" class="btn outline" data-z21="prev" '+(tour.index===0?'disabled':'')+'>Anterior</button><button type="button" class="btn" data-z21="next">'+(tour.index===tour.steps.length-1?'Concluir':'Seguinte')+'</button></div><button type="button" class="z21-skip" data-z21="exit">'+(tour.auto?'Saltar tutorial':'Sair do tutorial')+'</button></div>';
-  const card=overlay.querySelector('.z21-coachcard'),hole=overlay.querySelector('.z21-hole'),shade=overlay.querySelector('.z21-shade');const cw=Math.min(390,Math.max(1,ww-24));card.style.width=cw+'px';card.style.maxHeight=Math.max(80,hh-24)+'px';const ch=Math.min(card.getBoundingClientRect().height,hh-24),placement=v21Place(rect,ww,hh,cw,ch);
+  const card=overlay.querySelector('.z21-coachcard'),hole=overlay.querySelector('.z21-hole'),shade=overlay.querySelector('.z21-shade');const cw=Math.min(390,Math.max(1,ww-24));card.style.width=cw+'px';card.style.maxHeight=Math.max(1,hh-24)+'px';const ch=Math.min(card.offsetHeight||card.getBoundingClientRect().height,hh-24),placement=v21Place(rect,ww,hh,cw,ch);
   card.style.left=placement.x+'px';card.style.top=placement.y+'px';
   if(placement.highlight&&rect){shade.hidden=true;hole.hidden=false;Object.assign(hole.style,{left:rect.left+'px',top:rect.top+'px',width:Math.min(rect.width,ww-rect.left-4)+'px',height:Math.min(rect.height,hh-rect.top-4)+'px'})}
   card.querySelector('[data-z21="next"]')?.focus({preventScroll:true});
@@ -1502,12 +1502,13 @@ function installV21(){
  function schedule(){
   if(timer){clearTimeout(timer);timer=null}
   if(tour||!access()||!authHidden()||!['home','hubdemo'].includes(tab))return;
-  const r=scope(),id=seenId(r);if(!first(r)){if(r==='buyer')incoming();return}
-  timer=setTimeout(()=>{timer=null;if(tour||scope()!==r||seenId(r)!==id||!authHidden()||!access()||!['home','hubdemo'].includes(tab))return;if($('#dialog').open||$('#zungaPicker').open)return;start('intro',r,true)},300);
+  const r=scope(),id=seenId(r);if(!first(r)){if(r==='buyer'&&!$('#dialog').open&&!$('#zungaPicker').open)incoming();return}
+  timer=setTimeout(()=>{timer=null;if(tour||scope()!==r||seenId(r)!==id||!authHidden()||!access()||!['home','hubdemo'].includes(tab))return;if($('#dialog').open||$('#zungaPicker').open){schedule();return}start('intro',r,true)},300);
  }
  startCoach=function(){goHelp(role)};finishCoach=finish;drawCoach=draw;
- const previousNav=nav;nav=function(){previousNav();const n=$('#nav');if(!n.querySelector('[data-go="help"]'))n.insertAdjacentHTML('beforeend','<button type="button" data-go="help" '+(tab==='help'?'class="active" aria-current="page"':'')+'>'+svg('help')+'<span>Tutoriais e ajuda</span></button>')};
- const previousRender=render;render=function(){
+ const previousNav=nav;nav=function(){previousNav();const n=$('#nav');if(!n.querySelector('[data-go="help"]'))n.insertAdjacentHTML('beforeend','<button type="button" data-go="help">'+svg('help')+'<span>Tutoriais e ajuda</span></button>');const help=n.querySelector('[data-go="help"]');if(help){help.classList.toggle('active',tab==='help');if(tab==='help')help.setAttribute('aria-current','page');else help.removeAttribute('aria-current')}};
+ const previousRender=render;let lastHelpRole=role;render=function(){
+  if(lastHelpRole!==role){helpScope=null;lastHelpRole=role}
   if(tab==='help'&&access()){nav();$('#view').innerHTML=helpPage();refreshCartDock();revealPhotos($('#view'));enhanceSelects(document);recordRoute()}
   else{previousRender();if(access()&&(tab==='profile'||tab==='more'||role==='admin'&&tab==='hubdemo')){const v=$('#view');if(!v.querySelector('[data-z21="help"]')&&!v.querySelector('[data-auth="tutorial"]'))v.insertAdjacentHTML('beforeend','<div class="z21-helpaccess"><button class="btn outline" data-z21="help" data-id="'+scope()+'">'+svg('help')+' Tutoriais e ajuda</button></div>')}}
   if(!tour)schedule();

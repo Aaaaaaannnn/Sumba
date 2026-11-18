@@ -14,6 +14,9 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Layout: tamanho intrínseco e overflow, pesquisa, filtros, grelhas, quantidades, menus, modal e zona ADM no mobile, cartões e cabeçalhos; animações discretas de cliente e respeito por movimento reduzido. Sem alterações aos dados do Supabase ou à autenticação isolada V0.20.
 - Validação: sintaxe JS, 87 testes de configuração dos guias, identidade e posicionamento em ecrãs simulados. Navegador real, dimensões efectivas e deploy não confirmados.
 
+
+- Complemento: 20 verificações de fluxo com DOM simulado — primeira entrada, repetição manual, saída/restauro, memória independente por perfil, convidado/conta, entregador, hub e ADM, bloqueio durante autenticação. Melhorado estado activo do menu, medição da janela e isolamento da preferência de convidado.
+
 ## [0.20.0] — 2026-11-18
 - Área real isolada: registo, códigos por email, login por código/password, recuperação por código, reenvio, Google/Facebook OAuth e vinculação. Templates de autenticação e segurança, configuração Worker dedicado, headers de segurança, instruções de activação em docs/autenticacao-v020.md.
 - Supabase dedicado confirmado saudável, RLS activa nas três tabelas, 10 políticas, role protegido, bucket avatar privado. Não executada migração nem modificações de settings. Sem envio real, configuração OAuth ou deploy confirmado. Não há acesso real aos módulos do protótipo; nenhuma credencial sensível publicada.
