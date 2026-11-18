@@ -1,7 +1,7 @@
 # V0.12 — Fundação real (pré-ativação)
 
 ## Estado
-Não há projeto ZUNGA associado no Supabase. Nenhum banco existente foi alterado. O protótipo V0.11 mantém-se disponível. A nova área `/real/` está desativada por defeito. O código não oferece login fictício na área real e não importa dados de demonstração.
+Projeto dedicado Zunga (asxyjhaujsowmdrpkcqc) ligado e saudável. Migração zunga_v012_foundation aplicada em 18/11/2026. Três tabelas com RLS ativo e bucket privado zunga-avatars confirmados. Advisor de segurança sem avisos; advisor de desempenho com avisos de RLS initplan e políticas permissivas múltiplas. Testes reais de sessão e isolamento entre contas pendentes. O protótipo V0.11 mantém-se disponível. A nova área `/real/` está desativada por defeito. O código não oferece login fictício na área real e não importa dados de demonstração.
 
 ## Ativação
 1. O responsável escolhe uma organização Supabase e confirma que é possível criar um projeto dedicado gratuito ZUNGA. Não reutilizar LUME ou qualquer projeto sem autorização específica.
@@ -36,4 +36,4 @@ Criar duas contas de teste distintas e confirmar email. Em dois navegadores:
 | Chave/configuração ausente ou origem demo | Sem formulário de credenciais, sem chamadas ao Auth |
 | Android/desktop e ligação instável | Erros claros; sem falsa confirmação |
 
-A validação com banco real, advisors, SMTP, deploy e teste de dois dispositivos está pendente. Os testes locais apenas verificam sintaxe e bloqueio por configuração. Próxima fase: migrar catálogo, pedidos e restantes módulos gradualmente sem misturar exemplos com produção.
+A instalação e os advisors foram verificados; SMTP, teste de isolamento com contas reais, deploy e teste de dois dispositivos estão pendentes. Não executar novamente o SQL inicial: já foi aplicado. Os testes locais apenas verificam sintaxe e bloqueio por configuração. Próxima fase: migrar catálogo, pedidos e restantes módulos gradualmente sem misturar exemplos com produção.
