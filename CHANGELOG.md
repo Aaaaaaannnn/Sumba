@@ -2,6 +2,17 @@
 
 Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 
+## [0.13.0] — 2026-11-18
+
+- Escalões de preço por quantidade e subtotal coerente no carrinho e checkout.
+- Reservas das novas encomendas, cancelamento com reposição única, preservação dos registos anteriores.
+- Estimativas fictícias de entrega por bancada; total separado do custo dos produtos.
+- Conversão de propostas aceites em encomenda B2B com preço negociado, validação de catálogo e prevenção de duplicação.
+- Área de armazém do fornecedor com disponibilidade, reservas, entradas, saídas e histórico de ajustes.
+- Comprovativos enriquecidos com preço unitário, desconto e estado.
+- Sintaxe e 21 testes de lógica em ambiente simulado aprovados. HTML principal e public sincronizados.
+- Autenticação real permanece desativada. Dados e operações são locais; sem migrações no Supabase. Publicação e teste visual pendentes.
+
 ## [0.12.0] — 2026-11-18 (backend instalado, interface pendente)
 
 - Nova área real separada do protótipo V0.11, mantendo a interface demonstrativa.
