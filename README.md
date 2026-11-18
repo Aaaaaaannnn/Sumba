@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.13.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.14.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,7 +20,7 @@ A ZUNGA pretende reduzir a distância entre a produção agrícola e os comprado
 
 ## Para quem é?
 
-| Perfil | Funcionalidades do protótipo V13 |
+| Perfil | Funcionalidades do protótipo V14 |
 |---|---|
 | Cliente | Entrada e registo demo, preferências, tutorial, feed fotográfico com modos de visualização, perfis de bancadas, cesta básica, categorias, carrinho, checkout em três etapas, endereços, favoritos, encomendas agrupadas, recompra, apoio e comprovativos PDF |
 | Produtor | Registo demo, painel operacional, perfil comercial com capa e avatar, inventário, anúncios ativos/pausados, quantidade mínima, pedidos, subscrições, estatísticas, campanhas e comprovativos |
@@ -284,3 +284,13 @@ Projeto dedicado Zunga `asxyjhaujsowmdrpkcqc` conectado. Migração inicial apli
 - Comprovativos: preços unitários, descontos, cancelamentos e estimativa de transporte registados localmente.
 
 Validação: sintaxe JavaScript e 21 verificações de lógica em ambiente simulado. Ficheiros `index.html` e `public/index.html` sincronizados. Sem pagamentos, sincronização de stock entre dispositivos, tarifas reais, contagem física, autenticação real ou migrações adicionais nesta versão. Teste visual em navegador e confirmação da publicação continuam pendentes.
+
+
+## V0.14 — Armazéns e cancelamento
+
+- Cancelar compra diretamente nos cartões de pedidos do cliente e cancelar pedido nos painéis profissionais. Inclui pedidos anteriores à V0.13, filtro Cancelados e confirmação por motivo. Permite cancelar até à preparação, sem entrega atribuída; não devolve stock de pedidos antigos sem reserva comprovada.
+- Armazém do fornecedor: múltiplas localizações, lotes, classificação de stock existente, entradas, saídas, perdas, transferências, alertas a 7 dias e limite de reposição demonstrativo de 5 unidades de venda.
+- Novas reservas usam primeiro os lotes vendáveis de validade mais próxima; lotes vencidos ficam excluídos do stock vendável, inclusive validação do checkout. Cancelamento repõe as alocações. Bloqueio de expedição de reservas vencidas; administração pode retirar atribuição antes da recolha.
+- Fichas de movimentos de lote e sem lote geradas no mesmo registo de stock; exportação PDF, Excel e Word, arquivo e fichas operacionais. Fichas manuais continuam sem alterar stock. Ajustes diretos de catálogo não substituem movimentações de lote.
+- Dados antigos mantidos, sem migrações Supabase nem autenticação real. Armazéns e lotes desta fase pertencem à bancada local do fornecedor; inventário independente de empresas e contabilização de receções ficam pendentes.
+- Sintaxe e 19 verificações de lógica no DOM simulado da versão final. HTML público e raiz sincronizados; deploy e teste real em Android ainda por confirmar.
