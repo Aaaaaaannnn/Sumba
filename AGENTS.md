@@ -1,7 +1,7 @@
 # SUMBA — Instruções de manutenção
 
 ## Identidade e âmbito
-- SUMBA: Do campo ao mercado.
+- SUMBA: Do campo à sua casa.
 - Marketplace agrícola de Angola; foco inicial na Huíla.
 - Três perfis: Cliente, Produtor e Empresa.
 - Repositório exclusivo: Aaaaaaannnn/Zunga (marca SUMBA; renomeação do repositório pendente em GitHub Settings).

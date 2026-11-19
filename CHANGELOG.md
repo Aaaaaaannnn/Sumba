@@ -1,3 +1,11 @@
+# SUMBA V0.21.2 — 20/11/2026
+
+- Página inicial: carrossel com cinco fotografias e mensagens diferentes; conserva o tema verde existente.
+- Navegação por swipe horizontal, setas de 44px, pontos, teclado e scroll-snap; mudança automática de 6 em 6 segundos e pausa ao interagir.
+- Preferências de movimento reduzido respeitadas. Rotas existentes reutilizadas para Promoções, Cesta básica, Bancadas e Catálogo.
+- Removido emoji de planta do cabeçalho, sem inventar logótipo novo; slogan actualizado para «Do campo à sua casa.»
+- Validação pré-commit: sintaxe do JavaScript, estrutura dos cartões, destinos e consistência das duas entradas HTML; testes reais de navegador e publicação tratados separadamente.
+
 
 ## SUMBA Auth — envio automático de email e operação (V0.21.2)
 - Templates adicionais confirmados pelas referências oficiais: convites, mudança de email (link de confirmação), reautenticação (OTP), além dos já preparados para registo, login OTP, recuperação e alerta de alteração de palavra-passe.

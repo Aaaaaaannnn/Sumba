@@ -2,17 +2,23 @@
 
 # 🌱 SUMBA
 
-**Do campo ao mercado.**
+**Do campo à sua casa.**
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.17.0-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.21.2-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
 **Africa Builds Tech 2026 · Agricultura e inclusão digital**
 
 </div>
+
+## V0.21.2 — Carrossel no Início
+
+A capa «Descobre a SUMBA» foi convertida em carrossel horizontal com cinco imagens e frases distintas: Descobre a Sumba, Promoções, Mais vendidos, Cesta básica e Produção local. Há swipe, setas, pontos e mudança automática a cada 6 segundos, com pausa após toque, enquanto o ponteiro permanece por cima ou durante foco visível por teclado. O temporizador é limpo ao sair da página. Se a pessoa desativar as animações, o carrossel mantém a navegação manual e deixa de avançar sozinho.
+
+Os botões usam os atalhos demonstrativos existentes. «Mais vendidos» é uma seleção de exploração, não uma medição real de vendas. Foi retirado o emoji do cabeçalho; o logótipo final ainda não foi escolhido. As duas entradas HTML são idênticas. A publicação Cloudflare e o teste de gestos num Android real não são confirmados automaticamente pelo commit.
 
 ## Visão
 
