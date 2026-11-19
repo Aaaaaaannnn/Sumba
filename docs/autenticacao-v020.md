@@ -36,3 +36,11 @@ O script não confirma a entrega de emails ou OAuth, apenas a configuração via
 - Supabase confirmado saudável, sem contas, perfis ou alertas de segurança. **Não foi possível configurar SMTP/URL/fornecedores OAuth via conector nem verificar o deploy.** A entrega real de emails depende das credenciais SMTP verificadas introduzidas apenas no serviço. Não apresentar este trabalho como envio de email activo.
 
 Após configurar e testar OAuth, editar explicitamente o objecto `oauth` de `public/real/config.js` (google/facebook) para `true`, republicar o Worker isolado e testar cada fornecedor. Nunca activar métodos antes do teste.
+
+## SUMBA Auth — envio automático de email e operação (V0.21.2)
+- Templates adicionais confirmados pelas referências oficiais: convites, mudança de email (link de confirmação), reautenticação (OTP), além dos já preparados para registo, login OTP, recuperação e alerta de alteração de palavra-passe.
+- Script `scripts/configure-sumba-auth.mjs`: aceita variáveis `SUMBA_SMTP_EMAIL`, `SUMBA_SMTP_USER`, `SUMBA_SMTP_KEY`, `SUMBA_SMTP_HOST` e `SUMBA_SMTP_PORT` (ou aliases `ZUNGA_*` antigos); valores predefinidos Brevo host `smtp-relay.brevo.com` e porta 587. Comando `status` consulta a configuração da Management API apenas no terminal com token, sem mostrar credenciais. `email --apply` exige confirmação literal SUMBA e Worker isolado publicado. Configura automaticamente os modelos e a confirmação obrigatória; `google --apply` e `facebook --apply` ficam opcionais depois de criares aplicações nesses fornecedores.
+- Workflow `Deploy SUMBA Auth (manual)` preparado: só se executa por acção manual em GitHub Actions, requer `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID` nos Secrets do repositório; publica apenas `wrangler.auth.jsonc`, sem substituir o Worker do marketplace.
+- Validação local de código disponível em `node tests/auth-contract.mjs`; não cria contas, não envia e-mails e não toca na base de dados. Sem entrega SMTP comprovada ou deploy confirmado.
+
+Para executar: configura primeiro Cloudflare, depois Brevo e o remetente verificado. Confirma a entrega com uma conta de teste autorizada antes de activar `oauth.google` ou `oauth.facebook` na configuração pública. Os segredos nunca devem ser partilhados em mensagens nem guardados no GitHub.
