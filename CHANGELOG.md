@@ -1,3 +1,9 @@
+
+## Autenticação V0.21.2 — Fluxos reais e segurança
+- Área real em origem isolada: conserva o pedido de código apenas na sessão do navegador (modo, email e cooldown; nunca armazena código ou palavra-passe), permite alterar o email pela confirmação do Supabase e distingue integrações sociais não activadas. Google/Facebook ficam visualmente indisponíveis até a configuração e teste do fornecedor; mantém código de ligação. Melhorias de acessibilidade e mobile.
+- A SUMBA continua com as tabelas técnicas `zunga_*` e origem prevista `zunga-auth.stivenluanda04.workers.dev` para compatibilidade. Nada de service_role no browser, nenhuma sessão real partilhada com o protótipo e nenhum pagamento real.
+- Supabase confirmado saudável, sem contas, perfis ou alertas de segurança. **Não foi possível configurar SMTP/URL/fornecedores OAuth via conector nem verificar o deploy.** A entrega real de emails depende das credenciais SMTP verificadas introduzidas apenas no serviço. Não apresentar este trabalho como envio de email activo.
+
 # Histórico de versões — SUMBA
 
 

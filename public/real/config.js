@@ -1,2 +1,2 @@
 // Public key only. Restricted to the planned dedicated HTTPS origin; deploy only after Auth configuration. The demo origin remains blocked.
-window.ZUNGA_REAL_CONFIG = Object.freeze({enabled:true,origin:"https://zunga-auth.stivenluanda04.workers.dev",url:"https://asxyjhaujsowmdrpkcqc.supabase.co",publishableKey:"sb_publishable_UefqqSeU3aZBX0k_vrKwaA_oTOOxxFt"});
+window.ZUNGA_REAL_CONFIG = Object.freeze({enabled:true,origin:"https://zunga-auth.stivenluanda04.workers.dev",url:"https://asxyjhaujsowmdrpkcqc.supabase.co",oauth:Object.freeze({google:false,facebook:false}),publishableKey:"sb_publishable_UefqqSeU3aZBX0k_vrKwaA_oTOOxxFt"});
