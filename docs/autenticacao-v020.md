@@ -44,3 +44,8 @@ Após configurar e testar OAuth, editar explicitamente o objecto `oauth` de `pub
 - Validação local de código disponível em `node tests/auth-contract.mjs`; não cria contas, não envia e-mails e não toca na base de dados. Sem entrega SMTP comprovada ou deploy confirmado.
 
 Para executar: configura primeiro Cloudflare, depois Brevo e o remetente verificado. Confirma a entrega com uma conta de teste autorizada antes de activar `oauth.google` ou `oauth.facebook` na configuração pública. Os segredos nunca devem ser partilhados em mensagens nem guardados no GitHub.
+
+## Ensaios de segurança adicionais — 19/11/2026
+- Verificação de código OTP mantida no servidor. A referência local do pedido expira agora após **10 minutos**, alinhada à configuração de email OTP do projecto; o cliente só guarda email, modo e instante do pedido no separador.
+- `scripts/test-sumba-auth-runtime.mjs` simula registo, reenvio lógico, login por código, confirmação, recuperação e logout, sem enviar e-mails nem criar utilizadores. `scripts/check-sumba-auth.mjs` valida a publicação, origem dedicada e headers de segurança (depois de usar manualmente o workflow Cloudflare). Integração com Brevo/SMTP depende de segredos e remetente verificado fornecidos apenas nos painéis oficiais.
+- Após configurar `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID` em GitHub Actions Secrets, executar manualmente **Deploy SUMBA Auth**. Se a origem prevista não coincidir com a conta Cloudflare, ajustar as origens antes de executar.

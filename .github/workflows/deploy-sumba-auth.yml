@@ -16,7 +16,9 @@ jobs:
         with:
           node-version: '22'
       - name: Validate authentication files
-        run: node tests/auth-contract.mjs
+        run: |
+          node tests/auth-contract.mjs
+          node scripts/test-sumba-auth-runtime.mjs
       - name: Check Cloudflare credentials
         env:
           HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
@@ -29,3 +31,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config wrangler.auth.jsonc
+      - name: Verificar publicação e segurança HTTP
+        run: node scripts/check-sumba-auth.mjs

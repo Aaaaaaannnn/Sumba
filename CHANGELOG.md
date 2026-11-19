@@ -421,3 +421,8 @@ Todas as alterações relevantes do projeto serão registadas neste ficheiro.
 - Configurador assistido de Auth por Management API, separado por email, Google e Facebook; modo de planeamento, confirmação e verificação do Worker, sem segredos. 10 testes de lógica de configuração aprovados. Não executado contra a API de gestão; SMTP e OAuth permanecem pendentes.
 
 - Validação: 46 verificações de marca, aliases, preservação de identidades, tutorial, SQL e configuração, além de sintaxe JS. Sem teste em navegador ou deploy confirmado.
+
+## Ensaios de segurança adicionais — 19/11/2026
+- Verificação de código OTP mantida no servidor. A referência local do pedido expira agora após **10 minutos**, alinhada à configuração de email OTP do projecto; o cliente só guarda email, modo e instante do pedido no separador.
+- `scripts/test-sumba-auth-runtime.mjs` simula registo, reenvio lógico, login por código, confirmação, recuperação e logout, sem enviar e-mails nem criar utilizadores. `scripts/check-sumba-auth.mjs` valida a publicação, origem dedicada e headers de segurança (depois de usar manualmente o workflow Cloudflare). Integração com Brevo/SMTP depende de segredos e remetente verificado fornecidos apenas nos painéis oficiais.
+- Após configurar `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID` em GitHub Actions Secrets, executar manualmente **Deploy SUMBA Auth**. Se a origem prevista não coincidir com a conta Cloudflare, ajustar as origens antes de executar.
