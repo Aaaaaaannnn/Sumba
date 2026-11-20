@@ -1,3 +1,11 @@
+## V0.24.0 — Emblema oficial aplicado em toda a experiência
+
+A identidade aprovada mantém o símbolo da família, sol, folha e campos agrícolas, sem repetir a palavra SUMBA dentro do ícone. Foi convertido da arte fornecida para SVG vectorial simplificado, com fundo transparente, em `public/assets/sumba-icon.svg`, e copiado para `public/real/assets/sumba-icon.svg`, permitindo servir separadamente a loja e o piloto de autenticação.
+
+A marca aparece no cabeçalho mobile/desktop, no menu lateral do computador (inclusive administração), no painel de perfil de cliente/fornecedor/empresa/operador, nos formulários demonstrativos de login e criação de conta (ícone grande), e no login e registo do piloto real, etapas de confirmação, recuperação e perfil. O avatar pessoal do utilizador **não** é substituído pelo logótipo.
+
+O problema anterior de imagem em branco foi corrigido eliminando os PNG incorporados de baixa resolução e o SVG que continha imagem raster incorporada, em favor do novo SVG autónomo com desenhos vectoriais. Não foi alterada a identidade visual de base, o slogan «Do campo à sua mesa.», a navegação demo ou a lógica de autenticação e pedidos. Validar visualmente o site publicado depois do deploy.
+
 ## SUMBA V0.23.0 — Restituição demonstrativa (20/11/2026)
 
 - O visitante explora sem login obrigatório; clientes, produtores, empresas, entregadores e administrador podem testar a navegação local, sem permissões reais.
