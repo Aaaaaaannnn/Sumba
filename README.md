@@ -6,7 +6,7 @@
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.21.3-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.22.0-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -20,13 +20,30 @@ A capa «Descobre a SUMBA» foi convertida em carrossel horizontal com cinco ima
 
 Os botões usam os atalhos demonstrativos existentes. «Mais vendidos» é uma seleção de exploração, não uma medição real de vendas. Foi retirado o emoji do cabeçalho; o logótipo final ainda não foi escolhido. As duas entradas HTML são idênticas. A publicação Cloudflare e o teste de gestos num Android real não são confirmados automaticamente pelo commit.
 
-## V0.21.3 — Logótipo escolhido e assinatura de marca
+## V0.22.0 — Logótipo escolhido e assinatura de marca
 
 Foi adoptado o **último conceito apresentado**, com família, sol, folha e campos agrícolas. O símbolo provém do desenho aprovado, foi recortado e optimizado com fundo transparente e está incorporado num SVG sem dependências externas. O slogan oficial é **Do campo à sua mesa.**
 
 O símbolo e a assinatura da marca estão no cabeçalho mobile e desktop, nas páginas de entrada e registo demonstrativo de Cliente, Produtor, Empresa, Administração e Entregas, e no cabeçalho e fluxo de autenticação do piloto real (login, registo, OTP e recuperação). O ícone do separador utiliza o mesmo símbolo. As cores, os restantes elementos do design e a lógica de login foram preservados.
 
 Recursos: `public/assets/sumba-emblem.svg` e `public/real/assets/sumba-emblem.svg`. A imagem é **raster incorporado em SVG**, não uma vectorização do original. As duas versões da aplicação podem publicar-se independentemente. A execução de testes de navegador real e a implantação nos dois Workers precisam de verificação separada; a integração no GitHub não é publicação.
+
+## V0.22 — autenticação, administração e notificações reais
+
+**Estado:** implementação de código e base de dados concluída; publicação na Cloudflare e testes de entrega por prestadores externos ainda carecem de verificação.
+
+- **Entrada real**: a loja abre livremente para consulta e liga à área de contas em `/real/`. O ecrã de autenticação real suporta email + palavra-passe, registo e confirmação de email, recuperação, telefone no formato internacional + OTP SMS, e Google OAuth. O email depende de SMTP/GoTrue; SMS depende do fornecedor SMS configurado; Google requer Client ID/Secret e redireccionamentos autorizados no Supabase.
+- **Sem compras fictícias**: no modo público os botões de pedidos, mensagens comerciais e carrinho de teste não criam transacções locais apresentadas como reais. O catálogo legado continua ilustrativo até existir backend comercial.
+- **Marca**: o logótipo da família e dos campos continua a ser utilizado. Os controlos do carrossel (setas e pontos) ficam sobre a fotografia do próprio cartão, sem uma faixa separada inferior.
+- **ADM**: menu restrito a identidade autenticada e administradores verificados. Permite lista de contas de `auth.users`, perfil e papel, pesquisa, histórico guardado, suspensão por 24/168/720 horas, bloqueio e reactivação, confirmação de operações e trilho de auditoria. Nenhuma credencial de administrador é confiada ao browser.
+- **Notificações**: `sumba_notifications` com RLS por utilizador, indicador vermelho de mensagens não lidas, actualização em tempo real e consulta periódica, estado de leitura confirmado na base de dados e preferências individuais de comunicação. Os eventos de perfil, bancada e empresa alimentam alertas e registo de actividades; os eventos de carrinho e pedidos dependem da implementação futura do backend correspondente.
+- **Comunicação**: ADM cria mensagens individuais e por grupo (clientes, fornecedores, empresas, entregadores ou todos), notificação interna, email e SMS com confirmação explícita, limite de 200 destinatários por operação, consentimento para canais promocionais e filas de envio auditadas. A Edge Function `sumba-admin` valida a sessão do utilizador e o papel administrativo no servidor.
+- **Email automático**: eventos reais de criação de conta/perfil, bancadas e empresas guardam o alerta e, quando apropriado, uma mensagem transaccional na fila. A entrega de emails no fluxo de autenticação utiliza SMTP configurado no Supabase. A fila de comunicações transaccionais e campanhas precisa de `BREVO_API_KEY` e `SUMBA_EMAIL_FROM` nos segredos das Edge Functions para entregar mensagens. A entrega SMS em massa precisa de `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` e `TWILIO_FROM`. As mensagens pendentes não são marcadas como enviadas até a API externa confirmar.
+- **Agendamento**: o ADM permite processar a fila manualmente. É necessária a configuração de agendamento seguro no Supabase para processamento autónomo contínuo; ainda não está demonstrado.
+- **Segurança**: tabelas de notificações e preferências possuem RLS; dados administrativos, auditoria e fila de envio estão em esquema privado. Uma conta suspensa ou bloqueada é impedida de entrar pelo Supabase Auth e por políticas RLS nas tabelas protegidas.
+- **Activação**: confirmar Site URL e Redirect URLs (incluindo `https://zunga.stivenluanda04.workers.dev/real/` e `https://zunga-auth.stivenluanda04.workers.dev/`) em Supabase Auth. Activar Google OAuth e SMS com respectivos dados do fornecedor. Confirmar o remetente no Brevo e adicionar credenciais às Edge Function Secrets. Não publicar chaves de serviço no frontend. Só depois verificar entrega real com contas e números autorizados.
+
+O ambiente de autenticação piloto antigo e o modo de consulta público coexistem; o repositório não cria automaticamente uma publicação nos Workers. Não confundir integração na `main` com deploy Cloudflare ou serviços externos validados.
 
 ## Visão
 
