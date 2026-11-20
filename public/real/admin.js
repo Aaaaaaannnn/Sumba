@@ -28,9 +28,9 @@ export async function mountAdmin(client,host){
  const content=section.querySelector('#adminContent'),message=section.querySelector('#adminMessage');
  let current='users',users=[],page=1,total=0,search='',filter='all',busy=false,recipient=null;
  const announce=msg=>{message.textContent=msg||'';};
- const busyRun=async fn=>{if(busy)return;busy=true;section.querySelectorAll('button').forEach(b=>b.disabled=true);
+ const busyRun=async fn=>{if(busy)return;busy=true;const previous=[...section.querySelectorAll('button')].map(b=>[b,b.disabled]);previous.forEach(([b])=>b.disabled=true);
   try{await fn()}catch(e){announce('Não foi possível concluir: '+e.message)}
-  finally{busy=false;section.querySelectorAll('button').forEach(b=>b.disabled=false)}};
+  finally{busy=false;previous.forEach(([b,disabled])=>{if(b.isConnected)b.disabled=disabled})}};
  const tabs=()=>{section.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===current?'true':'false'));};
  const userCard=u=>{
   const status=u.state==='active'?'Activa':u.state==='suspended'?'Suspensa':'Bloqueada';
@@ -142,7 +142,7 @@ export async function mountAdmin(client,host){
     inapp:v.has('inapp'),email:v.has('email'),sms:v.has('sms'),confirmed:v.has('confirm')
    });
    const r=res.result;announce('Notificados no site: '+r.inapp+' · emails na fila: '+r.email_queued+' · SMS na fila: '+r.sms_queued+'.');
-   e.target.reset();recipient=null;
+   e.target.reset();recipient=null;drawCompose();
   });
  });
  await loadUsers();
