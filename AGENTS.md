@@ -30,3 +30,10 @@
 - PostgreSQL e armazenamento partilhado.
 - Pedidos, catálogo e estatísticas persistentes.
 - Moderação, monetização e integração de anúncios com autorização.
+
+## SUMBA V0.22 — regras obrigatórias
+- Não voltar a exigir credenciais fictícias no modo público. Reservar rotas de pré-visualização para tarefas locais.
+- O ADM só usa contas autenticadas e permissões verificadas no Supabase; nunca usar `user_metadata` ou o seletor de perfil do browser para autorizar administração.
+- Nunca afirmar que SMS/emails foram entregues sem confirmação do fornecedor. Respeitar consentimento em campanhas.
+- Os cartões e produtos legados podem ser ilustrativos; não simular transacções reais em produção.
+- Após cada alteração de autenticação, verificar recuperação, OTP, Google, sessões, RLS e permissões de administrador.
