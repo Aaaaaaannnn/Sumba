@@ -1,3 +1,7 @@
+# SUMBA v0.23.0 — 20/11/2026
+
+Restituição para demonstração: navegação livre, perfis locais, login e criação de conta simulados (Google, Facebook, email, telefone), carrossel com pré-visualização do próximo cartão, logótipo e slogan legíveis, notificações lidas/não lidas, histórico local de emails de actividade sem envio real. Não foram efectuados envios externos de mensagens nem cobranças. A publicação na Cloudflare depende de deployment separado.
+
 # SUMBA V0.22.0 — 20/11/2026
 
 - Login real por email/telefone, OTP e início de Google OAuth; ligação da loja pública a `/real/`.
