@@ -6,3 +6,16 @@
 
 /* SUMBA auth usability */
 .social:disabled{opacity:.58;cursor:not-allowed}.social:disabled .provider-icon{filter:grayscale(1)}.panel form button[type=submit]{max-width:100%}input[name=token]{text-align:center;letter-spacing:.28em;font-size:22px;font-weight:750;font-variant-numeric:tabular-nums}.panel{overflow-wrap:anywhere}.row>div:last-child{min-width:0;overflow-wrap:anywhere}.auth-panel .actions button{flex:1 1 125px}@media(max-width:440px){.panel{padding:16px}.auth-panel .actions{display:grid;grid-template-columns:1fr}.social{width:100%}.row{align-items:flex-start}}
+
+/* V0.21.3 — marca SUMBA escolhida, preserva os layouts de acesso real. */
+.brand-lockup{display:inline-flex;align-items:center;gap:9px;min-width:0;letter-spacing:0}
+.brand-lockup .brand-mark{display:grid;place-items:center;flex:0 0 46px;width:46px;height:48px;padding:3px;background:#edf3e2;border-radius:12px}
+.brand-lockup .brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-lockup .brand-words{display:flex;flex-direction:column;line-height:1.05}
+.brand-lockup .brand-words strong{font-size:23px;letter-spacing:-.7px}
+.brand-lockup .brand-words small{font-size:10px;line-height:1.15;margin-top:5px;letter-spacing:0;color:#d7e7d7}
+.auth-hero-identity{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.auth-hero-identity img{background:#edf3e2;border-radius:12px;width:46px;height:49px;object-fit:contain;padding:3px}
+.auth-hero-identity strong{font-size:24px;display:block;line-height:1}
+.auth-hero-identity small{font-size:11px;display:block;margin-top:5px;color:#d7e7d7}
+@media(max-width:420px){header{gap:8px}header>.brand-lockup .brand-mark{flex-basis:38px;width:38px;height:41px}header>.brand-lockup .brand-words strong{font-size:19px}header>.brand-lockup .brand-words small{font-size:9px}header>small{font-size:10px;text-align:right}}

@@ -2,11 +2,11 @@
 
 # 🌱 SUMBA
 
-**Do campo à sua casa.**
+**Do campo à sua mesa.**
 
 Marketplace agrícola digital para Angola — conectando produtores, consumidores e empresas.
 
-![Versão](https://img.shields.io/badge/vers%C3%A3o-0.21.2-123c2c)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-0.21.3-123c2c)
 ![Estado](https://img.shields.io/badge/estado-prot%C3%B3tipo-f4a340)
 ![Plataforma](https://img.shields.io/badge/plataforma-Web%20responsiva-326846)
 
@@ -19,6 +19,14 @@ Marketplace agrícola digital para Angola — conectando produtores, consumidore
 A capa «Descobre a SUMBA» foi convertida em carrossel horizontal com cinco imagens e frases distintas: Descobre a Sumba, Promoções, Mais vendidos, Cesta básica e Produção local. Há swipe, setas, pontos e mudança automática a cada 6 segundos, com pausa após toque, enquanto o ponteiro permanece por cima ou durante foco visível por teclado. O temporizador é limpo ao sair da página. Se a pessoa desativar as animações, o carrossel mantém a navegação manual e deixa de avançar sozinho.
 
 Os botões usam os atalhos demonstrativos existentes. «Mais vendidos» é uma seleção de exploração, não uma medição real de vendas. Foi retirado o emoji do cabeçalho; o logótipo final ainda não foi escolhido. As duas entradas HTML são idênticas. A publicação Cloudflare e o teste de gestos num Android real não são confirmados automaticamente pelo commit.
+
+## V0.21.3 — Logótipo escolhido e assinatura de marca
+
+Foi adoptado o **último conceito apresentado**, com família, sol, folha e campos agrícolas. O símbolo provém do desenho aprovado, foi recortado e optimizado com fundo transparente e está incorporado num SVG sem dependências externas. O slogan oficial é **Do campo à sua mesa.**
+
+O símbolo e a assinatura da marca estão no cabeçalho mobile e desktop, nas páginas de entrada e registo demonstrativo de Cliente, Produtor, Empresa, Administração e Entregas, e no cabeçalho e fluxo de autenticação do piloto real (login, registo, OTP e recuperação). O ícone do separador utiliza o mesmo símbolo. As cores, os restantes elementos do design e a lógica de login foram preservados.
+
+Recursos: `public/assets/sumba-emblem.svg` e `public/real/assets/sumba-emblem.svg`. A imagem é **raster incorporado em SVG**, não uma vectorização do original. As duas versões da aplicação podem publicar-se independentemente. A execução de testes de navegador real e a implantação nos dois Workers precisam de verificação separada; a integração no GitHub não é publicação.
 
 ## Visão
 
@@ -273,7 +281,7 @@ O objetivo é manter custos iniciais de desenvolvimento e alojamento dentro dos 
 
 ---
 
-**SUMBA · Do campo ao mercado · Angola 🇦🇴**
+**SUMBA · Do campo à sua mesa. · Angola 🇦🇴**
 
 
 ### Fundação real — atualização 18/11/2026

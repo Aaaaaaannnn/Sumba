@@ -1,3 +1,11 @@
+# SUMBA V0.21.3 — 20/11/2026
+
+- Símbolo da marca da última proposta (família, sol, folha e campos) optimizado e incluído como recurso local para a loja e o piloto real.
+- Aplicação do logótipo e do slogan «Do campo à sua mesa.» ao cabeçalho mobile/desktop, ecrãs de entrada e registo de todos os perfis demo, login, registo, OTP e recuperação do piloto real.
+- Ícone do separador utiliza a marca; sem redesign global da paleta ou mudança do fluxo de autenticação.
+- Duas entradas da loja mantidas sincronizadas; JavaScript dos fluxos demo e real validado sintacticamente, sem alterar lógica de negócio ou segredos.
+- Não foram confirmados a publicação na Cloudflare nem os testes visuais em dispositivos reais.
+
 # SUMBA V0.21.2 — 20/11/2026
 
 - Página inicial: carrossel com cinco fotografias e mensagens diferentes; conserva o tema verde existente.
