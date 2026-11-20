@@ -44,6 +44,7 @@ function socialButtons(link=false,identities=[]){
 
 
 function authScreen(mode='login',identifier='',channel=authChannel){
+ document.getElementById('sumbaNotifications')?.remove();
  authChannel=channel==='phone'?'phone':'email';
  const login=mode==='login',register=mode==='register',reset=mode==='reset';
  const password=login||register,phone=authChannel==='phone';
@@ -68,7 +69,7 @@ function authScreen(mode='login',identifier='',channel=authChannel){
 function otpScreen(){
  if(!pending)return authScreen();
  const {identifier,channel}=pending,phone=channel==='phone';
- screen('<div class="hero"><h1>Verifica o teu '+(phone?'telemóvel':'email')+'</h1><p>Introduz o código de seis algarismos.</p></div>'+
+ screen('<div class="hero"><h1>Verifica o teu '+(phone?'telemóvel':'email')+'</h1><p>'+(phone?'Introduz o código SMS de seis algarismos.':'Confirma pelo link recebido no email ou introduz o código, caso esteja incluído na mensagem.')+'</p></div>'+
  '<div class="panel"><p>Se o pedido foi aceite, solicitámos um código para <strong>'+esc(identifier)+'</strong>.</p>'+
  '<form id="otpForm">'+label('Código de verificação','token','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required')+
  '<button type="submit">Verificar código</button></form>'+
@@ -147,7 +148,17 @@ async function dashboard(ticket){
  '<div class="panel"><h2>Segurança da conta</h2><p class="muted">Para alterar o email, poderá ser necessário confirmar a operação tanto no endereço actual como no novo.</p><form id="changeEmail">'+label('Novo email de acesso','newEmail','','type="email" required autocomplete="email" maxlength="254"')+'<button type="submit" class="outline">Solicitar alteração de email</button></form><p class="muted">Para recuperar a palavra-passe, termina a sessão e escolhe Recuperar acesso.</p></div>'+
  '<div class="panel"><h2>Métodos de acesso</h2><p class="muted">Vincula um método adicional à mesma conta. A confirmação é feita pelo fornecedor, nunca pela aplicação.</p><div class="socials">'+socialButtons(true,identities)+'</div><p class="muted">Métodos associados: '+esc(identities.map(i=>providers[i]|| (i==='email'?'Email':i)).join(', '))+'</p></div>'+
  '<div class="panel"><h2>Bancadas publicadas</h2><p class="muted">Diretório real — sem dados fictícios.</p><div class="list">'+(catalog.length?catalog.map(s=>'<article><h2>'+esc(s.name)+'</h2><p class="muted">'+esc(s.city)+', '+esc(s.province)+'</p><p>'+esc(s.description)+'</p></article>').join(''):'<p>Ainda não existem bancadas publicadas.</p>')+'</div></div><div class="actions">'+button('Atualizar dados','reload')+button('Terminar sessão','logout')+'</div>');
+
  notice('Sessão autenticada · dados sincronizados com o servidor.');
+ const activeUser=user?.id;
+ try{
+  const module=await import('./notifications.js');
+  if(user?.id===activeUser)await module.mountNotifications(client,document.querySelector('header'),$('content'));
+ }catch(e){console.warn('Notificações indisponíveis:',String(e?.message||e))}
+ try{
+  const module=await import('./admin.js');
+  if(user?.id===activeUser)await module.mountAdmin(client,$('content'));
+ }catch(e){console.warn('Administração indisponível:',String(e?.message||e))}
 }
 async function execute(f){
  const v=new FormData(f),s=k=>String(v.get(k)||'').trim(),p=k=>String(v.get(k)||'');
