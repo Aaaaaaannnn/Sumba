@@ -3,6 +3,10 @@
 # SUMBA
 **Do campo à sua mesa.**
 
+### 🌐 [ACEDER AO SITE DA SUMBA](https://zunga.stivenluanda04.workers.dev/)
+
+**[Abrir o protótipo web →](https://zunga.stivenluanda04.workers.dev/)**
+
 Marketplace agrícola digital de Angola — protótipo demonstrativo responsivo.
 
 </div>
