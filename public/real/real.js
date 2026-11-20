@@ -52,7 +52,7 @@ function authScreen(mode='login',identifier='',channel=authChannel){
  const field=phone?
   label('Número de telemóvel','phone',identifier,'type="tel" inputmode="tel" placeholder="+2449XXXXXXXX" pattern="\\+[1-9][0-9]{7,14}" required autocomplete="tel" maxlength="16"'):
   label('Email','email',identifier,'type="email" required autocomplete="email" maxlength="254"');
- screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-emblem.svg" alt="" width="46" height="49"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+
+ screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-symbol-v024.svg?v=024" alt="Símbolo da SUMBA" width="116" height="116" loading="eager"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+
  (login?'Entra na SUMBA':register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+
  '</h1><p>Uma conta pessoal, protegida e confirmada por '+(phone?'SMS.':'email.')+'</p></div>'+
  '<div class="panel auth-panel">'+tabs+
