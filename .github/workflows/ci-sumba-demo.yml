@@ -1,0 +1,25 @@
+name: CI SUMBA Demonstration
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run static regression tests
+        run: |
+          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs
+      - name: Verify static resources
+        run: |
+          test -f public/assets/sumba-icon.svg
+          test -f public/real/assets/sumba-icon.svg
+          test -f wrangler.sumba.jsonc
