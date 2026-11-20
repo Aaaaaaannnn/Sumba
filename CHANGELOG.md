@@ -1,3 +1,13 @@
+# SUMBA V0.22.0 — 20/11/2026
+
+- Login real por email/telefone, OTP e início de Google OAuth; ligação da loja pública a `/real/`.
+- Carrossel com setas e indicadores sobrepostos ao cartão; identidade visual e logótipo preservados.
+- Supabase: base de dados de notificações, preferências, actividades, administração, moderação e fila de entrega. RLS e permissões testadas.
+- ADM real: lista de contas, filtros, actividade, suspender/bloquear/reactivar, comunicações individuais e colectivas com confirmação e consentimento.
+- Notificações com ponto vermelho, leituras persistentes, actualização em tempo real e pop-up no site.
+- Edge Function segura `sumba-admin` para gestão e envio via Brevo/Twilio quando configurados.
+- Não activados automaticamente: fornecedores Google/SMS, segredos Brevo/Twilio, agendamento da fila, compras e pedidos reais ou publicação Cloudflare.
+
 # SUMBA V0.21.3 — 20/11/2026
 
 - Símbolo da marca da última proposta (família, sol, folha e campos) optimizado e incluído como recurso local para a loja e o piloto real.
