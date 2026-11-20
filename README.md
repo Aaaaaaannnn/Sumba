@@ -1,3 +1,15 @@
+## SUMBA V0.23.0 — Restituição demonstrativa (20/11/2026)
+
+- O visitante explora sem login obrigatório; clientes, produtores, empresas, entregadores e administrador podem testar a navegação local, sem permissões reais.
+- Entrar, registar, continuar com Google/Facebook e usar email/telemóvel são simulações deliberadamente identificadas. Nenhum dado é enviado a fornecedores externos e as palavras-passe introduzidas não são guardadas.
+- Carrinho, pedidos e chat voltam a funcionar como simulações locais. Sem pagamentos, logística ou mensagens reais.
+- Carrossel com 5 imagens distintas: primeira mensagem «Esteja mais perto de quem produz.»; avanço a cada 6 segundos, pausa após gestos e quando o cursor fica por cima; o próximo cartão fica parcialmente à vista e os indicadores/setas foram removidos.
+- Logótipo familiar e slogan «Do campo à sua mesa.» incorporados na própria página para contornar o carregamento falhado do recurso anterior; espaçamento compacto no telemóvel.
+- Notificações locais com ponto vermelho, removido depois de consultar; eventos de carrinho, pedidos e chat; emails de actividade registados num histórico demonstrativo, sem pop-ups de "email enviado".
+- O ambiente real de autenticação em /real/ mantém-se como piloto separado no repositório, mas o site principal não depende dele e não o recomenda como fluxo activo.
+- Foram efectuadas verificações estáticas e testes funcionais isolados. Não constituem testes ponta a ponta num navegador real nem confirmam publicação no Cloudflare.
+
+
 <div align="center">
 
 # 🌱 SUMBA
