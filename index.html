@@ -560,44 +560,62 @@ function resetMarket(){category='Todos';query='';province='';onlyOffers=false;on
 const quickPaths={stalls:'<path d="M3 10h18M4 10v11h16V10M3 10l2-6h14l2 6M9 21v-6h6v6"/><path d="M9 4l-1 6m7-6 1 6"/>',offers:'<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="8" cy="8" r="1.5"/>',favorites:'<path d="M20 8c0 4-8 10-8 10S4 12 4 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1z"/>'};
 function quickLinks(){return '<div class="quicklinks" aria-label="Acessos rápidos">'+[['stalls','Bancadas','Ver vendedores','data-go="stalls"'],['offers','Promoções','Ofertas especiais','data-act="customerOffers"'],['favorites','Favoritos',db.favorites.length+' guardados','data-shop="favorites"']].map(([k,t,sub,act])=>'<button class="quicklink" '+act+'><span class="quickicon"><svg viewBox="0 0 24 24" aria-hidden="true">'+quickPaths[k]+'</svg></span><span>'+esc(t)+'</span><small>'+esc(sub)+'</small></button>').join('')+'</div>'}
 
+
 var sumbaCarouselTimer;
 function sumbaCarousel(){
- const slides=[
-  {tag:'DESCOBRE A SUMBA',title:v16Settings().headline,image:photoFiles.veg,alt:'Hortícolas frescas',cta:'Explorar bancadas',action:'data-go="stalls"'},
-  {tag:'PROMOÇÕES',title:'Boas oportunidades para a tua cesta.',image:photoFiles.p3,alt:'Tomates frescos',cta:'Ver promoções',action:'data-act="customerOffers"'},
-  {tag:'MAIS VENDIDOS',title:'Uma seleção para a tua próxima compra.',image:photoFiles.grain,alt:'Cereais e leguminosas',cta:'Explorar produtos',action:'data-go="market"'},
-  {tag:'CESTA BÁSICA',title:'Os essenciais para a tua casa.',image:photoFiles.b1,alt:'Arroz e produtos essenciais',cta:'Ver cesta básica',action:'data-act="customerCategory" data-id="Cesta Básica"'},
-  {tag:'PRODUÇÃO LOCAL',title:'Descobre quem produz perto de ti.',image:photoFiles.market,alt:'Banca agrícola local',cta:'Conhecer produtores',action:'data-go="stalls"'}
+ const cards=[
+  {tag:'DESCOBRE A SUMBA',title:'Esteja mais perto de quem produz.',image:photoFiles.veg,alt:'Hortícolas frescas no mercado',cta:'Explorar bancadas',action:'data-go="stalls"'},
+  {tag:'PROMOÇÕES',title:'Encontre boas oportunidades para a sua cesta.',image:photoFiles.p3,alt:'Produtos frescos em promoção',cta:'Ver promoções',action:'data-act="customerOffers"'},
+  {tag:'PRODUTOS EM DESTAQUE',title:'Descubra os produtos da nossa comunidade.',image:photoFiles.grain,alt:'Cereais disponíveis no mercado',cta:'Explorar produtos',action:'data-go="market"'},
+  {tag:'CESTA BÁSICA',title:'O essencial para a sua mesa.',image:photoFiles.b1,alt:'Alimentos essenciais',cta:'Ver cesta básica',action:'data-act="customerCategory" data-id="Cesta Básica"'},
+  {tag:'PRODUÇÃO LOCAL',title:'Conheça a origem dos seus alimentos.',image:photoFiles.market,alt:'Bancas agrícolas',cta:'Conhecer produtores',action:'data-go="stalls"'}
  ];
- const arrow=(side,path,label)=>'<button type="button" class="sumba-carousel-arrow" data-sumba-carousel-arrow="'+side+'" aria-label="'+label+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+path+'"/></svg></button>';
- return '<section class="sumba-carousel" aria-label="Destaques da Sumba" aria-roledescription="carrossel"><div class="sumba-carousel-track" id="sumbaCarouselTrack" tabindex="0" aria-label="Desliza para ver mais destaques">'+
- slides.map((slide,i)=>'<article class="market-feature sumba-carousel-slide" aria-label="'+(i+1)+' de '+slides.length+'" aria-roledescription="slide"><div>'+photoTag(slide.image,slide.alt,960)+'<div class="market-feature-copy"><span>'+esc(slide.tag)+'</span><h2>'+esc(slide.title)+'</h2><button type="button" class="btn light small" '+slide.action+'>'+esc(slide.cta)+'</button></div></div></article>').join('')+
- '</div><div class="sumba-carousel-controls">'+arrow('prev','M15 18l-6-6 6-6','Anterior')+
- '<div class="sumba-carousel-dots">'+slides.map((slide,i)=>'<button type="button" class="sumba-carousel-dot" data-sumba-carousel-dot="'+i+'" aria-current="'+(i===0?'true':'false')+'" aria-label="Ver '+esc(slide.tag)+'"></button>').join('')+'</div>'+
- arrow('next','M9 18l6-6-6-6','Seguinte')+'</div><span class="sumba-carousel-status" id="sumbaCarouselStatus" aria-live="polite">Destaque 1 de '+slides.length+'</span></section>';
+ return '<section class="sumba-carousel" aria-label="Destaques da SUMBA" aria-roledescription="carrossel">'+
+ '<div class="sumba-carousel-track" id="sumbaCarouselTrack" tabindex="0" aria-label="Deslize horizontalmente para descobrir mais cartões; use as setas do teclado">'+
+ cards.map((card,i)=>'<article class="market-feature sumba-carousel-slide" aria-label="Cartão '+(i+1)+' de '+cards.length+'" aria-roledescription="slide"><div>'+
+ photoTag(card.image,card.alt,960)+'<div class="market-feature-copy"><span>'+esc(card.tag)+'</span><h2>'+esc(card.title)+'</h2>'+
+ '<button type="button" class="btn light small" '+card.action+'>'+esc(card.cta)+'</button></div></div></article>').join('')+
+ '</div><span class="sumba-carousel-status" id="sumbaCarouselStatus" aria-live="polite">Cartão 1 de '+cards.length+'</span></section>';
 }
 function initSumbaCarousel(){
  if(sumbaCarouselTimer)clearInterval(sumbaCarouselTimer);
  sumbaCarouselTimer=null;
- const track=document.getElementById('sumbaCarouselTrack');if(!track)return;
- const root=track.closest('.sumba-carousel'),dots=Array.from(root.querySelectorAll('[data-sumba-carousel-dot]')),count=track.children.length,status=root.querySelector('#sumbaCarouselStatus');
+ const track=document.getElementById('sumbaCarouselTrack');
+ if(!track)return;
+ const slides=Array.from(track.children),total=slides.length;
+ const root=track.closest('.sumba-carousel'),status=root.querySelector('#sumbaCarouselStatus');
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches||!v16Settings().motion;
- let active=0,pausedUntil=0,hover=false;
- const select=(i,announce=false)=>{active=(i+count)%count;dots.forEach((d,j)=>d.setAttribute('aria-current',j===active?'true':'false'));if(announce)status.textContent='Destaque '+(active+1)+' de '+count};
- const move=(i,user=false)=>{if(user)pausedUntil=Date.now()+9000;select(i,user);track.scrollTo({left:active*track.clientWidth,behavior:reduced?'instant':'smooth'})};
- root.addEventListener('click',e=>{
-  const dot=e.target.closest('[data-sumba-carousel-dot]'),arrow=e.target.closest('[data-sumba-carousel-arrow]');
-  if(dot)move(Number(dot.dataset.sumbaCarouselDot),true);
-  else if(arrow)move(active+(arrow.dataset.sumbaCarouselArrow==='next'?1:-1),true);
+ let active=0,held=false,hovered=false,holdUntil=0,programmatic=false;
+ const step=()=>slides.length>1?slides[1].offsetLeft-slides[0].offsetLeft:track.clientWidth;
+ const navigate=(i,manual=false)=>{
+  active=(i+total)%total;
+  if(manual){holdUntil=Date.now()+12000;status.textContent='Cartão '+(active+1)+' de '+total}
+  programmatic=true;
+  track.scrollTo({left:active*step(),behavior:reduced?'instant':'smooth'});
+  // O estado programmatic é usado apenas para evitar confusão durante o scroll.
+  programmatic=false;
+ };
+ const pause=()=>{holdUntil=Date.now()+12000};
+ track.addEventListener('pointerdown',()=>{held=true;pause()},{passive:true});
+ track.addEventListener('pointerup',()=>{held=false;pause()},{passive:true});
+ track.addEventListener('pointercancel',()=>{held=false;pause()},{passive:true});
+ track.addEventListener('wheel',pause,{passive:true});
+ track.addEventListener('touchend',pause,{passive:true});
+ root.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hovered=true});
+ root.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hovered=false;held=false});
+ root.addEventListener('click',pause);
+ track.addEventListener('scroll',()=>{
+  const next=Math.max(0,Math.min(total-1,Math.round(track.scrollLeft/Math.max(step(),1))));
+  active=next;
  });
- track.addEventListener('scroll',()=>select(Math.round(track.scrollLeft/Math.max(track.clientWidth,1))));
- track.addEventListener('pointerdown',()=>{pausedUntil=Date.now()+9000},{passive:true});
- root.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hover=true});
- root.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hover=false});
- track.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();move(active+(e.key==='ArrowRight'?1:-1),true)}});
+ track.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+   e.preventDefault();navigate(active+(e.key==='ArrowRight'?1:-1),true);
+  }
+ });
  if(!reduced)sumbaCarouselTimer=setInterval(()=>{
-  if(document.hidden||hover||Date.now()<pausedUntil||(root.contains(document.activeElement)&&document.activeElement.matches(':focus-visible')))return;
-  move(active+1);
+  if(document.hidden||held||hovered||Date.now()<holdUntil||root.contains(document.activeElement))return;
+  navigate(active+1);
  },6000);
 }
 
