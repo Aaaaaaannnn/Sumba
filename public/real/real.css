@@ -27,3 +27,40 @@
 .auth-tabs button.selected{background:#123c2c;color:#fff;border-color:#123c2c}
 .auth-panel input[type=tel]{font-variant-numeric:tabular-nums}
 .auth-panel .socials .social{width:100%}
+
+
+/* V0.22 — notificações, histórico de utilizadores e comunicação. */
+.notification-shell{position:relative;margin-left:auto;z-index:20}
+#sumbaNotificationBell{position:relative;width:44px;height:44px;padding:0;background:#edf3e2;color:#123c2c;border:1px solid #b8d1b6;border-radius:50%;display:grid;place-items:center}
+.notification-count{position:absolute;top:-6px;right:-5px;background:#ce2d44;color:white;min-width:19px;height:19px;padding:0 3px;border-radius:99px;display:grid;place-items:center;font-size:10px;line-height:1;font-weight:900;border:2px solid #123c2c}
+.notification-count[hidden],.notification-panel[hidden]{display:none!important}
+.notification-panel{position:absolute;right:0;top:53px;width:min(355px,calc(100vw - 28px));max-height:min(540px,73dvh);overflow:auto;background:#fff;color:#163826;border:1px solid #d9e5d4;border-radius:17px;padding:12px;box-shadow:0 16px 40px #06241b30}
+.notification-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 4px 8px}
+.notification-title button{min-height:37px;padding:6px 12px}
+.notification-item{padding:12px 7px;border-top:1px solid #e3eadf}
+.notification-item.new{background:#f2f9ed}
+.notification-item-head{display:flex;align-items:start;justify-content:space-between;gap:8px}
+.notification-item-head strong{font-size:13px}
+.notification-item-head time{font-size:10px;white-space:nowrap;color:#6b786d}
+.notification-item p{font-size:13px;line-height:1.5;margin:6px 0 0;overflow-wrap:anywhere}
+.sumba-notification-toast{position:fixed;right:18px;bottom:20px;z-index:999;background:#123c2c;color:#fff;padding:13px 16px;border-radius:14px;max-width:min(350px,90vw);box-shadow:0 12px 35px #10271844;line-height:1.45}
+.sumba-notification-preferences .check{font-weight:500;margin:14px 0}
+.sumba-notification-preferences .check input{margin-top:2px}
+.sumba-admin{margin-top:18px}
+.admin-head{display:flex;align-items:start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-tabs{display:flex;gap:6px;border-bottom:1px solid #dce5d5;margin:15px 0 16px;flex-wrap:wrap}
+.admin-tabs button{background:transparent;color:#244735;border:0;border-bottom:3px solid transparent;border-radius:0;padding:11px 13px;font-size:13px}
+.admin-tabs button[aria-selected=true]{border-bottom-color:#17442d;font-weight:900;color:#123c2c}
+.admin-tools{display:grid;grid-template-columns:minmax(0,2fr) minmax(140px,1fr);gap:12px;align-items:end}
+.admin-users{display:grid;gap:12px;margin:12px 0 17px}
+.admin-user{border:1px solid #dfe7db;padding:14px;border-radius:16px}
+.admin-user-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.admin-user .muted{margin:5px 0;font-size:12px;overflow-wrap:anywhere}
+.admin-user-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.admin-user-actions button{min-height:41px;padding:8px 11px;font-size:12px}
+.admin-activity{margin-top:8px}
+.admin-channels{border:1px solid #dce5d5;border-radius:14px;margin:15px 0;padding:10px 14px}
+.admin-channels legend{padding:0 6px;font-size:13px;font-weight:750}
+.admin-channels .check{font-weight:500}
+#adminMessage:not(:empty){background:#edf5e5;padding:10px;border-radius:12px;margin:8px 0;overflow-wrap:anywhere}
+@media(max-width:550px){header{flex-wrap:wrap}.notification-shell{margin-left:0}.admin-tools{grid-template-columns:1fr}.admin-head>button{width:100%}.admin-user-actions>*{flex-grow:1}}
