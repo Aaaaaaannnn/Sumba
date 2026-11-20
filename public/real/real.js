@@ -94,14 +94,31 @@ function authError(e){
  return e?.name==='AuthRetryableFetchError'?'Ligação indisponível. Tenta novamente.':'Não foi possível concluir. Confirma os dados e a configuração do serviço.';
 }
 
-async function requestCode(mode,email,resend=false){
+
+async function requestCode(mode,identifier,channel='email',resend=false){
  if(!['register','otp','reset'].includes(mode))throw Error('invalid-mode');
- if(Date.now()<nextSend)throw {code:'over_email_send_rate_limit'};
- if(mode==='register'){if(!resend)throw Error('invalid-mode');checked(await client.auth.resend({type:'signup',email,options:{emailRedirectTo:redirect}}))}
- else if(mode==='reset')checked(await client.auth.resetPasswordForEmail(email,{redirectTo:redirect}));
- else checked(await client.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:redirect}}));
- nextSend=Date.now()+60000;setPending(mode,email);otpScreen();notice('Se o pedido for aceite, receberás um código por email.');
+ if(Date.now()<nextSend)throw {code:'over_request_rate_limit'};
+ if(channel==='phone'){
+  if(!isPhone(identifier))throw {code:'invalid_phone'};
+  if(mode==='register'){
+   if(!resend)throw Error('invalid-mode');
+   checked(await client.auth.resend({type:'sms',phone:identifier}));
+  }else{
+   checked(await client.auth.signInWithOtp({phone:identifier,options:{shouldCreateUser:false,channel:'sms'}}));
+  }
+ }else{
+  if(!isEmail(identifier))throw Error('invalid-email');
+  if(mode==='register'){
+   if(!resend)throw Error('invalid-mode');
+   checked(await client.auth.resend({type:'signup',email:identifier,options:{emailRedirectTo:redirect}}));
+  }else if(mode==='reset')checked(await client.auth.resetPasswordForEmail(identifier,{redirectTo:redirect}));
+  else checked(await client.auth.signInWithOtp({email:identifier,options:{shouldCreateUser:false,emailRedirectTo:redirect}}));
+ }
+ nextSend=Date.now()+60000;
+ setPending(mode,identifier,channel);otpScreen();
+ notice('Se o pedido foi aceite, receberás um código por '+(channel==='phone'?'SMS.':'email.'));
 }
+
 function onboarding(){
  screen('<h1>Completa o teu perfil</h1><div class="panel"><p>Conta autenticada. Escolhe o teu tipo de acesso. Administração e entregas são atribuídas pelo responsável, nunca por auto-registo.</p><form id="onboarding">'+label('Nome','name','','required minlength="2" maxlength="80" autocomplete="name"')+'<label>Tipo de conta<select name="role"><option value="buyer">Cliente</option><option value="producer">Fornecedor</option><option value="company">Empresa</option></select></label>'+label('Província','province','','maxlength="80"')+label('Município','city','','maxlength="80"')+agree()+'<button type="submit">Guardar perfil</button></form></div>'+button('Terminar sessão','logout'));
 }
@@ -111,8 +128,8 @@ async function load(){
  const ticket=++generation;
  try{
   const result=await client.auth.getUser();if(ticket!==generation)return;
-  if(result.error||!result.data.user){user=null;profile=null;if(pending)otpScreen();else authScreen();notice('Entra ou cria uma conta de teste real.');return}
-  user=result.data.user;if(!user.email_confirmed_at){await client.auth.signOut();user=null;profile=null;clearPending();authScreen();notice('Confirma primeiro o email.',true);return}if(recovery){recoveryScreen();notice('Define uma nova palavra-passe.');return}
+  if(result.error||!result.data.user){user=null;profile=null;if(pending)otpScreen();else authScreen();notice('Entra ou cria uma conta SUMBA.');return}
+  user=result.data.user;if(!user.email_confirmed_at&&!user.phone_confirmed_at&&!user.identities?.some(i=>i.provider==='google')){await client.auth.signOut();user=null;profile=null;clearPending();authScreen();notice('Confirma primeiro o email.',true);return}if(recovery){recoveryScreen();notice('Define uma nova palavra-passe.');return}
   profile=checked(await client.from('zunga_profiles').select('*').eq('user_id',user.id).maybeSingle());if(ticket!==generation)return;
   if(!profile){onboarding();notice('Completa o perfil para continuar.');return}
   await dashboard(ticket);
@@ -124,7 +141,7 @@ async function dashboard(ticket){
  if(profile.role==='company')company=checked(await client.from('zunga_companies').select('*').eq('owner_id',user.id).maybeSingle());
  if(profile.avatar_path){const r=await client.storage.from('zunga-avatars').createSignedUrl(profile.avatar_path,300);if(!r.error)avatar=r.data.signedUrl}
  const identities=checked(await client.auth.getUserIdentities()).identities.map(i=>i.provider);catalog=checked(await client.from('zunga_stalls').select('id,name,province,city,description').eq('published',true).order('name').limit(50));if(ticket!==generation)return;
- screen('<div class="hero"><span class="pill">'+esc(roles[profile.role])+'</span><h1>Olá, '+esc(profile.display_name)+'</h1><p>Perfil guardado na base de dados. Compras e outros módulos comerciais ainda não estão ligados.</p></div><div class="panel"><div class="row">'+(avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'<div class="avatar avatar-fallback">'+esc(profile.display_name[0])+'</div>')+'<div><h2>'+esc(profile.display_name)+'</h2><span class="muted">'+esc(user.email)+'</span></div></div><form id="editProfile">'+label('Nome','name',profile.display_name,'required minlength="2" maxlength="80"')+label('Província','province',profile.province,'maxlength="80"')+label('Município','city',profile.city,'maxlength="80"')+textarea('Apresentação','bio',profile.bio)+'<label>Foto de perfil (até 1 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label><button type="submit">Guardar perfil</button></form>'+(profile.avatar_path?button('Remover foto','removeAvatar'):'')+'</div>'+
+ screen('<div class="hero"><span class="pill">'+esc(roles[profile.role])+'</span><h1>Olá, '+esc(profile.display_name)+'</h1><p>Perfil guardado na base de dados. Compras e outros módulos comerciais ainda não estão ligados.</p></div><div class="panel"><div class="row">'+(avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'<div class="avatar avatar-fallback">'+esc(profile.display_name[0])+'</div>')+'<div><h2>'+esc(profile.display_name)+'</h2><span class="muted">'+esc(user.email||user.phone||'Identidade verificada')+'</span></div></div><form id="editProfile">'+label('Nome','name',profile.display_name,'required minlength="2" maxlength="80"')+label('Província','province',profile.province,'maxlength="80"')+label('Município','city',profile.city,'maxlength="80"')+textarea('Apresentação','bio',profile.bio)+'<label>Foto de perfil (até 1 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label><button type="submit">Guardar perfil</button></form>'+(profile.avatar_path?button('Remover foto','removeAvatar'):'')+'</div>'+
  (profile.role==='producer'?'<div class="panel"><h2>A minha bancada</h2><form id="stall" data-exists="'+!!stall+'">'+label('Nome comercial','name',stall?.name,'required minlength="2" maxlength="100"')+label('Província','province',stall?.province||profile.province,'required minlength="2" maxlength="80"')+label('Município','city',stall?.city||profile.city,'required minlength="2" maxlength="80"')+textarea('Descrição','description',stall?.description,1000)+'<label class="check"><input type="checkbox" name="published" '+(stall?.published?'checked':'')+'> Publicar nome, localização e descrição no diretório</label><button type="submit">Guardar bancada</button></form></div>':'')+
  (profile.role==='company'?'<div class="panel"><h2>A minha empresa</h2><form id="company" data-exists="'+!!company+'">'+label('Nome comercial','name',company?.name,'required minlength="2" maxlength="100"')+label('Setor','sector',company?.sector,'maxlength="100"')+label('Província','province',company?.province||profile.province,'maxlength="80"')+label('Município','city',company?.city||profile.city,'maxlength="80"')+'<button type="submit">Guardar empresa</button></form></div>':'')+
  '<div class="panel"><h2>Segurança da conta</h2><p class="muted">Para alterar o email, poderá ser necessário confirmar a operação tanto no endereço actual como no novo.</p><form id="changeEmail">'+label('Novo email de acesso','newEmail','','type="email" required autocomplete="email" maxlength="254"')+'<button type="submit" class="outline">Solicitar alteração de email</button></form><p class="muted">Para recuperar a palavra-passe, termina a sessão e escolhe Recuperar acesso.</p></div>'+
@@ -134,26 +151,42 @@ async function dashboard(ticket){
 }
 async function execute(f){
  const v=new FormData(f),s=k=>String(v.get(k)||'').trim(),p=k=>String(v.get(k)||'');
+
  if(f.id==='authForm'){
-  const mode=f.dataset.mode,email=s('email').toLowerCase();
-  if(mode==='register'){
-   if(!v.has('agree')||p('password')!==p('confirm')||p('password').length<12){notice('Aceita as condições e confirma a palavra-passe de pelo menos 12 caracteres.',true);return}
-   if(Date.now()<nextSend)throw {code:'over_email_send_rate_limit'};
-   const r=checked(await client.auth.signUp({email,password:p('password'),options:{emailRedirectTo:redirect}}));
-   if(r.session){await client.auth.signOut();notice('O servidor não está configurado para exigir confirmação de email. Contacta o responsável.',true);return}
-   nextSend=Date.now()+60000;setPending(mode,email);otpScreen();notice('Se o registo for aceite, consulta o email para confirmar a conta.');return
+  const mode=f.dataset.mode,channel=f.dataset.channel==='phone'?'phone':'email';
+  const identifier=s(channel==='phone'?'phone':'email').toLowerCase();
+  if(!(channel==='phone'?isPhone(identifier):isEmail(identifier))){
+   notice(channel==='phone'?'Escreve o número no formato internacional (+2449XXXXXXXX).':'Introduz um email válido.',true);return;
   }
-  if(mode==='reset'||mode==='otp'){await requestCode(mode,email);return}
+  if(mode==='register'){
+   if(!v.has('agree')||p('password')!==p('confirm')||p('password').length<12){notice('Aceita as condições e confirma a palavra-passe com pelo menos 12 caracteres.',true);return}
+   if(Date.now()<nextSend)throw {code:'over_request_rate_limit'};
+   const credentials=channel==='phone'?{phone:identifier,password:p('password')}:
+    {email:identifier,password:p('password'),options:{emailRedirectTo:redirect}};
+   const result=checked(await client.auth.signUp(credentials));
+   if(result.session){await client.auth.signOut();notice('O servidor aceitou a conta sem confirmação. A verificação é obrigatória; contacta o suporte.',true);return}
+   nextSend=Date.now()+60000;
+   setPending(mode,identifier,channel);
+   otpScreen();notice('Se o registo foi aceite, consulta o teu '+(channel==='phone'?'SMS.':'email.'));return;
+  }
+  if(mode==='reset'||mode==='otp'){await requestCode(mode,identifier,channel);return}
   if(mode!=='login')return;
-  clearPending();checked(await client.auth.signInWithPassword({email,password:p('password')}));await load();return
+  clearPending();
+  checked(await client.auth.signInWithPassword(channel==='phone'?{phone:identifier,password:p('password')}:{email:identifier,password:p('password')}));
+  await load();return;
  }
+
+
  if(f.id==='otpForm'){
-  if(!pending||!/^\d{6}$/.test(s('token'))) {notice('Introduz um código de seis algarismos.',true);return}
-  const {mode,email}=pending;
-  const resetting=mode==='reset';recovery=resetting;
-  try{const result=checked(await client.auth.verifyOtp({email,token:s('token'),type:otpTypes[mode]}));if(!result.session)throw {code:'otp_expired'};clearPending();await load()}catch(e){recovery=false;throw e}
-  return
+  if(!pending||!(/^\d{6}$/).test(s('token'))){notice('Introduz um código de seis algarismos.',true);return}
+  const {mode,identifier,channel}=pending,resetting=mode==='reset';
+  recovery=resetting;
+  const options=channel==='phone'?{phone:identifier,token:s('token'),type:'sms'}:
+   {email:identifier,token:s('token'),type:otpTypes[mode]};
+  try{const result=checked(await client.auth.verifyOtp(options));if(!result.session)throw {code:'otp_expired'};clearPending();await load()}catch(e){recovery=false;throw e}
+  return;
  }
+
  if(f.id==='recovery'){if(p('password')!==p('confirm')){notice('As palavras-passe não coincidem.',true);return}if(!recovery||p('password').length<12){notice('A recuperação não está activa ou a palavra-passe é curta.',true);return}checked(await client.auth.updateUser({password:p('password')}));recovery=false;clearPending();const result=await client.auth.signOut({scope:'global'});if(result.error){screen('<div class="panel"><h1>Palavra-passe alterada</h1><p>Não foi possível terminar todas as sessões. Tenta terminar a sessão novamente.</p>'+button('Terminar sessão','logout')+'</div>');notice('A alteração foi guardada; o logout não foi confirmado.',true);return}user=null;profile=null;authScreen();notice('Palavra-passe alterada. Entra novamente.');return}
  if(!user)throw Error('Inicia sessão.');
  if(f.id==='onboarding'){if(!v.has('agree')||!['buyer','producer','company'].includes(s('role')))throw Error('Confirma o tipo de conta e as condições.');checked(await client.from('zunga_profiles').insert({user_id:user.id,role:s('role'),display_name:s('name'),province:s('province'),city:s('city'),terms_version:'pilot-1'}));await load();return}
@@ -172,7 +205,35 @@ async function execute(f){
 }
 async function run(work){if(busy)return;busy=true;const previous=Array.from(document.querySelectorAll('button')).map(b=>[b,b.disabled]);previous.forEach(([b])=>b.disabled=true);try{await work()}catch(e){notice(authError(e),true)}finally{busy=false;previous.forEach(([b,disabled])=>{b.disabled=disabled});const resend=$('resendCode');if(resend)resend.disabled=Date.now()<nextSend}}
 document.addEventListener('submit',e=>{if(!['authForm','otpForm','onboarding','editProfile','changeEmail','stall','company','recovery'].includes(e.target.id))return;e.preventDefault();run(()=>execute(e.target))});
-document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(!action||busy)return;if(['login','register','reset','otp','change-email'].includes(action)){const old=pending;clearPending();authScreen(action==='change-email'?old?.mode||'login':action,action==='change-email'?old?.email||'':'');notice();return}run(async()=>{if(action==='resend'&&pending){await requestCode(pending.mode,pending.email,true);return}if(action.startsWith('oauth-')||action.startsWith('link-')){const provider=action.split('-')[1];if(!Object.hasOwn(providers,provider)||cfg.oauth?.[provider]!==true)return;const options={redirectTo:redirect};if(action.startsWith('link-')){if(!user||recovery)return;checked(await client.auth.linkIdentity({provider,options}))}else{clearPending();checked(await client.auth.signInWithOAuth({provider,options}))}return}if(action==='logout'){generation++;checked(await client.auth.signOut());user=null;profile=null;recovery=false;clearPending();authScreen();notice('Sessão terminada.')}else if(action==='reload')await load();else if(action==='removeAvatar'&&user&&profile){checked(await client.from('zunga_profiles').update({avatar_path:null}).eq('user_id',user.id).select('user_id').single());checked(await client.storage.from('zunga-avatars').remove([user.id+'/avatar']));await load()}})});
+
+document.addEventListener('click',e=>{
+ const action=e.target.closest('[data-action]')?.dataset.action;
+ if(!action||busy)return;
+ if(action==='channel-email'||action==='channel-phone'){
+  authScreen($('authForm')?.dataset.mode||'login','',action==='channel-phone'?'phone':'email');notice();return;
+ }
+ if(['login','register','reset','otp','change-identifier'].includes(action)){
+  const previous=pending,channel=previous?.channel||authChannel,mode=action==='change-identifier'?previous?.mode||'login':action;
+  clearPending();authScreen(mode,'',channel);notice();return;
+ }
+ run(async()=>{
+  if(action==='resend'&&pending){await requestCode(pending.mode,pending.identifier,pending.channel,true);return}
+  if(action.startsWith('oauth-')||action.startsWith('link-')){
+   const provider=action.split('-')[1];if(!Object.hasOwn(providers,provider))return;
+   const options={redirectTo:redirect};
+   if(action.startsWith('link-')){if(!user||recovery)return;checked(await client.auth.linkIdentity({provider,options}))}
+   else{clearPending();checked(await client.auth.signInWithOAuth({provider,options}))}
+   return;
+  }
+  if(action==='logout'){generation++;checked(await client.auth.signOut());user=null;profile=null;recovery=false;clearPending();authScreen();notice('Sessão terminada.')}
+  else if(action==='reload')await load();
+  else if(action==='removeAvatar'&&user&&profile){
+   checked(await client.from('zunga_profiles').update({avatar_path:null}).eq('user_id',user.id).select('user_id').single());
+   checked(await client.storage.from('zunga-avatars').remove([user.id+'/avatar']));await load();
+  }
+ });
+});
+
 async function start(){
  if(!validConfig(cfg)){notice('Backend ainda não configurado. Não é possível criar contas reais.',true);screen('<div class="panel"><h1>A fundação real está preparada</h1><p>O ambiente de autenticação exige uma origem HTTPS dedicada e configuração do Supabase. Não introduzas credenciais nesta página.</p><a class="button outline" href="https://zunga.stivenluanda04.workers.dev/">Explorar demonstração</a></div>');return}
  const callback=new URLSearchParams(location.search),hasError=callback.has('error')||new URLSearchParams(location.hash.slice(1)).has('error');
