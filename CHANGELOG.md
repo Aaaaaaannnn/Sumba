@@ -1,3 +1,14 @@
+# SUMBA V0.25.0 — 20/11/2026
+
+- Cabeçalho da demonstração: botão «Entrar» ocultado após sessão simulada, notificações movidas para a direita e espaço mobile revisto.
+- Carrinho reorganizado com cestos independentes (criar, escolher, renomear, eliminar) e separação de produtos por bancada; histórico de pedidos preservado.
+- Checkout limitado ao cesto activo, com NIF fictício opcional, Multicaixa Express simulado com referência local, estado pendente e aprovação automática demonstrativa, ou pagamento na entrega simulado. Nenhuma solicitação de pagamento ou dados pessoais foram enviados a bancos.
+- Página vazia do carrinho e botão «Explorar produtos» alinhados e adaptados a telemóvel.
+- README reescrito como guia técnico e de avaliação; histórico detalhado mantido neste CHANGELOG.
+- Preparados configuração e workflow manuais para Worker paralelo `sumba`, documentação de migração, regressões e CI. Workers `zunga` e `zunga-auth` e Supabase ref não foram modificados.
+- Em `/real/` no novo endereço, encaminhamento para o Worker de autenticação existente, de modo a preservar as allowlists atuais.
+- Verificações executadas: JavaScript principal validado sintacticamente e entradas HTML sincronizadas por SHA. Testes automatizados CI e validação visual num navegador real devem ser confirmados no PR. Publicação Cloudflare e renomeação do repositório **ainda não executadas**.
+
 # SUMBA V0.24.0 — 20/11/2026
 
 - Emblema familiar escolhido (folha, sol, família, campos) vectorizado a partir do original em PNG transparente.
