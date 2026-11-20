@@ -2,49 +2,98 @@
 (() => {
 const $=id=>document.getElementById(id), cfg=window.ZUNGA_REAL_CONFIG||{}, roles={buyer:'Cliente',producer:'Fornecedor',company:'Empresa',courier:'Entregador',admin:'Administração'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const validConfig=c=>c.enabled===true&&c.origin===location.origin&&/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(c.url||'')&&/^sb_publishable_[A-Za-z0-9_-]+$/.test(c.publishableKey||'')&&location.protocol==='https:'&&location.pathname==='/'&&location.origin!=='https://zunga.stivenluanda04.workers.dev';
-const redirect=location.origin+'/';
-const providers={google:'Google',facebook:'Facebook'};
+const validConfig=c=>c.enabled===true&&c.routes?.some?.(r=>r.origin===location.origin&&r.path===location.pathname)&&/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(c.url||'')&&/^sb_publishable_[A-Za-z0-9_-]+$/.test(c.publishableKey||'')&&location.protocol==='https:';
+const redirect=location.origin+location.pathname;
+const providers={google:'Google'};
 const otpTypes={register:'email',otp:'email',reset:'recovery'};
-const pendingKey='sumba-auth-otp-v1';
+const pendingKey='sumba-auth-otp-v2';
 let pending=null,nextSend=0,otpTimer=null;
-const restorePending=()=>{try{const x=JSON.parse(sessionStorage.getItem(pendingKey)||'null');if(x&&['register','reset','otp'].includes(x.mode)&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x.email)&&x.expiresAt>Date.now()&&x.expiresAt<=Date.now()+601000){pending={mode:x.mode,email:x.email};nextSend=Math.max(0,Math.min(x.nextSend||0,Date.now()+60000))}}catch{}};
-const setPending=(mode,email)=>{pending={mode,email};try{sessionStorage.setItem(pendingKey,JSON.stringify({mode,email,nextSend,expiresAt:Date.now()+10*60000}))}catch{}};
+
+const isEmail=value=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+const isPhone=value=>/^\+[1-9]\d{7,14}$/.test(value);
+let authChannel='email';
+const restorePending=()=>{try{
+ const x=JSON.parse(sessionStorage.getItem(pendingKey)||'null');
+ if(x&&['register','reset','otp'].includes(x.mode)&&['email','phone'].includes(x.channel)&&
+ (x.channel==='email'?isEmail(x.identifier):isPhone(x.identifier))&&x.expiresAt>Date.now()&&x.expiresAt<=Date.now()+601000){
+  pending={mode:x.mode,identifier:x.identifier,channel:x.channel};
+  authChannel=x.channel;nextSend=Math.max(0,Math.min(x.nextSend||0,Date.now()+60000));
+ }
+}catch{}};
+const setPending=(mode,identifier,channel)=>{pending={mode,identifier,channel};
+ try{sessionStorage.setItem(pendingKey,JSON.stringify({mode,identifier,channel,nextSend,expiresAt:Date.now()+600000}))}catch{}};
 const clearPending=()=>{pending=null;nextSend=0;try{sessionStorage.removeItem(pendingKey)}catch{}};
 restorePending();
+
 let client,user=null,profile=null,recovery=false,busy=false,generation=0;
 const notice=(s='',error=false)=>{$('notice').textContent=s;$('notice').classList.toggle('error',error)};
 const screen=html=>{if(otpTimer){clearInterval(otpTimer);otpTimer=null}$('content').innerHTML=html};
 const label=(name,key,value='',attrs='')=>'<label>'+esc(name)+'<input name="'+key+'" value="'+esc(value)+'" '+attrs+'></label>';
 const textarea=(name,key,value='',max=600)=>'<label>'+esc(name)+'<textarea name="'+key+'" maxlength="'+max+'">'+esc(value)+'</textarea></label>';
 const button=(title,act)=>'<button type="button" class="outline" data-action="'+act+'">'+esc(title)+'</button>';
-const terms='<details><summary>Condições do piloto (versão pilot-1)</summary><p>A SUMBA é uma plataforma em desenvolvimento. Neste piloto não há compras, pagamentos, cobranças, garantias de entrega ou contratos celebrados pelo sistema. O email é usado para autenticação; nome, localização aproximada, apresentação e foto são usados no perfil. Bancadas publicadas exibem publicamente nome comercial, localização e descrição. Não introduzas dados sensíveis, documentos, contactos de terceiros ou conteúdo ilegal. Usa apenas conteúdo que tens direito a publicar. A versão de teste não substitui os termos e política de privacidade definitivos. A eliminação da conta deverá ser disponibilizada antes do lançamento público; para testes, solicita apoio ao responsável pelo piloto.</p></details>';
+const terms='<details><summary>Condições do piloto (versão pilot-1)</summary><p>A SUMBA é uma plataforma em desenvolvimento. Neste piloto não há compras, pagamentos, cobranças, garantias de entrega ou contratos celebrados pelo sistema. O email ou o número de telemóvel é usado para autenticação; nome, localização aproximada, apresentação e foto são usados no perfil. Bancadas publicadas exibem publicamente nome comercial, localização e descrição. Não introduzas dados sensíveis, documentos, contactos de terceiros ou conteúdo ilegal. Usa apenas conteúdo que tens direito a publicar. A versão de teste não substitui os termos e política de privacidade definitivos. A eliminação da conta deverá ser disponibilizada antes do lançamento público; para testes, solicita apoio ao responsável pelo piloto.</p></details>';
 const agree=()=>terms+'<label class="check"><input type="checkbox" name="agree" required> Li e aceito as condições do piloto.</label>';
 
+
 function socialButtons(link=false,identities=[]){
- return Object.entries(providers).map(([id,name])=>{const linked=identities.includes(id),ready=cfg.oauth?.[id]===true;return '<button type="button" class="social '+id+'" data-action="'+(link?'link-':'oauth-')+id+'" '+(linked||!ready?'disabled':'')+'><span class="provider-icon" aria-hidden="true">'+(id==='google'?'G':'f')+'</span>'+esc(linked?name+' vinculado':ready?(link?'Vincular ':'Continuar com ')+name:name+' · em preparação')+'</button>'}).join('');
+ return Object.entries(providers).map(([id,name])=>{
+  const linked=identities.includes(id);
+  return '<button type="button" class="social '+id+'" data-action="'+(link?'link-':'oauth-')+id+'" '+(linked?'disabled':'')+'><span class="provider-icon" aria-hidden="true">G</span>'+esc(linked?name+' vinculado':(link?'Vincular ':'Continuar com ')+name)+'</button>';
+ }).join('');
 }
-function authScreen(mode='login',email=''){
- const login=mode==='login',register=mode==='register',reset=mode==='reset',otp=mode==='otp';
- const password=login||register;
- screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-emblem.svg" alt="" width="46" height="49"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+ (login?'Entra na SUMBA':register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+'</h1><p>Uma conta para acompanhar a tua actividade no mercado agrícola.</p></div><div class="panel auth-panel"><form id="authForm" data-mode="'+mode+'">'+label('Email','email',email,'type="email" required autocomplete="email" maxlength="254"')+(password?label('Palavra-passe','password','','type="password" required '+(register?'minlength="12" ':'')+'maxlength="128" autocomplete="'+(register?'new-password':'current-password')+'"'):'')+(register?label('Confirmar palavra-passe','confirm','','type="password" required minlength="12" maxlength="128" autocomplete="new-password"')+agree():'')+'<button type="submit">'+(login?'Entrar':register?'Criar conta':'Enviar código por email')+'</button></form><div class="actions">'+(login?button('Entrar com código','otp')+button('Esqueci a palavra-passe','reset')+button('Criar conta','register'):button('Voltar ao login','login'))+'</div>'+((login||register)?'<div class="or"><span>ou</span></div><div class="socials">'+socialButtons()+'</div>':'')+'</div><p class="muted">Piloto real separado do marketplace demonstrativo. Não uses a palavra-passe de demonstração.</p>');
+
+
+function authScreen(mode='login',identifier='',channel=authChannel){
+ authChannel=channel==='phone'?'phone':'email';
+ const login=mode==='login',register=mode==='register',reset=mode==='reset';
+ const password=login||register,phone=authChannel==='phone';
+ const tabs='<div class="auth-tabs" role="group" aria-label="Método de acesso"><button type="button" class="'+(!phone?'selected':'')+'" data-action="channel-email" aria-pressed="'+(!phone)+'">Email</button><button type="button" class="'+(phone?'selected':'')+'" data-action="channel-phone" aria-pressed="'+phone+'">Telemóvel</button></div>';
+ const field=phone?
+  label('Número de telemóvel','phone',identifier,'type="tel" inputmode="tel" placeholder="+2449XXXXXXXX" pattern="\\+[1-9][0-9]{7,14}" required autocomplete="tel" maxlength="16"'):
+  label('Email','email',identifier,'type="email" required autocomplete="email" maxlength="254"');
+ screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-emblem.svg" alt="" width="46" height="49"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+
+ (login?'Entra na SUMBA':register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+
+ '</h1><p>Uma conta pessoal, protegida e confirmada por '+(phone?'SMS.':'email.')+'</p></div>'+
+ '<div class="panel auth-panel">'+tabs+
+ '<form id="authForm" data-mode="'+mode+'" data-channel="'+authChannel+'">'+field+
+ (password?label('Palavra-passe','password','','type="password" required '+(register?'minlength="12" ':'')+'maxlength="128" autocomplete="'+(register?'new-password':'current-password')+'"'):'')+
+ (register?label('Confirmar palavra-passe','confirm','','type="password" required minlength="12" maxlength="128" autocomplete="new-password"')+agree():'')+
+ '<button type="submit">'+(login?'Entrar':register?'Criar conta':reset?'Receber código de recuperação':'Enviar código de acesso')+'</button></form>'+
+ '<div class="actions">'+(login?button('Entrar com código','otp')+button('Esqueci a palavra-passe','reset')+button('Criar conta','register'):button('Voltar ao login','login'))+'</div>'+
+ ((login||register)?'<div class="or"><span>ou</span></div><div class="socials">'+socialButtons()+'</div>':'')+
+ '<p class="muted">'+(phone?'Usa o formato internacional, por exemplo +2449XXXXXXXX. O envio depende da activação do serviço SMS.':'A confirmação e os códigos são enviados pelo serviço de email da SUMBA.')+'</p></div>');
 }
+
+
 function otpScreen(){
  if(!pending)return authScreen();
- const {mode,email}=pending;
- screen('<div class="hero"><h1>Verifica o teu email</h1><p>Introduz o código de seis algarismos.</p></div><div class="panel"><p>Se o pedido foi aceite, o código foi solicitado para <strong>'+esc(email)+'</strong>. Verifica também o spam.</p><form id="otpForm">'+label('Código de verificação','token','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required')+'<button type="submit">Verificar código</button></form><div class="actions"><button type="button" class="outline" data-action="resend" id="resendCode">Reenviar código</button>'+button('Alterar email','change-email')+'</div><p class="muted">O código expira conforme a configuração do servidor. Nunca partilhes o teu código.</p></div>');
+ const {identifier,channel}=pending,phone=channel==='phone';
+ screen('<div class="hero"><h1>Verifica o teu '+(phone?'telemóvel':'email')+'</h1><p>Introduz o código de seis algarismos.</p></div>'+
+ '<div class="panel"><p>Se o pedido foi aceite, solicitámos um código para <strong>'+esc(identifier)+'</strong>.</p>'+
+ '<form id="otpForm">'+label('Código de verificação','token','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required')+
+ '<button type="submit">Verificar código</button></form>'+
+ '<div class="actions"><button type="button" class="outline" data-action="resend" id="resendCode">Reenviar código</button>'+button('Alterar '+(phone?'número':'email'),'change-identifier')+'</div>'+
+ '<p class="muted">O código tem validade limitada. Nunca partilhes o teu código.</p></div>');
  const tick=()=>{const b=$('resendCode');if(!b)return;const secs=Math.max(0,Math.ceil((nextSend-Date.now())/1000));b.disabled=busy||secs>0;b.textContent=secs?'Reenviar em '+secs+' s':'Reenviar código';if(!secs&&otpTimer){clearInterval(otpTimer);otpTimer=null}};
  tick();otpTimer=setInterval(tick,1000);
 }
+
+
 function authError(e){
- const code=String(e?.code||'');
- if(['invalid_credentials','email_not_confirmed'].includes(code))return 'Não foi possível entrar. Confirma o email e a palavra-passe, ou usa um código.';
- if(['otp_expired','otp_disabled','bad_code_verifier','flow_state_not_found','flow_state_expired'].includes(code))return 'Código inválido ou expirado. Solicita um novo código neste navegador.';
+ const code=String(e?.code||''),message=String(e?.message||'').toLowerCase();
+ if(['invalid_credentials','email_not_confirmed','phone_not_confirmed'].includes(code))return 'Não foi possível entrar. Confirma a identidade e a palavra-passe, ou usa um código.';
+ if(['otp_expired','otp_disabled','bad_code_verifier','flow_state_not_found','flow_state_expired'].includes(code))return 'Código inválido ou expirado. Solicita um novo código.';
  if(['over_email_send_rate_limit','over_request_rate_limit','over_sms_send_rate_limit'].includes(code)||e?.status===429)return 'Aguarda antes de solicitar outro código.';
- if(['provider_disabled','oauth_provider_not_supported','manual_linking_disabled','identity_already_exists','identity_not_found'].includes(code))return 'Este método de acesso não está disponível ou já está associado a outra conta. Contacta o suporte.';
+ if(['sms_provider_disabled','phone_provider_disabled','sms_send_failed','sms_send_error','sms_not_configured'].includes(code)||message.includes('sms provider')||message.includes('sms not enabled')||message.includes('phone signups are disabled'))
+  return 'O envio de SMS ainda não está activo. É necessário configurar um fornecedor SMS no Supabase.';
+ if(['provider_disabled','oauth_provider_not_supported'].includes(code)||message.includes('provider is not enabled'))
+  return 'O login com Google precisa de ser activado e configurado no Supabase.';
+ if(['manual_linking_disabled','identity_already_exists','identity_not_found'].includes(code))return 'Este método já está associado a outra conta ou ainda não pode ser vinculado.';
  if(['weak_password','same_password'].includes(code))return 'Escolhe uma palavra-passe nova e mais forte, com pelo menos 12 caracteres.';
- return e?.name==='AuthRetryableFetchError'?'Ligação indisponível. Tenta novamente.':'Não foi possível concluir. Verifica os dados ou tenta mais tarde.';
+ if(code==='invalid_phone'||message.includes('invalid phone'))return 'Número inválido. Usa o formato internacional, por exemplo +2449XXXXXXXX.';
+ return e?.name==='AuthRetryableFetchError'?'Ligação indisponível. Tenta novamente.':'Não foi possível concluir. Confirma os dados e a configuração do serviço.';
 }
+
 async function requestCode(mode,email,resend=false){
  if(!['register','otp','reset'].includes(mode))throw Error('invalid-mode');
  if(Date.now()<nextSend)throw {code:'over_email_send_rate_limit'};
