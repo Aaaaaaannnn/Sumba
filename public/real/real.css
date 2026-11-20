@@ -19,3 +19,11 @@
 .auth-hero-identity strong{font-size:24px;display:block;line-height:1}
 .auth-hero-identity small{font-size:11px;display:block;margin-top:5px;color:#d7e7d7}
 @media(max-width:420px){header{gap:8px}header>.brand-lockup .brand-mark{flex-basis:38px;width:38px;height:41px}header>.brand-lockup .brand-words strong{font-size:19px}header>.brand-lockup .brand-words small{font-size:9px}header>small{font-size:10px;text-align:right}}
+
+
+/* V0.22 — selector acessível de email ou telemóvel, sem mudar a paleta existente. */
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
+.auth-tabs button{background:#f3f6f0;color:#244d34;border:1px solid #dce6d7;border-radius:12px;min-height:44px}
+.auth-tabs button.selected{background:#123c2c;color:#fff;border-color:#123c2c}
+.auth-panel input[type=tel]{font-variant-numeric:tabular-nums}
+.auth-panel .socials .social{width:100%}
