@@ -1692,8 +1692,9 @@ async function sumbaLoadRealSession(){
      if(!n.error&&n.count>0)alert.hidden=false;
     }
    }
-   if(u&&role==='buyer'&&name)account.name=name;
-   if(role==='buyer'&&tab==='profile')render();
+   const before=account.name;
+   if(role==='buyer')account.name=u&&name?name:'';
+   if(role==='buyer'&&['home','profile'].includes(tab)&&before!==account.name)render();
   };
   await update();
   client.auth.onAuthStateChange(()=>{setTimeout(()=>update(),0)});
@@ -1716,7 +1717,7 @@ document.addEventListener('click',e=>{
 
 const entryRole=({client:'buyer',business:'producer',company:'company',admin:'admin',courier:'courier'})[new URLSearchParams(location.search).get?.('app')];if(entryRole){role=entryRole;db.role=role;save()}
 
-if(sumbaPublicMode){role='buyer';tab='home';account.guest=true;account.signed=false;}
+if(sumbaPublicMode){role='buyer';tab='home';account.guest=true;account.signed=false;account.name='';}
 else document.getElementById('sumbaPreviewRole')?.removeAttribute('hidden');
 initPickers();
 bindBackdropDismiss($('#dialog'),dismissDialog);$('#closeDialog').addEventListener('click',dismissDialog);$('#dialog').addEventListener('cancel',e=>{if(typeof $('#dialog').animate==='function'&&!reducedMotion()){e.preventDefault();dismissDialog()}});$('#dialog').addEventListener('close',()=>{activeStall=null});render();armBack();const params=new URLSearchParams(location.search);if(role==='producer'&&!producerAccount.signed){openProducerAuth()}else if(role==='company'&&!business.signed){openBusinessAuth()}else if(['admin','courier'].includes(role)&&!ops.sessions[role]){openOpsAuth(role)}else if(role==='buyer'&&!account.signed&&!account.guest&&!sumbaPublicMode){openAuth()}else{}
