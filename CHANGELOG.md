@@ -1,3 +1,12 @@
+# SUMBA V0.24.0 — 20/11/2026
+
+- Emblema familiar escolhido (folha, sol, família, campos) vectorizado a partir do original em PNG transparente.
+- Substituídos os antigos recursos vazios/PNG incorporados em ambos os portais; novo SVG oficial independente, sem texto embutido.
+- Marca aplicada ao cabeçalho móvel, menu lateral desktop e administração, perfis de todos os tipos e favicon.
+- Nos formulários demo de login/registo aparece em destaque com até 132 px; autenticação real piloto também actualizada em login, OTP, onboarding, recuperação e perfil.
+- Fotografia/avatares dos utilizadores preservados. Slogan «Do campo à sua mesa.».
+- 18 verificações estáticas e funcionais isoladas passaram; deploy e teste visual final não comprovados.
+
 # SUMBA v0.23.0 — 20/11/2026
 
 Restituição para demonstração: navegação livre, perfis locais, login e criação de conta simulados (Google, Facebook, email, telefone), carrossel com pré-visualização do próximo cartão, logótipo e slogan legíveis, notificações lidas/não lidas, histórico local de emails de actividade sem envio real. Não foram efectuados envios externos de mensagens nem cobranças. A publicação na Cloudflare depende de deployment separado.
