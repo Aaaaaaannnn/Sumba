@@ -1,0 +1,36 @@
+name: Deploy SUMBA Demo (manual, parallel)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sumba-demo-parallel-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate demonstration and static assets
+        run: |
+          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs
+          test -f public/assets/sumba-icon.svg
+      - name: Verify Cloudflare credentials
+        env:
+          HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          HAS_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        run: |
+          test "$HAS_TOKEN" = "true" && test "$HAS_ACCOUNT" = "true" || (echo "Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under repository secrets" && exit 1)
+      - name: Deploy new parallel Worker SUMBA
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config wrangler.sumba.jsonc
+      - name: Smoke test new Worker
+        run: |
+          node -e "fetch('https://sumba.stivenluanda04.workers.dev/').then(async r=>{if(!r.ok)throw Error('HTTP '+r.status);const text=await r.text();if(!text.includes('SUMBA'))throw Error('Sem marca SUMBA');console.log('SUMBA demo publicada')}).catch(e=>{console.error(e);process.exitCode=1})"

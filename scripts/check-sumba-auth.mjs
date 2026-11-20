@@ -7,7 +7,7 @@ for(const path of ['/','/config.js','/real.js','/real.css']){
   if(!response.ok)throw Error('HTTP '+response.status);
   const body=await response.text();
   if(path==='/'){
-   if(!body.includes('name="sumba-version" content="0.21.2"')||!body.includes('real.js'))throw Error('Página/versão inesperada');
+   if(!body.includes('name="sumba-version" content="0.24.0"')||!body.includes('real.js'))throw Error('Página/versão inesperada');
    if(!(response.headers.get('content-security-policy')||'').includes("frame-ancestors 'none'"))throw Error('CSP em falta');
    if(response.headers.get('x-frame-options')!=='DENY')throw Error('X-Frame-Options em falta');
   }
