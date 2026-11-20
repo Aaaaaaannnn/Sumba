@@ -1996,7 +1996,7 @@ function sumbaPaymentFields(){
 const sumbaLegacyCheckoutPage=checkoutPage;
 checkoutPage=function(){
  const html=sumbaLegacyCheckoutPage();
- return checkoutStep===3?html.replace('</form>',sumbaPaymentFields()+'</form>'):html;
+ return checkoutStep===3?html.replace('<div class="checkout-actions"><button type="button" class="btn outline" data-shop="checkoutBack">Voltar</button>',sumbaPaymentFields()+'<div class="checkout-actions"><button type="button" class="btn outline" data-shop="checkoutBack">Voltar</button>'):html;
 };
 function sumbaPaymentLabel(p){
  return p?.status==='approved_demo'?'Pagamento aprovado (simulado)':
