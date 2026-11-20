@@ -39,7 +39,7 @@ export async function mountNotifications(client,header,host){
   if(r.error)return;
   const next=r.data||[];
   const newest=next[0]?.id;
-  if(loaded&&newest&&newest!==lastId&&!panel.hidden){
+  if(loaded&&newest&&newest!==lastId&&panel.hidden){
     const info=next.find(n=>n.id===newest);
     if(info){const toast=document.createElement('div');toast.className='sumba-notification-toast';toast.textContent=info.title+' — '+info.body;
       document.body.appendChild(toast);setTimeout(()=>toast.remove(),5000);}
