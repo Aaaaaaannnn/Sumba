@@ -14,11 +14,13 @@ test('JavaScript sintacticamente válido',()=>{
  assert.ok(inline);new Function(inline[1]);new Function(auth);
  new Function(admin.replace(/^export\s+/m,''));new Function(notifications.replace(/^export\s+/m,''));
 });
-test('entrada real e protecção contra compras simuladas',()=>{
- assert.match(home,/const sumbaPublicMode=/);assert.match(home,/href="\/real\/"/);
- assert.match(home,/account\.guest=true;account\.signed=false/);
- assert.match(home,/Não foi registada nenhuma compra/);
- assert.match(home,/script src="\/real\/config\.js"/);
+test('piloto real isolado e pedidos explicitamente demonstrativos',()=>{
+ assert.match(home,/const sumbaPublicMode=false/);
+ assert.match(home,/href="\/real\/"/);
+ assert.match(home,/if\(!account\.signed\)account\.guest=true/);
+ assert.match(home,/Multicaixa Express \(simulação\)/);
+ assert.match(home,/Não introduzas NIF ou telefone pessoais verdadeiros/);
+ assert.match(read('public/real/config.js'),/window\.ZUNGA_REAL_CONFIG/);
 });
 test('carrossel sobreposto sem faixa separada',()=>{
  assert.match(home,/\.sumba-carousel-controls\{position:absolute/);
