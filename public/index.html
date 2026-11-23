@@ -827,7 +827,7 @@ const sumbaWelcomePhotos={market:'/assets/sumba-onboarding-market.svg',farmers:'
 const slides=[{title:'Compre diretamente dos agricultores.',desc:'Descobre quem cultiva, conhece os produtos e aproxima o campo da tua mesa.',file:sumbaWelcomePhotos.man},{title:'Valoriza quem trabalha a terra.',desc:'Por trás de cada colheita há famílias e muito trabalho. Dá visibilidade aos produtores.',file:sumbaWelcomePhotos.woman},{title:'Mais escolhas. Mais proximidade.',desc:'Encontra agricultores, explora ofertas e compara produtos num só lugar.',file:sumbaWelcomePhotos.market}];
 function authButton(label,act,style=''){return '<button class="btn '+style+'" type="button" data-auth="'+act+'">'+esc(label)+'</button>'}
 function openAuth(page='welcome'){if(page==='welcome')editingPrefs=false;authPage=page;$('#auth').classList.remove('hide');document.body.style.overflow='hidden';$('.app').inert=true;$('#bottom').inert=true;renderAuth()}
-function hideAuth(){if(!account.guest){openAuth('welcome');return}$('#auth').classList.add('hide');document.body.style.overflow='';$('.app').inert=false;$('#bottom').inert=false}
+function hideAuth(){if(!account.guest&&!account.signed){openAuth('welcome');return}$('#auth').classList.add('hide');document.body.style.overflow='';$('.app').inert=false;$('#bottom').inert=false}
 
 
 const SUMBA_ICON='/assets/sumba-icon.svg';
@@ -870,7 +870,7 @@ function enterSumbaVisitor(name,visitorRole){
  if(role==='courier'){ops.sessions.courier=true;saveOps()}
  tab='home';save();hideAuth();navigate('home');return true
 }
-function enterCustomer(guest=false){if(guest){openAuth('visitor');return}account.signed=true;account.guest=false;account.name=account.name||'Cliente de demonstração';saveAccount();role='buyer';db.role=role;save();hideAuth();navigate('home')}
+function enterCustomer(guest=false){if(guest){openAuth('visitor');return}account.signed=true;account.guest=false;account.name=account.name||'Cliente de demonstração';try{sessionStorage.setItem(SUMBA_VISITOR_KEY,JSON.stringify({name:account.name,role:'buyer',demoMember:true}))}catch{}saveAccount();role='buyer';db.role=role;save();hideAuth();navigate('home')}
 function openIncoming(){const p=new URLSearchParams(location.search);if(p.has('product')&&productOf(p.get('product')))detail(p.get('product'));else if(p.has('stall')&&allStalls().some(s=>s.id===p.get('stall')))showStall(p.get('stall'))}
 function loginDemo(email,password){
  const identifier=sumbaDemoEmail(email);
@@ -2369,7 +2369,7 @@ const entryRole=({client:'buyer',business:'producer',company:'company',admin:'ad
 
 let sumbaVisitorSession=null;
 try{const saved=JSON.parse(sessionStorage.getItem(SUMBA_VISITOR_KEY)||'null');if(saved&&typeof saved.name==='string'&&saved.name.trim().length>=2&&['buyer','producer','company','courier'].includes(saved.role))sumbaVisitorSession=saved}catch{}
-account.signed=false;account.guest=!!sumbaVisitorSession;
+account.signed=sumbaVisitorSession?.demoMember===true;account.guest=!!sumbaVisitorSession&&!account.signed;
 if(sumbaVisitorSession)account.name=sumbaVisitorSession.name;
 role=sumbaVisitorSession?.role||'buyer';tab='home';db.role=role;
 if(role==='producer'){producerAccount.signed=true;saveProducer()}

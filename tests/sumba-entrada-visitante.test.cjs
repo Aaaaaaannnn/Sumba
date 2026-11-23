@@ -5,9 +5,9 @@ test('Both SUMBA main entries are synchronized and syntactically valid',()=>{
  assert.equal(html,read('index.html'));
  const js=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];assert.ok(js);new Function(js);new Function(auth);
 });
-test('Visible account actions lead to actual Supabase portal instead of fake login',()=>{
- assert.match(html,/authButton\('Criar conta','real-register'\)/);
- assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
+test('Demo entry and the real client portal have separate actions',()=>{
+ assert.match(html,/authButton\('Criar conta','demo-create'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','quick','outline'\)/);
  assert.match(html,/const SUMBA_AUTH_URL='https:\/\/zunga-auth\.stivenluanda04\.workers\.dev\/'/);
  assert.match(html,/location\.assign\(SUMBA_AUTH_URL\+'\?flow='/);
  assert.match(auth,/const entryMode=new URLSearchParams\(location\.search\)/);
@@ -22,7 +22,7 @@ test('Guest must provide name and role; without it main demo is gated',()=>{
  assert.match(html,/name="visitorRole"/);
  assert.match(html,/sumbaVisitorSession=null/);
  assert.match(html,/if\(!sumbaVisitorSession\)openAuth\('welcome'\)/);
- assert.match(html,/if\(!account\.guest\)\{openAuth\('welcome'\);return\}/);
+ assert.match(html,/if\(!account\.guest&&!account\.signed\)\{openAuth\('welcome'\);return\}/);
  assert.match(html,/SUMBA_VISITOR_KEY='sumba-visitor-session-v1'/);
 });
 test('Guest shopping is genuinely non-finalizable',()=>{
@@ -54,8 +54,8 @@ test('Full-screen welcome keeps one sharp photograph and a proportional central 
  assert.match(html,/title:'Valoriza quem trabalha a terra\.'/);
  assert.match(html,/title:'Mais escolhas\. Mais proximidade\.'/);
  assert.match(html,/authButton\('Entrar como visitante','guest','outline'\)/);
- assert.match(html,/authButton\('Criar conta','real-register'\)/);
- assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
+ assert.match(html,/authButton\('Criar conta','demo-create'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','quick','outline'\)/);
  assert.match(html,/if\(\+\+introStep>=slides\.length\)\{introStep=0;authPage='welcome'\}/);
  assert.match(html,/authButton\('Saltar introdução','intro-skip','outline'\)/);
 });
