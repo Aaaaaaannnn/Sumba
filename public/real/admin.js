@@ -34,15 +34,15 @@ export async function mountAdmin(client,host){
  const tabs=()=>{section.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===current?'true':'false'));};
  const userCard=u=>{
   const status=u.state==='active'?'Activa':u.state==='suspended'?'Suspensa':'Bloqueada';
-  return '<article class="admin-user"><div class="admin-user-head"><strong>'+escapeHtml(u.name||u.email||u.phone||'Conta sem perfil')+'</strong><span class="pill">'+escapeHtml(status)+'</span></div>'+
+  return '<article class="admin-user"><details><summary class="admin-user-head"><strong>'+escapeHtml(u.name||u.email||u.phone||'Conta sem perfil')+'</strong><span class="pill">'+escapeHtml(status)+'</span></summary>'+
    '<div class="muted">'+escapeHtml(roleName[u.role]||u.role)+' · '+escapeHtml(u.email||'Sem email')+
    (u.phone?' · '+escapeHtml(u.phone):'')+'</div>'+
-   '<div class="muted">Registo: '+date(u.createdAt)+' · Último acesso: '+date(u.lastSignIn)+'</div>'+
+   '<div class="muted">'+escapeHtml([u.city,u.province].filter(Boolean).join(', '))+'</div><div class="muted">Registo: '+date(u.createdAt)+' · Último acesso: '+date(u.lastSignIn)+'</div>'+
    '<div class="admin-user-actions"><button type="button" class="outline" data-a="activity" data-id="'+u.id+'">Actividades</button>'+
    '<button type="button" class="outline" data-a="contact" data-id="'+u.id+'">Mensagem</button>'+
    (u.state==='active'?'<button type="button" class="outline" data-a="suspend" data-id="'+u.id+'">Suspender</button><button type="button" class="outline" data-a="block" data-id="'+u.id+'">Bloquear</button>':
     '<button type="button" class="outline" data-a="activate" data-id="'+u.id+'">Reactivar</button>')+
-   '</div><div id="activity-'+u.id+'" class="admin-activity"></div></article>';
+   '</div><div id="activity-'+u.id+'" class="admin-activity"></div></details></article>';
  };
  const drawUsers=()=>{
   const normalized=search.trim().toLowerCase();
