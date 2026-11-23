@@ -45,11 +45,16 @@ jobs:
             const base="https://zunga.stivenluanda04.workers.dev";
             const paths=["/","/assets/sumba-brand-original.svg","/assets/sumba-onboarding-market.svg","/assets/sumba-onboarding-farmers.svg","/assets/sumba-onboarding-produce.svg"];
             for (const p of paths) {
-              const r=await fetch(base+p,{cache:"no-store"});
-              if(!r.ok)throw Error(p+" returned HTTP "+r.status);
-              const body=await r.text();
-              if(p==="/"&&!body.includes("sumbaWelcomePhotos"))throw Error("New entry HTML missing");
-              if(p!=="/"&&(!body.includes("data:image/webp;base64,")||body.length<10000))throw Error(p+" is not the new bundled illustration");
-              console.log("Published "+p+" ("+body.length+" chars)");
+              let verified=false,latest="";
+              for (let attempt=1;attempt<=8;attempt++) {
+                const url=base+p+(p==="/"?"?sumba_onboard_check="+Date.now()+"_"+attempt:"?v=20261123_"+attempt);
+                const response=await fetch(url,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+                latest=await response.text();
+                const ok=response.ok&&(p==="/"?latest.includes("sumbaWelcomePhotos"):latest.includes("data:image/webp;base64,")&&latest.length>10000);
+                if(ok){console.log("Verified "+p+" ("+latest.length+" chars), attempt "+attempt);verified=true;break}
+                console.log("Retry "+p+": HTTP "+response.status+", bytes "+latest.length+", type "+(response.headers.get("content-type")||"?"));
+                await new Promise(resolve=>setTimeout(resolve,2500));
+              }
+              if(!verified)throw Error("The published "+p+" did not match the new onboarding. First chars: "+latest.slice(0,180));
             }
           '
