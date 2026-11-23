@@ -1,3 +1,13 @@
+# SUMBA — entrada e contas (23/11/2026)
+
+- Corrigida a imagem da entrada para enquadramento proporcional sem filtros de desfoque; logótipo original mantém-se em destaque.
+- «Criar conta» e «Já tenho conta» encaminham para o serviço de autenticação Supabase, em registo ou login, sem criar sessões fictícias na interface principal.
+- Google permanece disponível mediante configuração OAuth; botão Facebook desativado com a indicação «brevemente».
+- Visitantes escolhem apenas nome e tipo de utilizador (cliente, produtor, empresa ou entregador) e acedem à experiência local de demonstração. A aplicação obriga esta escolha antes de entrar.
+- Visitantes podem explorar catálogos e cestos, mas não podem confirmar encomendas ou pagamentos. Compras reais continuam a exigir integração operacional posterior.
+- Tutorial inicial por perfil: progresso da conta autenticada persistido no Supabase com RLS; percurso demonstrativo guardado por nome e perfil no navegador.
+- Preparadas publicações isoladas dos Workers principal e de autenticação, sem mexer na configuração SMTP/Brevo.
+
 # SUMBA — entrada full-screen conforme referência (23/11/2026)
 
 - A entrada do cliente e o tutorial de três cartões passaram a usar uma composição fotográfica vertical contínua: imagem de fundo até ao rodapé, degradê verde e texto branco sobre a fotografia.
