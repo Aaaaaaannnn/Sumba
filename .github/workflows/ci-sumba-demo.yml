@@ -18,6 +18,10 @@ jobs:
       - name: Run static regression tests
         run: |
           node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs
+      - name: Validate isolated real authentication
+        run: |
+          node tests/auth-contract.mjs
+          node scripts/test-sumba-auth-runtime.mjs
       - name: Verify static resources
         run: |
           test -f public/assets/sumba-icon.svg
