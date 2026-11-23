@@ -46,21 +46,21 @@ function socialButtons(link=false,identities=[]){
 function authScreen(mode='login',identifier='',channel=authChannel){
  document.getElementById('sumbaNotifications')?.remove();
  authChannel=channel==='phone'?'phone':'email';
- const login=mode==='login',register=mode==='register',reset=mode==='reset';
- const password=login||register,phone=authChannel==='phone';
+ const login=mode==='login'||mode==='password',register=mode==='register',reset=mode==='reset',passwordLogin=mode==='password';
+ const password=passwordLogin||register,phone=authChannel==='phone';
  const tabs='<div class="auth-tabs" role="group" aria-label="Método de acesso"><button type="button" class="'+(!phone?'selected':'')+'" data-action="channel-email" aria-pressed="'+(!phone)+'">Email</button><button type="button" class="'+(phone?'selected':'')+'" data-action="channel-phone" aria-pressed="'+phone+'">Telemóvel</button></div>';
  const field=phone?
   label('Número de telemóvel','phone',identifier,'type="tel" inputmode="tel" placeholder="+2449XXXXXXXX" pattern="\\+[1-9][0-9]{7,14}" required autocomplete="tel" maxlength="16"'):
   label('Email','email',identifier,'type="email" required autocomplete="email" maxlength="254"');
  screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-icon.svg" alt="Emblema da SUMBA" width="132" height="132"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+
- (login?'Entra na SUMBA':register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+
+ (login?(passwordLogin?'Entrar com palavra-passe':'Entra na SUMBA'):register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+
  '</h1><p>Uma conta pessoal, protegida e confirmada por '+(phone?'SMS.':'email.')+'</p></div>'+
  '<div class="panel auth-panel">'+tabs+
  '<form id="authForm" data-mode="'+mode+'" data-channel="'+authChannel+'">'+field+
  (password?label('Palavra-passe','password','','type="password" required '+(register?'minlength="12" ':'')+'maxlength="128" autocomplete="'+(register?'new-password':'current-password')+'"'):'')+
  (register?label('Confirmar palavra-passe','confirm','','type="password" required minlength="12" maxlength="128" autocomplete="new-password"')+agree():'')+
- '<button type="submit">'+(login?'Entrar':register?'Criar conta':reset?'Receber código de recuperação':'Enviar código de acesso')+'</button></form>'+
- '<div class="actions">'+(login?button('Entrar com código','otp')+button('Esqueci a palavra-passe','reset')+button('Criar conta','register'):button('Voltar ao login','login'))+'</div>'+
+ '<button type="submit">'+(login?(passwordLogin?'Entrar com palavra-passe':'Receber código de 6 dígitos'):register?'Criar conta':reset?'Receber código de recuperação':'Enviar código de acesso')+'</button></form>'+
+ '<div class="actions">'+(login?(passwordLogin?button('Entrar com código','login'):button('Usar palavra-passe','password'))+button('Esqueci a palavra-passe','reset')+button('Criar conta','register'):button('Voltar ao login','login'))+'</div>'+
  ((login||register)?'<div class="or"><span>ou</span></div><div class="socials">'+socialButtons()+'</div>':'')+
  '<p class="muted">'+(phone?'Usa o formato internacional, por exemplo +2449XXXXXXXX. O envio depende da activação do serviço SMS.':'A confirmação e os códigos são enviados pelo serviço de email da SUMBA.')+'</p></div>');
 }
@@ -68,15 +68,49 @@ function authScreen(mode='login',identifier='',channel=authChannel){
 
 function otpScreen(){
  if(!pending)return authScreen();
- const {identifier,channel}=pending,phone=channel==='phone';
- screen('<div class="hero">'+'<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+'<h1>Verifica o teu '+(phone?'telemóvel':'email')+'</h1><p>'+(phone?'Introduz o código SMS de seis algarismos.':'Confirma pelo link recebido no email ou introduz o código, caso esteja incluído na mensagem.')+'</p></div>'+
- '<div class="panel"><p>Se o pedido foi aceite, solicitámos um código para <strong>'+esc(identifier)+'</strong>.</p>'+
- '<form id="otpForm">'+label('Código de verificação','token','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required')+
- '<button type="submit">Verificar código</button></form>'+
- '<div class="actions"><button type="button" class="outline" data-action="resend" id="resendCode">Reenviar código</button>'+button('Alterar '+(phone?'número':'email'),'change-identifier')+'</div>'+
- '<p class="muted">O código tem validade limitada. Nunca partilhes o teu código.</p></div>');
+ const {identifier,channel,mode}=pending,phone=channel==='phone';
+ const title=mode==='reset'?'Recupera o teu acesso':'Verifica o teu '+(phone?'telemóvel':'email');
+ screen('<div class="hero sumba-otp-hero">'+
+ '<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+
+ '<span class="pill">VERIFICAÇÃO SEGURA</span><h1>'+title+'</h1>'+
+ '<p>Introduz o código de 6 dígitos enviado '+(phone?'por SMS.':'para o teu email. Nenhum link é necessário.')+'</p></div>'+
+ '<div class="panel sumba-otp-panel"><div class="otp-identity"><span class="otp-identity-icon" aria-hidden="true">✉</span><div><span class="muted">Código enviado para</span><strong>'+esc(identifier)+'</strong></div></div>'+
+ '<form id="otpForm" autocomplete="on"><label for="otpCode" class="otp-label">Código de verificação</label>'+
+ '<div class="otp-control" id="otpControl"><input id="otpCode" class="otp-input" name="token" type="text" inputmode="numeric" pattern="[0-9]{6}" autocomplete="one-time-code" maxlength="6" minlength="6" required aria-label="Código de verificação de seis dígitos" aria-describedby="otpHint">'+
+ '<div class="otp-digits" aria-hidden="true">'+Array.from({length:6},(_,i)=>'<span class="otp-digit'+(i===0?' current':'')+'"></span>').join('')+'</div></div>'+
+ '<p class="otp-hint" id="otpHint">Toca nas caixas para abrir o teclado numérico. Também podes colar o código completo.</p>'+
+ '<button class="otp-submit" type="submit">Confirmar código</button></form>'+
+ '<div class="otp-divider"></div><div class="actions otp-actions">'+
+ '<button type="button" class="outline" data-action="resend" id="resendCode">Reenviar código</button>'+
+ button('Alterar '+(phone?'número':'email'),'change-identifier')+'</div>'+
+ '<p class="muted otp-security">O código é de utilização única e tem validade limitada. Nunca o partilhes.</p></div>');
+ const input=$('otpCode'),slots=Array.from(document.querySelectorAll('.otp-digit'));
+ const update=()=>{
+  if(!input)return;
+  const clean=input.value.replace(/[^0-9]/g,'').slice(0,6);
+  if(clean!==input.value)input.value=clean;
+  slots.forEach((slot,i)=>{
+   slot.textContent=clean[i]||'';
+   slot.classList.toggle('filled',i<clean.length);
+   slot.classList.toggle('current',i===Math.min(clean.length,5));
+  });
+  $('otpControl')?.classList.toggle('complete',clean.length===6);
+ };
+ if(input){
+  input.addEventListener('input',update);
+  input.addEventListener('paste',event=>{
+   const digits=(event.clipboardData?.getData('text')||'').replace(/[^0-9]/g,'').slice(0,6);
+   if(!digits)return;
+   event.preventDefault();
+   input.value=digits;update();
+  });
+  input.addEventListener('focus',update);
+  update();
+ }
  const tick=()=>{const b=$('resendCode');if(!b)return;const secs=Math.max(0,Math.ceil((nextSend-Date.now())/1000));b.disabled=busy||secs>0;b.textContent=secs?'Reenviar em '+secs+' s':'Reenviar código';if(!secs&&otpTimer){clearInterval(otpTimer);otpTimer=null}};
  tick();otpTimer=setInterval(tick,1000);
+ // A maioria dos browsers móveis só abre o teclado após gesto do utilizador.
+ // O toque nas caixas foca o único input real e ativa o teclado numérico.
 }
 
 
@@ -180,8 +214,8 @@ async function execute(f){
    setPending(mode,identifier,channel);
    otpScreen();notice('Se o registo foi aceite, consulta o teu '+(channel==='phone'?'SMS.':'email.'));return;
   }
-  if(mode==='reset'||mode==='otp'){await requestCode(mode,identifier,channel);return}
-  if(mode!=='login')return;
+  if(mode==='reset'||mode==='otp'||mode==='login'){await requestCode(mode==='login'?'otp':mode,identifier,channel);return}
+  if(mode!=='password')return;
   clearPending();
   checked(await client.auth.signInWithPassword(channel==='phone'?{phone:identifier,password:p('password')}:{email:identifier,password:p('password')}));
   await load();return;
@@ -189,7 +223,7 @@ async function execute(f){
 
 
  if(f.id==='otpForm'){
-  if(!pending||!(/^\d{6}$/).test(s('token'))){notice('Introduz um código de seis algarismos.',true);return}
+  if(!pending||!(/^\d{6}$/).test(s('token'))){notice('Introduz um código de seis algarismos.',true);$('otpCode')?.focus();return}
   const {mode,identifier,channel}=pending,resetting=mode==='reset';
   recovery=resetting;
   const options=channel==='phone'?{phone:identifier,token:s('token'),type:'sms'}:
@@ -223,7 +257,7 @@ document.addEventListener('click',e=>{
  if(action==='channel-email'||action==='channel-phone'){
   authScreen($('authForm')?.dataset.mode||'login','',action==='channel-phone'?'phone':'email');notice();return;
  }
- if(['login','register','reset','otp','change-identifier'].includes(action)){
+ if(['login','password','register','reset','otp','change-identifier'].includes(action)){
   const previous=pending,channel=previous?.channel||authChannel,mode=action==='change-identifier'?previous?.mode||'login':action;
   clearPending();authScreen(mode,'',channel);notice();return;
  }
