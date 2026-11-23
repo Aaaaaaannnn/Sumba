@@ -797,7 +797,7 @@ function hideAuth(){if(!account.guest){openAuth('welcome');return}$('#auth').cla
 const SUMBA_ICON='/assets/sumba-icon.svg';
 const SUMBA_ORIGINAL_BRAND='/assets/sumba-brand-original.svg';
 function sumbaAuthPhoto(file,alt){
- const src=String(file||'').startsWith('/assets/sumba-onboarding-')?file:sumbaWelcomePhotos.market;
+ const src=Object.values(sumbaWelcomePhotos).includes(String(file||''))?file:sumbaWelcomePhotos.market;
  return '<img class="sumba-welcome-photo" src="'+esc(src)+'" alt="'+esc(alt)+'" loading="eager" decoding="async" fetchpriority="high">';
 }
 function sumbaAuthSpotlight(){
