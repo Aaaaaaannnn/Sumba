@@ -25,6 +25,19 @@ const setPending=(mode,identifier,channel)=>{pending={mode,identifier,channel};
 const clearPending=()=>{pending=null;nextSend=0;try{sessionStorage.removeItem(pendingKey)}catch{}};
 restorePending();
 
+// Email-only navigation aid: the link carries an address, never a token or a session.
+// Supabase still validates the six-digit OTP on the server.
+function resumeOtpFromEmailLink(){
+ const prefix='#email-otp=';
+ if(!location.hash?.startsWith(prefix))return false;
+ let identifier;
+ try{identifier=decodeURIComponent(location.hash.slice(prefix.length)).trim().toLowerCase()}catch{return false}
+ if(!isEmail(identifier))return false;
+ setPending('otp',identifier,'email');nextSend=0;
+ history.replaceState?.(null,'',redirect); // remove the email from browser history/navigation URL
+ return true;
+}
+
 let client,user=null,profile=null,recovery=false,busy=false,generation=0;
 const notice=(s='',error=false)=>{$('notice').textContent=s;$('notice').classList.toggle('error',error)};
 const screen=html=>{if(otpTimer){clearInterval(otpTimer);otpTimer=null}$('content').innerHTML=html};
@@ -74,7 +87,7 @@ function otpScreen(){
  '<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+
  '<span class="pill">VERIFICAÇÃO SEGURA</span><h1>'+title+'</h1>'+
  '<p>Introduz o código de 6 dígitos enviado '+(phone?'por SMS.':'para o teu email. Nenhum link é necessário.')+'</p></div>'+
- '<div class="panel sumba-otp-panel"><div class="otp-identity"><span class="otp-identity-icon" aria-hidden="true">✉</span><div><span class="muted">Código enviado para</span><strong>'+esc(identifier)+'</strong></div></div>'+
+ '<div class="panel sumba-otp-panel"><div class="otp-identity"><span class="otp-identity-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"></rect><path d="m3.5 7 8.5 6.3L20.5 7"></path></svg></span><div><span class="muted">Código enviado para</span><strong>'+esc(identifier)+'</strong></div></div>'+
  '<form id="otpForm" autocomplete="on"><label for="otpCode" class="otp-label">Código de verificação</label>'+
  '<div class="otp-control" id="otpControl"><input id="otpCode" class="otp-input" name="token" type="text" inputmode="numeric" pattern="[0-9]{6}" autocomplete="one-time-code" maxlength="6" minlength="6" required aria-label="Código de verificação de seis dígitos" aria-describedby="otpHint">'+
  '<div class="otp-digits" aria-hidden="true">'+Array.from({length:6},(_,i)=>'<span class="otp-digit'+(i===0?' current':'')+'"></span>').join('')+'</div></div>'+
@@ -281,6 +294,7 @@ document.addEventListener('click',e=>{
 
 async function start(){
  if(!validConfig(cfg)){notice('Backend ainda não configurado. Não é possível criar contas reais.',true);screen('<div class="panel"><h1>A fundação real está preparada</h1><p>O ambiente de autenticação exige uma origem HTTPS dedicada e configuração do Supabase. Não introduzas credenciais nesta página.</p><a class="button outline" href="https://zunga.stivenluanda04.workers.dev/">Explorar demonstração</a></div>');return}
+ resumeOtpFromEmailLink();
  const callback=new URLSearchParams(location.search),hasError=callback.has('error')||new URLSearchParams(location.hash.slice(1)).has('error');
  try{const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/+esm');client=createClient(cfg.url,cfg.publishableKey,{auth:{flowType:'pkce',persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'zunga-real-auth-v012'}});
  client.auth.onAuthStateChange((event)=>{if(event==='PASSWORD_RECOVERY'){recovery=true;setTimeout(()=>{if(!busy)load()},0)}else if(event==='SIGNED_OUT'){generation++;user=null;profile=null;recovery=false;clearPending();authScreen();notice('Sessão terminada.')}});
