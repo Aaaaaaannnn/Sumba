@@ -193,3 +193,8 @@ input.otp-input::selection{background:transparent;color:transparent}
  .sumba-live-cart-actions .sumba-field{flex:1}
 }
 @media(max-width:365px){.sumba-live-stock{grid-template-columns:1fr}.sumba-live-head button{max-width:none;width:100%}}
+
+.admin-user summary {cursor:pointer;min-height:44px;gap:.75rem;align-items:center}
+.admin-user summary strong {overflow-wrap:anywhere}
+.admin-user summary:focus-visible {outline:2px solid currentColor;outline-offset:3px}
+.admin-user details[open] summary {margin-bottom:.75rem}
