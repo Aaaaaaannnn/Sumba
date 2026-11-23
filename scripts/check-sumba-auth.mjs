@@ -1,7 +1,7 @@
 // SUMBA Auth · verificador read-only da origem publicada. Sem tokens/segredos.
 const origin='https://zunga-auth.stivenluanda04.workers.dev';
 let failed=0;
-for(const path of ['/','/config.js','/real.js','/real.css']){
+for(const path of ['/','/config.js','/real.js','/real.css','/market.js']){
  try{
   const response=await fetch(origin+path,{redirect:'error',signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw Error('HTTP '+response.status);
@@ -14,6 +14,11 @@ for(const path of ['/','/config.js','/real.js','/real.css']){
   if(path==='/config.js'){
    if(!body.includes('origin:"'+origin+'"')||!body.includes('enabled:true'))throw Error('Origem/configuração inválida');
    if(/(?:publishableKey|secretKey)\s*:\s*["']sb_secret_/.test(body)||/\bservice_role\s*[:=]\s*["']/.test(body))throw Error('Segredo não permitido');
+  }
+  if(path==='/market.js'){
+   for(const t of ['sumba_products','sumba_cart_items','sumba_inquiries','sumba_inquiry_messages'])
+    if(!body.includes(t))throw Error('Mercado autenticado não publicado: '+t);
+   if(body.includes('localStorage'))throw Error('Mercado autenticado não deve usar dados locais de demonstração');
   }
   console.log('OK '+path);
  }catch(e){console.error('FALHA '+path+': '+e.message);failed++}
