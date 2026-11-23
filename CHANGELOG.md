@@ -1,3 +1,12 @@
+# SUMBA — entrada e introdução fotográficas (23/11/2026)
+
+- Página inicial e introdução mantidas em ecrã completo: logótipo oficial transparente ao centro, com slogan «Do campo à sua mesa.», fotografia original sem desfoque e degradê verde na zona inferior.
+- Integração das duas fotografias de agricultores fornecidas em alta resolução (1536 px), guardadas no próprio repositório.
+- Botões da entrada: «Criar conta», «Entrar na minha conta» e «Entrar como visitante»; preservados os destinos de autenticação Supabase e demonstração.
+- Introdução: «Compre diretamente dos agricultores.», «Valoriza quem trabalha a terra.» e «Mais escolhas. Mais proximidade.», sem mensagens genéricas sobre bancadas.
+- «Saltar introdução» e o fim dos diapositivos regressam à página de escolha de acesso, sem iniciar um registo não solicitado.
+- Não foram alterados os pagamentos, dados, emails, Supabase, Brevo nem o Worker de autenticação. Verificações automatizadas em CI e Cloudflare antes de considerar a publicação concluída.
+
 # SUMBA — entrada e contas (23/11/2026)
 
 - Corrigida a imagem da entrada para enquadramento proporcional sem filtros de desfoque; logótipo original mantém-se em destaque.
