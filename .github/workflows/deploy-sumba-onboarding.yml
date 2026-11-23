@@ -1,0 +1,55 @@
+name: Deploy SUMBA onboarding visuals (main demo only)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/deploy-sumba-onboarding.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sumba-demo-onboarding-deploy
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test demo without changing real authentication
+        run: |
+          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs tests/sumba-onboarding-brand.test.cjs
+          node tests/auth-contract.mjs
+      - name: Check existing Cloudflare deploy credentials
+        env:
+          HAS_API: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          HAS_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        run: |
+          if [ "$HAS_API" != "true" ] || [ "$HAS_ACCOUNT" != "true" ]; then
+            echo "Cloudflare credentials missing; aborting publish."
+            exit 1
+          fi
+      - name: Deploy only current public demo Worker
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.166.0"
+          command: deploy --config wrangler.jsonc
+      - name: Verify published HTML and all four local image assets
+        run: |
+          node --input-type=module -e '
+            const base="https://zunga.stivenluanda04.workers.dev";
+            const paths=["/","/assets/sumba-brand-original.svg","/assets/sumba-onboarding-market.svg","/assets/sumba-onboarding-farmers.svg","/assets/sumba-onboarding-produce.svg"];
+            for (const p of paths) {
+              const r=await fetch(base+p,{cache:"no-store"});
+              if(!r.ok)throw Error(p+" returned HTTP "+r.status);
+              const body=await r.text();
+              if(p==="/"&&!body.includes("sumbaWelcomePhotos"))throw Error("New entry HTML missing");
+              if(p!=="/"&&(!body.includes("data:image/webp;base64,")||body.length<10000))throw Error(p+" is not the new bundled illustration");
+              console.log("Published "+p+" ("+body.length+" chars)");
+            }
+          '
