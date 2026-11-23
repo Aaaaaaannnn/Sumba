@@ -46,7 +46,7 @@ test('Full-screen welcome keeps one sharp photograph and a proportional central 
  assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?filter:none!important/);
  assert.match(styles,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
  assert.match(styles,/object-fit:cover!important/);
- assert.match(styles,/max-height:36dvh!important/);
+ assert.match(styles,/max-height:35dvh!important/);
  assert.ok(!styles.includes('filter:blur('));
  assert.match(html,/sumba-onboarding-refresh/);
  assert.match(html,/const SUMBA_ORIGINAL_BRAND='\/assets\/sumba-brand-original\.svg'/);
