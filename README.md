@@ -35,7 +35,7 @@ Os endereços acima identificam **o ambiente antigo**, preservado para compatibi
 **Percurso recomendado para os avaliadores:**
 
 1. Abrir a página inicial e explorar o carrossel, categorias, pesquisas e bancadas.
-2. No ecrã inicial, **Criar conta** e **Entrar na minha conta** abrem percursos de teste locais, sem validar credenciais ou criar contas Supabase. **Entrar como visitante** pede nome e perfil para explorar a demonstração.
+2. No ecrã inicial, **Criar conta** e **Entrar na minha conta** abrem percursos de teste locais; entrar pede apenas email/telemóvel, sem palavra-passe, e não cria conta Supabase. **Entrar como visitante** pede nome e perfil para explorar a demonstração.
 3. Adicionar produtos ao carrinho, criar outros **cestos**, mudar entre eles e separar produtos por bancada.
 4. Na experiência de visitante, experimentar a organização de produtos e cestos; **a finalização de compras está bloqueada**, não são criadas encomendas nem enviados pagamentos.
 5. Para testar a autenticação real, entra na área **Cliente → Perfil → Testar autenticação real (Supabase)**. O piloto seguro é separado da demonstração principal; os dados de catálogo e cestos autenticados usam tabelas Supabase com RLS.

@@ -1,7 +1,7 @@
 # SUMBA — entrada demonstrativa e composição fotográfica (23/11/2026)
 
 - A fotografia enviada da agricultora foi guardada em `public/assets/sumba-home.jpg` e aplicada como fundo integral do ecrã de entrada, com object-fit cover, logótipo original por cima da imagem e degradê verde apenas atrás do conteúdo inferior.
-- Os percursos «Criar conta» e «Entrar na minha conta» permanecem no protótipo demonstrativo e deixam claro que não validam credenciais nem criam sessão Supabase; login de teste reduzido a dois campos e criação de perfil a nome/email.
+- Os percursos «Criar conta» e «Entrar na minha conta» permanecem no protótipo demonstrativo e deixam claro que não validam credenciais nem criam sessão Supabase; login de teste reduzido a um campo (email/telemóvel) e criação de perfil a nome/email.
 - O teste de autenticação Supabase permanece no perfil do cliente, com sessão e dados separados da experiência demonstrativa.
 - Confirmada a ligação da área real a Supabase Auth, perfis, produtos, cestos, propostas e mensagens; sem mudanças de esquema, segredos ou pagamentos.
 - Verificação: revisão estática das rotas, formulários e CSS. Testes automatizados e publicação não foram executados nesta alteração.
