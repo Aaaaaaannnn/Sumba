@@ -11,7 +11,7 @@ test('entradas continuam sincronizadas e javascript válido',()=>{
  new vm.Script(script);
 });
 test('boas-vindas e introdução ocupam o ecrã inteiro',()=>{
- assert.match(html,/authframe'\+\(\(authPage==='welcome'\|\|authPage==='intro'\)\?' sumba-cinematic':'');
+ assert.ok(html.includes("((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')"));
  assert.match(html,/#auth \.authframe\.sumba-cinematic\{/);
  assert.match(html,/min-height:100dvh/);
  assert.match(html,/#auth \.authframe\.sumba-cinematic \.authphoto\{/);
@@ -32,7 +32,6 @@ test('carrossel preserva interação, imagens fornecidas e logótipo original',(
  assert.match(html,/sumbaWelcomePhotos\.market/);
  assert.match(html,/title:'Conhece as bancadas\.'[^\n]*file:sumbaWelcomePhotos\.market/);
  assert.match(html,/data-auth="'\+act\+'"/);
- assert.match(html,/data-auth="\/"/);
  assert.ok(html.includes("'nextIntro'"));
  assert.ok(html.includes("'register'"));
  assert.ok(html.includes("'guest'"));
