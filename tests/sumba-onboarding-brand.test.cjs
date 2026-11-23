@@ -18,7 +18,7 @@ test('all four demonstration authentication roles use the new photo backgrounds'
  assert.match(html,/sumbaWelcomePhotos\.produce/);
 });
 test('provided logo and all three photographs are embedded assets, no remote hotlink',()=>{
- for(const f of ['sumba-brand-original.svg','sumba-onboarding-market.svg','sumba-onboarding-farmers.svg','sumba-onboarding-produce.svg']){
+ for(const f of ['sumba-brand-original.svg','sumba-onboarding-market.svg','sumba-onboarding-farmers.svg','sumba-onboarding-produce.svg','sumba-farmer-woman.svg','sumba-farmer-man.svg']){
   const s=read('public/assets/'+f);
   assert.match(s,/^<svg /);
   assert.match(s,/href="data:image\/webp;base64,/);
@@ -34,6 +34,6 @@ test('original SUMBA wordmark and slogan correction, no change to back-end logic
  assert.ok(html.includes('Do campo à sua mesa.'));
  const js=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
  assert.ok(js);new Function(js);
- assert.match(html,/O mercado agrícola angolano no teu telemóvel/);
+ assert.match(html,/O campo mais perto de ti\./);
  assert.ok(html.includes('Multicaixa Express (simulação)'));
 });
