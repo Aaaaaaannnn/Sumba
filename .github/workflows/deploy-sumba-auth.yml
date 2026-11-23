@@ -5,6 +5,7 @@ on:
     paths:
       - public/real/real.js
       - public/real/real.css
+      - scripts/check-sumba-auth.mjs
       - .github/workflows/deploy-sumba-auth.yml
   workflow_dispatch:
 permissions:
