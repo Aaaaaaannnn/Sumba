@@ -11,7 +11,7 @@ let now=1732000000000;
 const saved=new Map();
 const sessionStorage={getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v),removeItem:k=>saved.delete(k)};
 const elements=new Map(),digits=Array.from({length:6},()=>({textContent:'',classList:{toggle(){}}}));
-const node=()=>({innerHTML:'',textContent:'',value:'',disabled:false,classList:{toggle(){}},listeners:{},addEventListener(k,cb){this.listeners[k]=cb},focus(){this.focused=true}});
+const node=()=>({innerHTML:'',textContent:'',value:'',disabled:false,classList:{toggle(){}},listeners:{},addEventListener(k,cb){this.listeners[k]=cb},focus(){this.focused=true},remove(){this.removed=true}});
 const document={getElementById:id=>{if(!elements.has(id))elements.set(id,node());return elements.get(id)},querySelectorAll:selector=>selector==='.otp-digit'?digits:[],addEventListener:()=>{}};
 class FormData{constructor(f){this.values=f.values}get(n){return this.values[n]??null}has(n){return Object.hasOwn(this.values,n)}}
 const calls=[],success=data=>({data,error:null});let activeUser=null;
