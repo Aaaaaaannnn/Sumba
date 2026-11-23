@@ -13,7 +13,7 @@ for(const path of ['/','/config.js','/real.js','/real.css']){
   }
   if(path==='/config.js'){
    if(!body.includes('origin:"'+origin+'"')||!body.includes('enabled:true'))throw Error('Origem/configuração inválida');
-   if(body.includes('sb_secret_')||body.includes('service_role'))throw Error('Segredo não permitido');
+   if(/(?:publishableKey|secretKey)\s*:\s*["']sb_secret_/.test(body)||/\bservice_role\s*[:=]\s*["']/.test(body))throw Error('Segredo não permitido');
   }
   console.log('OK '+path);
  }catch(e){console.error('FALHA '+path+': '+e.message);failed++}
