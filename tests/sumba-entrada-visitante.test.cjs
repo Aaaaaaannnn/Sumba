@@ -45,3 +45,20 @@ test('Cinematic image does not use blur, scaling or stretched background anymore
  assert.match(html,/object-fit:contain!important/);
  assert.match(html,/width:min\(67vw,380px\)!important/);
 });
+
+test('Final mobile image style overrides prior blurry/hidden layers',()=>{
+ const start=html.lastIndexOf('/* SUMBA: fotografias originais em alta resolucao');
+ assert.ok(start>0,'High resolution override missing');
+ const styles=html.slice(start,html.indexOf('</style>',start));
+ assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?display:block!important/);
+ assert.match(styles,/\.sumba-welcome-photo-scene\{[\s\S]*?filter:none!important/);
+ assert.match(styles,/\.sumba-welcome-photo-scene\{[\s\S]*?object-fit:contain!important/);
+ assert.match(styles,/max-height:32dvh!important/);
+ assert.ok(!styles.includes('filter:blur('),'No blur should remain in the active mobile override');
+ for(const name of ['market','farmers','produce']){
+  const photo=read('public/assets/sumba-onboarding-'+name+'.svg');
+  const match=photo.match(/width="(\d+)" height="(\d+)"/);
+  assert.ok(match&&Number(match[1])>=1400&&Number(match[2])>=950,'Photo is not high resolution: '+name);
+ }
+ assert.match(html,/SUMBA · MERCADO AGRÍCOLA/);
+});

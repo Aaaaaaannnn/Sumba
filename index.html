@@ -583,6 +583,42 @@ body.z17-admin.z17-collapsed .sidebar .brand.brand-lockup .brand-words{display:n
  #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:31%!important}
 }
 
+
+/* SUMBA: fotografias originais em alta resolucao, sem desfoque nem esticamento */
+#auth .authframe.sumba-cinematic .authphoto{background:linear-gradient(180deg,#e2efd3 0%,#bed6af 35%,#427c50 67%,#073e29 100%)!important}
+#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{
+ display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center 18%!important;max-width:none!important;
+ clip-path:inset(0 0 54% 0);opacity:.60!important;filter:none!important;transform:none!important;
+}
+#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{
+ display:block!important;position:absolute!important;inset:auto!important;left:-6%!important;top:32%!important;
+ width:112%!important;height:auto!important;max-height:none!important;
+ object-fit:contain!important;object-position:center!important;
+ transform:none!important;filter:none!important;opacity:1!important;
+ -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
+ mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
+}
+#auth .authframe.sumba-cinematic .authphoto::after{
+ background:linear-gradient(180deg,rgba(238,249,225,.34) 0%,rgba(238,249,225,.08) 32%,transparent 45%,rgba(0,50,28,.03) 52%,rgba(0,50,28,.36) 70%,#073e29 90%,#073e29 100%)!important;
+}
+#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{
+ top:clamp(10px,2.0dvh,28px)!important;max-height:32dvh!important;align-items:flex-start!important;
+}
+#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
+ display:block;width:min(69vw,405px)!important;max-width:82%!important;
+ height:auto!important;max-height:32dvh!important;object-fit:contain!important;
+ filter:drop-shadow(0 2px 5px rgba(241,255,232,.27))!important;
+}
+@media(max-width:400px){
+ #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(68vw,275px)!important}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:34%!important}
+}
+@media(max-height:680px){
+ #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:29%!important}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{max-height:28dvh!important}
+}
+
 </style></head><body>
 <div class="app"><aside class="sidebar"><div class="brand brand-lockup"><span class="brand-mark" aria-hidden="true"><img src="/assets/sumba-icon.svg" alt="" width="40" height="48" decoding="async"></span><span class="brand-words"><strong>SUMBA</strong><small>Do campo à sua mesa.</small></span></div><nav class="nav" id="nav"></nav><div class="sidefoot">🇦🇴 Mercado agrícola angolano<br>SUMBA · Do campo à sua mesa.</div></aside><div class="shell"><header class="top"><div class="brand mobilebrand brand-lockup"><span class="brand-mark" aria-hidden="true"><img src="/assets/sumba-icon.svg" alt="" width="40" height="48" decoding="async"></span><span class="brand-words"><strong>SUMBA</strong><small>Do campo à sua mesa.</small></span></div><div class="desktopheading"><strong>Mercado agrícola</strong><br><small id="topLabel"></small></div><div class="role" id="sumbaPreviewRole" hidden><label for="role" class="muted">Perfil</label><select id="role"><option value="buyer">Cliente</option><option value="producer">Produtor</option><option value="company">Empresa</option><option value="admin">Administrador demo</option><option value="courier">Entregador demo</option></select></div><button type="button" class="sumba-notification-link" id="sumbaNotificationLink" data-demo-notifications aria-label="Notificações SUMBA"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 8-3 8-3 10h18c0-2-3-2-3-10zM10 21h4"/></svg><span id="sumbaNotificationAlert" class="sumba-notification-alert" hidden></span></button><button type="button" class="sumba-account-link" id="sumbaAccountLink" data-demo-login aria-label="Entrar ou criar conta de demonstração">Entrar</button></header><main class="content" id="view"></main></div></div><nav class="bottom" id="bottom"></nav><dialog class="dialog" id="dialog" aria-labelledby="dialogTitle"><div class="dialoghead"><h2 id="dialogTitle"></h2><button type="button" class="close" id="closeDialog" aria-label="Voltar" title="Voltar"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M5 12h14"/></svg></button></div><div id="dialogBody"></div></dialog><div id="toast" class="toast hide" role="status"></div><button id="cartDock" class="cartdock" data-go="cart"></button><section id="auth" class="auth hide" aria-label="Entrada na SUMBA"></section><div id="coach" class="coach hide" role="dialog" aria-modal="true" aria-label="Tutorial guiado"></div><dialog id="zungaPicker" aria-labelledby="zpickerTitle"><div class="zpicker-handle" aria-hidden="true"></div><header class="zpicker-header"><div><h2 id="zpickerTitle">Selecionar</h2><small>Escolhe uma opção</small></div><button type="button" class="zpicker-close" id="zpickerClose" aria-label="Fechar seleção"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div id="zpickerSearchBox" class="zpicker-search hide"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="zpickerSearch" type="search" aria-label="Pesquisar opções" placeholder="Pesquisar..." autocomplete="off"></div><div class="zpicker-list" id="zpickerList" role="group" aria-label="Opções disponíveis"></div><footer class="zpicker-footer">SUMBA · Toca numa opção para confirmar</footer></dialog>
 <script>
@@ -746,7 +782,7 @@ if(regStep===1)body+=input('Nome completo','name',registration.name||'','require
 else if(regStep===2)body+=select('Província','province',provinces,registration.province||'Huíla')+input('Município ou cidade','city',registration.city||'','required maxlength="60" placeholder="Ex.: Lubango"')+select('Tipo de compra','buying',['Uso doméstico','Pequenas compras','Compras frequentes'],registration.buying||'Uso doméstico');
 else body+='<p>Escolhe as categorias que mais te interessam.</p><div class="interestgrid">'+cats.slice(1).map(c=>'<label class="interest">'+photoTag(photoFiles[categoriesPhoto[c]],c,160)+'<span>'+esc(c)+'</span><input type="checkbox" name="interests" value="'+esc(c)+'" '+((registration.interests||[]).includes(c)?'checked':'')+'></label>').join('')+'</div>';
 body+='<div class="err" id="authError" role="alert"></div>'+submit(regStep===3?'Concluir registo':'Continuar')+'</form>'+authButton(regStep===1?'Voltar':'Passo anterior','regBack','outline')}else if(authPage==='done'){title='Tudo pronto, '+(account.name.split(' ')[0]||'cliente')+'!';body='<p>A tua experiência está personalizada. Vamos conhecer o mercado?</p>'+authButton('Começar a explorar','finish')}
-$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">DEMONSTRAÇÃO</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
+$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'SUMBA · MERCADO AGRÍCOLA':authPage==='intro'?'CONHECE A SUMBA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
 const SUMBA_AUTH_URL='https://zunga-auth.stivenluanda04.workers.dev/';
 const SUMBA_VISITOR_KEY='sumba-visitor-session-v1';
 function sumbaRealAccess(flow='login'){location.assign(SUMBA_AUTH_URL+'?flow='+(flow==='register'?'register':'login'))}
