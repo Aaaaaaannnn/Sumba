@@ -1,3 +1,11 @@
+# SUMBA — renovação visual da entrada (23/11/2026)
+
+- Identidade: logótipo original fornecido, com símbolo e letras mantidos e slogan corrigido para «Do campo à sua mesa.», sem fundo ou cartão.
+- Fotografias de entrada trocadas pelas três imagens fornecidas. Cada uma está incorporada como ficheiro local, sem dependência de ligações do Pinterest.
+- Removida a apresentação duplicada do logótipo nos ecrãs de início, introdução, registo e login demonstrativo de cliente, produtor, empresa e operações.
+- Logótipo de maior dimensão sobre a própria fotografia, com sobreposição suave para legibilidade e formato responsivo.
+- Não alterados autenticação real, backend Supabase, Brevo, pagamentos ou dados de demonstração.
+
 # SUMBA — ajuste OTP do portal real (23/11/2026)
 
 - Ícone de envelope redesenhado com SVG, apenas na página do código real.
