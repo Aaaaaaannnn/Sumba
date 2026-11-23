@@ -17,7 +17,7 @@ jobs:
           node-version: '22'
       - name: Run static regression tests
         run: |
-          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs tests/sumba-onboarding-brand.test.cjs tests/sumba-cinematic-reference.test.cjs
+          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs tests/sumba-onboarding-brand.test.cjs tests/sumba-entrada-visitante.test.cjs tests/sumba-cinematic-reference.test.cjs
       - name: Validate isolated real authentication
         run: |
           node tests/auth-contract.mjs
