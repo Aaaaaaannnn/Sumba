@@ -17,7 +17,7 @@ A **Sumba** é uma proposta de plataforma de comércio agrícola que aproxima pr
 
 Este repositório reúne a **experiência demonstrativa principal** e um **piloto técnico separado de autenticação**. Os dois ambientes não devem ser confundidos.
 
-**Estado para avaliação (20/11/2026):** protótipo navegável, alimentado maioritariamente por dados fictícios, sem cobranças reais, sem contratos comerciais ou operações logísticas ativas. Algumas funcionalidades técnicas Supabase estão preparadas em ambiente piloto, mas dependem de configuração e validação operacional.
+**Estado para avaliação (23/11/2026):** a experiência principal continua demonstrativa, com a entrada simplificada e imagem de agricultora em ecrã inteiro. A área técnica Supabase permanece separada para testes autenticados; pagamentos e logística reais não estão ativos.
 
 ## 2. Como experimentar
 
@@ -35,10 +35,10 @@ Os endereços acima identificam **o ambiente antigo**, preservado para compatibi
 **Percurso recomendado para os avaliadores:**
 
 1. Abrir a página inicial e explorar o carrossel, categorias, pesquisas e bancadas.
-2. No ecrã inicial, **Criar conta** ou **Já tenho conta** encaminham para o acesso da SUMBA no Supabase (OTP, palavra-passe e Google; Facebook a disponibilizar). **Explorar como visitante** pede apenas nome e tipo de utilizador (cliente, produtor, empresa ou entregador).
+2. No ecrã inicial, **Criar conta** e **Entrar na minha conta** abrem percursos de teste locais; entrar pede apenas email/telemóvel, sem palavra-passe, e não cria conta Supabase. **Entrar como visitante** pede nome e perfil para explorar a demonstração.
 3. Adicionar produtos ao carrinho, criar outros **cestos**, mudar entre eles e separar produtos por bancada.
 4. Na experiência de visitante, experimentar a organização de produtos e cestos; **a finalização de compras está bloqueada**, não são criadas encomendas nem enviados pagamentos.
-5. No acesso autenticado, testar perfis gravados no Supabase, o diretório de fornecedores, os dados de produtor/empresa e o tutorial personalizado. As compras e pagamentos efetivos dependem de integração comercial posterior.
+5. Para testar a autenticação real, entra na área **Cliente → Perfil → Testar autenticação real (Supabase)**. O piloto seguro é separado da demonstração principal; os dados de catálogo e cestos autenticados usam tabelas Supabase com RLS.
 6. Consultar **Pedidos** para ver histórico, detalhes, estados e opções demonstrativas de cancelamento/recompra; experimentar os perfis Produtor e Empresa.
 7. Aceder à área de ajuda e tutoriais do próprio protótipo.
 
@@ -46,7 +46,7 @@ Os endereços acima identificam **o ambiente antigo**, preservado para compatibi
 
 ## Estado da separação de acessos
 
-O ecrã inicial apresenta dois percursos independentes. **Conta SUMBA:** o acesso em `https://zunga-auth.stivenluanda04.workers.dev/` usa Supabase Auth e perfis autorizados com RLS; ainda não partilha sessões com o protótipo demo. Google pode ser utilizado se o fornecedor OAuth estiver devidamente configurado; Facebook aparece como brevemente. O guia inicial por utilizador/perfil é persistido na tabela `sumba_tutorial_progress` do Supabase.
+A entrada principal mantém-se demonstrativa. Os botões de criar/entrar usam perfis de teste locais e não redirecionam para autenticação real. **Teste de conta SUMBA:** abre-se a partir de Cliente → Perfil → Testar autenticação real (Supabase), em `public/real/`. Usa Supabase Auth e perfis com RLS; a sessão não é partilhada com a demonstração principal. Google depende da configuração OAuth; o tutorial autenticado persiste em `sumba_tutorial_progress`.
 
 **Visitante:** introduz nome e tipo de utilizador e entra apenas no ambiente local demonstrativo. Pode explorar produtos, bancadas e cestos fictícios, mas não pode concluir compras nem pagamentos. O tutorial de cada perfil aparece na primeira utilização e fica guardado no navegador. Um visitante não recebe privilégios de administração.
 

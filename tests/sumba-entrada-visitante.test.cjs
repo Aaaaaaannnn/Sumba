@@ -5,15 +5,20 @@ test('Both SUMBA main entries are synchronized and syntactically valid',()=>{
  assert.equal(html,read('index.html'));
  const js=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];assert.ok(js);new Function(js);new Function(auth);
 });
-test('Visible account actions lead to actual Supabase portal instead of fake login',()=>{
- assert.match(html,/authButton\('Criar conta','real-register'\)/);
- assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
+test('Entry stays demonstrative; real Supabase access stays in the customer profile',()=>{
+ assert.match(html,/authButton\('Criar conta','demo-register'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','login','outline'\)/);
+ assert.match(html,/authButton\('Entrar como visitante','guest','outline'\)/);
+ assert.match(html,/Esta é a demonstração da SUMBA/);
+ assert.match(html,/id="demoCustomerRegister"/);
+ assert.match(html,/id="demoLogin"/);
+ assert.doesNotMatch(html,/input\('Palavra-passe de teste'/);
+ assert.match(html,/href="\/real\/"/);
+ assert.match(html,/Testar autenticação real \(Supabase\)/);
  assert.match(html,/const SUMBA_AUTH_URL='https:\/\/zunga-auth\.stivenluanda04\.workers\.dev\/'/);
  assert.match(html,/location\.assign\(SUMBA_AUTH_URL\+'\?flow='/);
  assert.match(auth,/const entryMode=new URLSearchParams\(location\.search\)/);
  assert.match(auth,/authScreen\(entryMode\)/);
- assert.match(auth,/Continuar com Facebook \(brevemente\)/);
- assert.match(auth,/disabled aria-disabled="true"/);
  assert.match(auth,/const providers=\{google:'Google'\}/);
 });
 test('Guest must provide name and role; without it main demo is gated',()=>{
@@ -22,7 +27,7 @@ test('Guest must provide name and role; without it main demo is gated',()=>{
  assert.match(html,/name="visitorRole"/);
  assert.match(html,/sumbaVisitorSession=null/);
  assert.match(html,/if\(!sumbaVisitorSession\)openAuth\('welcome'\)/);
- assert.match(html,/if\(!account\.guest\)\{openAuth\('welcome'\);return\}/);
+ assert.match(html,/if\(!account\.guest&&!account\.signed\)\{openAuth\('welcome'\);return\}/);
  assert.match(html,/SUMBA_VISITOR_KEY='sumba-visitor-session-v1'/);
 });
 test('Guest shopping is genuinely non-finalizable',()=>{
@@ -40,13 +45,13 @@ test('Profile-specific guide is persisted per authenticated user in protected Su
  for(const r of ['buyer','producer','company','courier','admin'])assert.match(auth,new RegExp(' '+r+':\\['));
 });
 test('Full-screen welcome keeps one sharp photograph and a proportional central logo',()=>{
- const start=html.lastIndexOf('/* SUMBA onboarding 2026: fotografia nítida, um único plano, logo central sem cartão.');
+ const start=html.lastIndexOf('/* SUMBA 0.25 — entrada fotográfica em ecrã inteiro e percursos de teste claros.');
  assert.ok(start>0,'New onboarding styles must be the final active rules');
  const styles=html.slice(start,html.indexOf('</style>',start));
  assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?filter:none!important/);
- assert.match(styles,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
+ assert.match(html,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
  assert.match(styles,/object-fit:cover!important/);
- assert.match(styles,/max-height:35dvh!important/);
+ assert.match(styles,/max-height:34dvh!important/);
  assert.ok(!styles.includes('filter:blur('));
  assert.match(html,/sumba-onboarding-refresh/);
  assert.match(html,/const SUMBA_ORIGINAL_BRAND='\/assets\/sumba-brand-original\.svg'/);
@@ -54,8 +59,8 @@ test('Full-screen welcome keeps one sharp photograph and a proportional central 
  assert.match(html,/title:'Valoriza quem trabalha a terra\.'/);
  assert.match(html,/title:'Mais escolhas\. Mais proximidade\.'/);
  assert.match(html,/authButton\('Entrar como visitante','guest','outline'\)/);
- assert.match(html,/authButton\('Criar conta','real-register'\)/);
- assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
+ assert.match(html,/authButton\('Criar conta','demo-register'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','login','outline'\)/);
  assert.match(html,/if\(\+\+introStep>=slides\.length\)\{introStep=0;authPage='welcome'\}/);
  assert.match(html,/authButton\('Saltar introdução','intro-skip','outline'\)/);
 });
