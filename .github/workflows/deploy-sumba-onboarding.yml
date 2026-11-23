@@ -1,3 +1,4 @@
+# Redeploy do onboarding SUMBA: fotografias originais HD sem desfoque (23/11/2026).
 name: Deploy SUMBA onboarding visuals (main demo only)
 on:
   push:
