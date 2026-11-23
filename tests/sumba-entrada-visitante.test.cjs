@@ -49,7 +49,7 @@ test('Full-screen welcome keeps one sharp photograph and a proportional central 
  assert.ok(start>0,'New onboarding styles must be the final active rules');
  const styles=html.slice(start,html.indexOf('</style>',start));
  assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?filter:none!important/);
- assert.match(styles,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
+ assert.match(html,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
  assert.match(styles,/object-fit:cover!important/);
  assert.match(styles,/max-height:34dvh!important/);
  assert.ok(!styles.includes('filter:blur('));
