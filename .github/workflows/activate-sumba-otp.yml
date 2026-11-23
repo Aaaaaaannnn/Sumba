@@ -1,0 +1,60 @@
+name: Activate SUMBA real email OTP (one-time)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/activate-sumba-otp.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sumba-auth-deploy
+  cancel-in-progress: false
+jobs:
+  activate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check existing authorization without exposing credentials
+        env:
+          HAS_CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          HAS_CLOUDFLARE_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          HAS_SUPABASE_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN != '' }}
+        run: |
+          if [ "$HAS_CLOUDFLARE_TOKEN" != "true" ] || [ "$HAS_CLOUDFLARE_ACCOUNT" != "true" ] || [ "$HAS_SUPABASE_TOKEN" != "true" ]; then
+            echo "NOT ACTIVATED: authorized credentials unavailable."
+            [ "$HAS_CLOUDFLARE_TOKEN" = "true" ] || echo "Missing secret: CLOUDFLARE_API_TOKEN"
+            [ "$HAS_CLOUDFLARE_ACCOUNT" = "true" ] || echo "Missing secret: CLOUDFLARE_ACCOUNT_ID"
+            [ "$HAS_SUPABASE_TOKEN" = "true" ] || echo "Missing secret: SUPABASE_ACCESS_TOKEN"
+            exit 1
+          fi
+      - name: Validate isolated real authentication
+        run: |
+          node tests/auth-contract.mjs
+          node scripts/test-sumba-auth-runtime.mjs
+          node scripts/apply-sumba-otp-email.mjs
+      - name: Publish only the isolated real-auth Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config wrangler.auth.jsonc
+      - name: Verify the actual published OTP interface before changing email
+        run: |
+          node --input-type=module -e '
+            const origin="https://zunga-auth.stivenluanda04.workers.dev";
+            const [page,script]=await Promise.all([fetch(origin+"/",{cache:"no-store"}),fetch(origin+"/real.js",{cache:"no-store"})]);
+            if(!page.ok||!script.ok)throw Error("Worker real inaccessible");
+            const [html,js]=await Promise.all([page.text(),script.text()]);
+            if(!html.includes("SUMBA")||!js.includes("otp-digits")||!js.includes("inputmode=\"numeric\""))
+              throw Error("OTP frontend not yet published: abort Supabase changes");
+            console.log("OTP frontend verified on isolated Worker");
+          '
+      - name: Apply only email OTP templates in Supabase Auth
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: node scripts/apply-sumba-otp-email.mjs --apply
