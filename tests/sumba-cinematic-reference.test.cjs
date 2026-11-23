@@ -11,7 +11,7 @@ test('entradas continuam sincronizadas e javascript válido',()=>{
  new vm.Script(script);
 });
 test('boas-vindas e introdução ocupam o ecrã inteiro',()=>{
- assert.ok(html.includes("((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')"));
+ assert.ok(html.includes("((authPage==='welcome'||authPage==='intro')?' sumba-cinematic sumba-onboarding-refresh':'')"));
  assert.match(html,/#auth \.authframe\.sumba-cinematic\{/);
  assert.match(html,/min-height:100dvh/);
  assert.match(html,/#auth \.authframe\.sumba-cinematic \.authphoto\{/);
