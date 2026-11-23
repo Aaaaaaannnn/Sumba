@@ -1,3 +1,12 @@
+# SUMBA — entrada full-screen conforme referência (23/11/2026)
+
+- A entrada do cliente e o tutorial de três cartões passaram a usar uma composição fotográfica vertical contínua: imagem de fundo até ao rodapé, degradê verde e texto branco sobre a fotografia.
+- Logótipo original transparente ampliado na parte superior, sem painel ou duplicações.
+- Indicadores do carrossel e botões mantidos como elementos HTML funcionais, agora sobrepostos na parte inferior, com botão principal verde-lima e secundário contornado.
+- Fotografia do mercado com duas vendedoras na etapa «Conhece as bancadas», de acordo com a referência enviada.
+- Formulários posteriores de login e registo não foram convertidos em fundos fotográficos para preservar legibilidade, foco e validação.
+- Testes adicionais para garantir o layout e a continuidade dos botões, sem alterar autenticação real, Supabase ou Brevo.
+
 # SUMBA — renovação visual da entrada (23/11/2026)
 
 - Identidade: logótipo original fornecido, com símbolo e letras mantidos e slogan corrigido para «Do campo à sua mesa.», sem fundo ou cartão.
