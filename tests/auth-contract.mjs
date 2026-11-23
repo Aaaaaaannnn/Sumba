@@ -20,6 +20,12 @@ check(js.includes("client.auth.updateUser({email},{emailRedirectTo:redirect})"),
 check(js.includes("client.auth.getUser()"),'server-validated session');
 check(js.includes('inputmode="numeric"'),'numeric keyboard in OTP');
 check(js.includes('class="otp-digits"'),'six digit visual slots');
+check(js.includes('class="otp-identity-icon"')&&js.includes('<svg viewBox="0 0 24 24"'),'outlined envelope icon');
+check(js.includes("const prefix='#email-otp='"),'email link opens OTP on client');
+check(js.includes("history.replaceState?.(null,'',redirect)"),'email removed from navigation URL');
+const signInTpl=get('supabase/auth-templates/magic-link.html');
+check(signInTpl.includes('https://zunga-auth.stivenluanda04.workers.dev/#email-otp={{ .Email }}'),'email links to the code entry screen');
+check(signInTpl.includes('Inserir código na SUMBA'),'email button has a clear label');
 check(js.includes("Array.from({length:6}"),'six digit boxes count');
 check(js.includes("mode==='reset'||mode==='otp'||mode==='login'"),'email login uses OTP first');
 check(js.includes("mode!=='password'"),'password remains an optional fallback');
