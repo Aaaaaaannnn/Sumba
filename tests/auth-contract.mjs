@@ -12,7 +12,7 @@ check(html.includes('<title>SUMBA | Acesso seguro</title>'),'SUMBA title');
 check(html.includes('name="sumba-version" content="0.24.0"'),'version');
 check(cfg.includes('oauth:Object.freeze({google:true})'),'Google OAuth button configured; provider still requires external validation');
 check(js.includes("location.protocol==='https:'"),'HTTPS only');
-check(js.includes("location.origin!=='https://zunga.stivenluanda04.workers.dev'"),'demo origin blocked');
+check(js.includes("c.routes?.some?.(r=>r.origin===location.origin&&r.path===location.pathname)") && !cfg.includes('origin:"https://sumba.stivenluanda04.workers.dev"'), 'auth only on allowlisted origin and path');
 check(js.includes("shouldCreateUser:false"),'OTP cannot create a new account');
 check(js.includes("type:otpTypes[mode]"),'server-side token verification');
 check(js.includes("resetPasswordForEmail(identifier"),'server-side recovery');
