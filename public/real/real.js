@@ -4,6 +4,7 @@ const $=id=>document.getElementById(id), cfg=window.ZUNGA_REAL_CONFIG||{}, roles
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validConfig=c=>c.enabled===true&&c.routes?.some?.(r=>r.origin===location.origin&&r.path===location.pathname)&&/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(c.url||'')&&/^sb_publishable_[A-Za-z0-9_-]+$/.test(c.publishableKey||'')&&location.protocol==='https:';
 const redirect=location.origin+location.pathname;
+const entryMode=new URLSearchParams(location.search).get('flow')==='register'?'register':'login';
 const providers={google:'Google'};
 const otpTypes={register:'email',otp:'email',reset:'recovery'};
 const pendingKey='sumba-auth-otp-v2';
@@ -52,7 +53,7 @@ function socialButtons(link=false,identities=[]){
  return Object.entries(providers).map(([id,name])=>{
   const linked=identities.includes(id);
   return '<button type="button" class="social '+id+'" data-action="'+(link?'link-':'oauth-')+id+'" '+(linked?'disabled':'')+'><span class="provider-icon" aria-hidden="true">G</span>'+esc(linked?name+' vinculado':(link?'Vincular ':'Continuar com ')+name)+'</button>';
- }).join('');
+ }).join('')+(link?'':'<button type="button" class="social facebook" disabled aria-disabled="true" title="Disponível brevemente"><span class="provider-icon" aria-hidden="true">f</span>Continuar com Facebook (brevemente)</button>');
 }
 
 
@@ -176,11 +177,12 @@ async function load(){
  const ticket=++generation;
  try{
   const result=await client.auth.getUser();if(ticket!==generation)return;
-  if(result.error||!result.data.user){user=null;profile=null;if(pending)otpScreen();else authScreen();notice('Entra ou cria uma conta SUMBA.');return}
+  if(result.error||!result.data.user){user=null;profile=null;if(pending)otpScreen();else authScreen(entryMode);notice('Entra ou cria uma conta SUMBA.');return}
   user=result.data.user;if(!user.email_confirmed_at&&!user.phone_confirmed_at&&!user.identities?.some(i=>i.provider==='google')){await client.auth.signOut();user=null;profile=null;clearPending();authScreen();notice('Confirma primeiro o email.',true);return}if(recovery){recoveryScreen();notice('Define uma nova palavra-passe.');return}
   profile=checked(await client.from('zunga_profiles').select('*').eq('user_id',user.id).maybeSingle());if(ticket!==generation)return;
   if(!profile){onboarding();notice('Completa o perfil para continuar.');return}
   await dashboard(ticket);
+  if(ticket===generation)await maybeShowFirstAccountGuide(ticket);
  }catch(e){if(ticket!==generation)return;notice('Não foi possível carregar os dados. Verifica a ligação e a configuração da base de dados.',true);screen('<div class="panel"><h2>Ligação indisponível</h2>'+button('Tentar novamente','reload')+button('Terminar sessão','logout')+'</div>')}
 }
 async function dashboard(ticket){
@@ -189,12 +191,12 @@ async function dashboard(ticket){
  if(profile.role==='company')company=checked(await client.from('zunga_companies').select('*').eq('owner_id',user.id).maybeSingle());
  if(profile.avatar_path){const r=await client.storage.from('zunga-avatars').createSignedUrl(profile.avatar_path,300);if(!r.error)avatar=r.data.signedUrl}
  const identities=checked(await client.auth.getUserIdentities()).identities.map(i=>i.provider);catalog=checked(await client.from('zunga_stalls').select('id,name,province,city,description').eq('published',true).order('name').limit(50));if(ticket!==generation)return;
- screen('<div class="hero"><div class="sumba-real-profile-brand"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">'+esc(roles[profile.role])+'</span><h1>Olá, '+esc(profile.display_name)+'</h1><p>Perfil guardado na base de dados. Compras e outros módulos comerciais ainda não estão ligados.</p></div><div class="panel"><div class="row">'+(avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'<div class="avatar avatar-fallback">'+esc(profile.display_name[0])+'</div>')+'<div><h2>'+esc(profile.display_name)+'</h2><span class="muted">'+esc(user.email||user.phone||'Identidade verificada')+'</span></div></div><form id="editProfile">'+label('Nome','name',profile.display_name,'required minlength="2" maxlength="80"')+label('Província','province',profile.province,'maxlength="80"')+label('Município','city',profile.city,'maxlength="80"')+textarea('Apresentação','bio',profile.bio)+'<label>Foto de perfil (até 1 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label><button type="submit">Guardar perfil</button></form>'+(profile.avatar_path?button('Remover foto','removeAvatar'):'')+'</div>'+
+ screen('<div class="hero"><div class="sumba-real-profile-brand"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">'+esc(roles[profile.role])+'</span><h1>Olá, '+esc(profile.display_name)+'</h1><p>Explora fornecedores, gere o teu perfil e utiliza os serviços disponíveis na SUMBA.</p><p>As compras e pagamentos serão disponibilizados após a integração dos módulos comerciais.</p></div><div class="panel"><div class="row">'+(avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'<div class="avatar avatar-fallback">'+esc(profile.display_name[0])+'</div>')+'<div><h2>'+esc(profile.display_name)+'</h2><span class="muted">'+esc(user.email||user.phone||'Identidade verificada')+'</span></div></div><form id="editProfile">'+label('Nome','name',profile.display_name,'required minlength="2" maxlength="80"')+label('Província','province',profile.province,'maxlength="80"')+label('Município','city',profile.city,'maxlength="80"')+textarea('Apresentação','bio',profile.bio)+'<label>Foto de perfil (até 1 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label><button type="submit">Guardar perfil</button></form>'+(profile.avatar_path?button('Remover foto','removeAvatar'):'')+'</div>'+
  (profile.role==='producer'?'<div class="panel"><h2>A minha bancada</h2><form id="stall" data-exists="'+!!stall+'">'+label('Nome comercial','name',stall?.name,'required minlength="2" maxlength="100"')+label('Província','province',stall?.province||profile.province,'required minlength="2" maxlength="80"')+label('Município','city',stall?.city||profile.city,'required minlength="2" maxlength="80"')+textarea('Descrição','description',stall?.description,1000)+'<label class="check"><input type="checkbox" name="published" '+(stall?.published?'checked':'')+'> Publicar nome, localização e descrição no diretório</label><button type="submit">Guardar bancada</button></form></div>':'')+
  (profile.role==='company'?'<div class="panel"><h2>A minha empresa</h2><form id="company" data-exists="'+!!company+'">'+label('Nome comercial','name',company?.name,'required minlength="2" maxlength="100"')+label('Setor','sector',company?.sector,'maxlength="100"')+label('Província','province',company?.province||profile.province,'maxlength="80"')+label('Município','city',company?.city||profile.city,'maxlength="80"')+'<button type="submit">Guardar empresa</button></form></div>':'')+
  '<div class="panel"><h2>Segurança da conta</h2><p class="muted">Para alterar o email, poderá ser necessário confirmar a operação tanto no endereço actual como no novo.</p><form id="changeEmail">'+label('Novo email de acesso','newEmail','','type="email" required autocomplete="email" maxlength="254"')+'<button type="submit" class="outline">Solicitar alteração de email</button></form><p class="muted">Para recuperar a palavra-passe, termina a sessão e escolhe Recuperar acesso.</p></div>'+
  '<div class="panel"><h2>Métodos de acesso</h2><p class="muted">Vincula um método adicional à mesma conta. A confirmação é feita pelo fornecedor, nunca pela aplicação.</p><div class="socials">'+socialButtons(true,identities)+'</div><p class="muted">Métodos associados: '+esc(identities.map(i=>providers[i]|| (i==='email'?'Email':i)).join(', '))+'</p></div>'+
- '<div class="panel"><h2>Bancadas publicadas</h2><p class="muted">Diretório real — sem dados fictícios.</p><div class="list">'+(catalog.length?catalog.map(s=>'<article><h2>'+esc(s.name)+'</h2><p class="muted">'+esc(s.city)+', '+esc(s.province)+'</p><p>'+esc(s.description)+'</p></article>').join(''):'<p>Ainda não existem bancadas publicadas.</p>')+'</div></div><div class="actions">'+button('Atualizar dados','reload')+button('Terminar sessão','logout')+'</div>');
+ '<div class="panel"><h2>Bancadas publicadas</h2><p class="muted">Bancadas publicadas por fornecedores registados.</p><div class="list">'+(catalog.length?catalog.map(s=>'<article><h2>'+esc(s.name)+'</h2><p class="muted">'+esc(s.city)+', '+esc(s.province)+'</p><p>'+esc(s.description)+'</p></article>').join(''):'<p>Ainda não existem bancadas publicadas.</p>')+'</div></div><div class="actions">'+button('Atualizar dados','reload')+button('Terminar sessão','logout')+'</div>');
 
  notice('Sessão autenticada · dados sincronizados com o servidor.');
  const activeUser=user?.id;
@@ -207,6 +209,50 @@ async function dashboard(ticket){
   if(user?.id===activeUser)await module.mountAdmin(client,$('content'));
  }catch(e){console.warn('Administração indisponível:',String(e?.message||e))}
 }
+
+/* First-use guide, persisted in Supabase and protected by auth.uid() RLS. */
+const accountGuideTopics={
+ buyer:[['Encontra fornecedores','Conhece as bancadas publicadas e consulta a sua localização e apresentação.'],['Gere a tua conta','Atualiza nome, fotografia e informações da tua conta.'],['Acompanha a evolução','As compras só estarão disponíveis depois da integração comercial.']],
+ producer:[['Cria a tua bancada','Preenche os dados comerciais e a descrição da tua produção.'],['Publica no diretório','Ativa a publicação para seres encontrado por compradores.'],['Mantém os dados atualizados','Consulta e revê a tua bancada sempre que necessário.']],
+ company:[['Apresenta a tua empresa','Guarda o nome comercial, setor e localização.'],['Descobre fornecedores','Consulta bancadas publicadas para encontrar parceiros.'],['Gere a tua conta','Atualiza os teus dados diretamente na plataforma.']],
+ courier:[['Conhece o teu perfil','Consulta as áreas disponíveis para a tua conta.'],['Segurança','Mantém o acesso e os dados atualizados.'],['Entregas','As tarefas estarão disponíveis quando a logística for integrada.']],
+ admin:[['Acesso atribuído','A administração é atribuída pela equipa autorizada.'],['Revê operações','Consulta os painéis disponíveis para a tua função.'],['Segurança','Utiliza as ferramentas de gestão apenas quando autorizadas.']]
+};
+let accountGuide=null;
+function renderAccountGuide(){
+ const overlay=document.getElementById('sumbaAccountGuide');if(!overlay||!accountGuide)return;
+ const steps=accountGuideTopics[accountGuide.role]||accountGuideTopics.buyer;
+ const [title,description]=steps[accountGuide.index];
+ overlay.innerHTML='<section class="sumba-first-guide-card" role="document">'+
+ '<span class="pill">BEM-VINDO À SUMBA</span><p class="muted">Passo '+(accountGuide.index+1)+' de '+steps.length+' · '+esc(roles[accountGuide.role]||'Conta')+'</p>'+
+ '<h2>'+esc(title)+'</h2><p>'+esc(description)+'</p>'+
+ '<div class="sumba-guide-actions"><button type="button" class="outline" data-sumba-first-guide="skip">Saltar</button>'+
+ '<button type="button" data-sumba-first-guide="next">'+(accountGuide.index===steps.length-1?'Concluir':'Seguinte')+'</button></div></section>';
+ overlay.querySelector('[data-sumba-first-guide="next"]')?.focus({preventScroll:true});
+}
+async function maybeShowFirstAccountGuide(ticket){
+ if(!user||!profile||ticket!==generation||accountGuide)return;
+ const result=await client.from('sumba_tutorial_progress').select('role').eq('user_id',user.id).eq('role',profile.role).maybeSingle();
+ if(result.error){console.warn('Guia de primeira utilização indisponível:',result.error.code);return}
+ if(result.data||ticket!==generation||!user||!profile)return;
+ accountGuide={userId:user.id,role:profile.role,index:0};
+ const overlay=document.createElement('div');overlay.id='sumbaAccountGuide';
+ overlay.className='sumba-first-guide';overlay.setAttribute('role','dialog');
+ overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','Tutorial de primeira utilização');
+ document.body.append(overlay);renderAccountGuide();
+}
+async function completeAccountGuide(){
+ if(!accountGuide||!user||user.id!==accountGuide.userId)return;
+ checked(await client.from('sumba_tutorial_progress').upsert({user_id:user.id,role:accountGuide.role},{onConflict:'user_id,role'}));
+ document.getElementById('sumbaAccountGuide')?.remove();accountGuide=null;
+}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-sumba-first-guide]');if(!b||!accountGuide||busy)return;
+ const action=b.dataset.sumbaFirstGuide,steps=accountGuideTopics[accountGuide.role]||accountGuideTopics.buyer;
+ if(action==='next'&&accountGuide.index<steps.length-1){accountGuide.index++;renderAccountGuide();return}
+ if(action==='skip'||action==='next')run(()=>completeAccountGuide());
+});
+
 async function execute(f){
  const v=new FormData(f),s=k=>String(v.get(k)||'').trim(),p=k=>String(v.get(k)||'');
 
@@ -283,7 +329,7 @@ document.addEventListener('click',e=>{
    else{clearPending();checked(await client.auth.signInWithOAuth({provider,options}))}
    return;
   }
-  if(action==='logout'){generation++;checked(await client.auth.signOut());user=null;profile=null;recovery=false;clearPending();authScreen();notice('Sessão terminada.')}
+  if(action==='logout'){document.getElementById('sumbaAccountGuide')?.remove();accountGuide=null;generation++;checked(await client.auth.signOut());user=null;profile=null;recovery=false;clearPending();authScreen();notice('Sessão terminada.')}
   else if(action==='reload')await load();
   else if(action==='removeAvatar'&&user&&profile){
    checked(await client.from('zunga_profiles').update({avatar_path:null}).eq('user_id',user.id).select('user_id').single());
