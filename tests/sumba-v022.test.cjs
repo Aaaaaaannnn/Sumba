@@ -17,7 +17,7 @@ test('JavaScript sintacticamente válido',()=>{
 test('piloto real isolado e pedidos explicitamente demonstrativos',()=>{
  assert.match(home,/const sumbaPublicMode=false/);
  assert.match(home,/href="\/real\/"/);
- assert.match(home,/if\(!account\.signed\)account\.guest=true/);
+ assert.match(home,/account\.guest=!!sumbaVisitorSession/);
  assert.match(home,/Multicaixa Express \(simulação\)/);
  assert.match(home,/Não introduzas NIF ou telefone pessoais verdadeiros/);
  assert.match(read('public/real/config.js'),/window\.ZUNGA_REAL_CONFIG/);
