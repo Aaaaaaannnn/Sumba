@@ -1,3 +1,10 @@
+# SUMBA V0.26.0 — 23/11/2026 (autenticação real de teste)
+
+- Portal real isolado: login prioritário por OTP email com seis caixas visuais, teclado numérico, colagem e preenchimento automático suportado; acesso por palavra-passe continua opcional.
+- Emails de acesso, confirmação e recuperação com template em português, emblema SUMBA e variável de seis dígitos `{{ .Token }}`; aplicação externa no Supabase Auth e SMTP real carecem de verificação.
+- Adicionado script limitado para aplicar templates OTP no Supabase sem alterar Brevo, URLs ou RLS, e testes automatizados em GitHub CI.
+- Site demonstrativo principal, lógica de compras e Worker antigo mantidos intactos.
+
 # SUMBA V0.25.0 — 20/11/2026
 
 - Cabeçalho da demonstração: botão «Entrar» ocultado após sessão simulada, notificações movidas para a direita e espaço mobile revisto.
