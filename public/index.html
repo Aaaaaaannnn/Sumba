@@ -849,7 +849,7 @@ const welcome = authPage === 'welcome';
 const artwork = welcome
   ? '<div class="welcome-art"><img src="/assets/welcome-brand.webp" alt="SUMBA — Do campo à sua casa." width="1254" height="1254"></div>'
   : '<div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div>';
-$('#auth').innerHTML='<div class="authframe'+((welcome||authPage==='intro')?' sumba-cinematic sumba-onboarding-refresh':'')+(welcome?' welcome-cover':'')+'">'+artwork+'<div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'AGRICULTURA ANGOLANA':authPage==='intro'?'DO CAMPO À TUA MESA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
+$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic sumba-onboarding-refresh':'')+(welcome?' welcome-cover':'')+'">'+artwork+'<div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'AGRICULTURA ANGOLANA':authPage==='intro'?'DO CAMPO À TUA MESA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
 const SUMBA_AUTH_URL='https://zunga-auth.stivenluanda04.workers.dev/';
 const SUMBA_VISITOR_KEY='sumba-visitor-session-v1';
 function sumbaRealAccess(flow='login'){location.assign(SUMBA_AUTH_URL+'?flow='+(flow==='register'?'register':'login'))}
