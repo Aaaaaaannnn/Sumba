@@ -140,6 +140,7 @@ with check (
 );
 
 revoke all on public.sumba_products,public.sumba_cart_items,public.sumba_inquiries,public.sumba_inquiry_messages from anon;
+revoke all on public.sumba_inquiries,public.sumba_inquiry_messages from authenticated;
 grant select,insert,update,delete on public.sumba_products to authenticated;
 grant select,insert,update,delete on public.sumba_cart_items to authenticated;
 grant select,insert on public.sumba_inquiries to authenticated;
