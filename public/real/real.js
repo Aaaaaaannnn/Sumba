@@ -186,7 +186,15 @@ async function load(){
  }catch(e){if(ticket!==generation)return;notice('Não foi possível carregar os dados. Verifica a ligação e a configuração da base de dados.',true);screen('<div class="panel"><h2>Ligação indisponível</h2>'+button('Tentar novamente','reload')+button('Terminar sessão','logout')+'</div>')}
 }
 async function dashboard(ticket){
- if(new URLSearchParams(location.search).get('view') !== 'services'){
+ const view=new URLSearchParams(location.search).get('view');
+ if(view==='conversations'){
+  const activeUser=user;
+  screen('<a href="?">Voltar à minha conta</a><section class="panel"><h1>Conversas com o apoio</h1><div id="sumbaSupport"></div></section>');
+  const {mountSupport}=await import('./support.js');
+  if(ticket===generation)await mountSupport(client,$('sumbaSupport'),activeUser);
+  return;
+ }
+ if(view!=='services'){
   let avatar='';
   if(profile.avatar_path){
    const result=await client.storage.from('zunga-avatars').createSignedUrl(profile.avatar_path,300);
@@ -203,8 +211,12 @@ async function dashboard(ticket){
    '<label>Foto de perfil (até 2 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label>'+
    '<button type="submit">Guardar perfil</button></form>'+
    (profile.avatar_path?button('Remover foto','removeAvatar'):'')+
-   '</section><div class="actions"><a href="?view=services">Serviços da conta</a>'+button('Terminar sessão','logout')+'</div>');
+   '</section><div class="actions"><a href="?view=conversations">Conversas com o apoio</a><a href="?view=services">Serviços da conta</a>'+button('Terminar sessão','logout')+'</div>');
   notice('');
+  try{
+   const {mountNotifications}=await import('./notifications.js');
+   if(ticket===generation)await mountNotifications(client,document.querySelector('header'),$('content'),{showPreferences:false});
+  }catch(e){console.warn('Notificações indisponíveis:',String(e?.message||e))}
   return;
  }
  let stall=null,company=null,avatar='',catalog=[];

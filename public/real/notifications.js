@@ -2,7 +2,7 @@
 /* SUMBA — notificações verificadas no Supabase; sem contadores fictícios. */
 const escapeNotification=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const when=v=>new Date(v).toLocaleString('pt-AO',{dateStyle:'short',timeStyle:'short'});
-export async function mountNotifications(client,header,host){
+export async function mountNotifications(client,header,host,{showPreferences=true}={}){
  if(!header||!host||!header.isConnected||!host.isConnected)return;
  const userResult=await client.auth.getUser();
  const user=userResult.data?.user;if(userResult.error||!user)return;
@@ -63,6 +63,7 @@ export async function mountNotifications(client,header,host){
   if(!bell.isConnected)return;
   if(!bell.contains(event.target)){panel.hidden=true;toggle.setAttribute('aria-expanded','false')}
  });
+ if(showPreferences){
  const preferences=document.createElement('section');preferences.className='panel sumba-notification-preferences';preferences.id='sumbaNotificationPreferences';
  preferences.innerHTML='<h2>Preferências de notificações</h2><p class="muted">Escolhe como queres receber novidades da SUMBA. A autenticação e os alertas essenciais podem continuar a usar o canal de verificação da conta.</p>'+
  '<form id="sumbaPreferences">'+
@@ -93,6 +94,7 @@ export async function mountNotifications(client,header,host){
   const result=await client.from('sumba_notification_preferences').upsert(payload,{onConflict:'user_id'});
   prefStatus.textContent=result.error?'Falha ao guardar. Tenta novamente.':'Preferências actualizadas.';
  });
+ }
  await refresh();
  try{
   channel=client.channel('sumba-notification-'+user.id)
