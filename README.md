@@ -50,7 +50,7 @@ O ecrã inicial apresenta dois percursos independentes. **Conta SUMBA:** o acess
 
 **Visitante:** introduz nome e tipo de utilizador e entra apenas no ambiente local demonstrativo. Pode explorar produtos, bancadas e cestos fictícios, mas não pode concluir compras nem pagamentos. O tutorial de cada perfil aparece na primeira utilização e fica guardado no navegador. Um visitante não recebe privilégios de administração.
 
-**Limitação atual:** os módulos comerciais reais de produtos, pagamentos, encomendas, mensagens e logística ainda não estão todos ligados ao Supabase; o protótipo demonstrativo **não** foi transformado artificialmente em compras reais. Esta integração é uma etapa adicional de desenvolvimento, não um resultado já verificado.
+**Estado da integração:** a conta autenticada dispõe agora de catálogo de produtos registados por produtores, cesto persistente e pedidos/mensagens entre compradores e fornecedores, sincronizados através de tabelas Supabase com RLS. São operações de contacto comercial, não compras. Pagamentos, finalização de encomendas, reserva de stock e logística continuam indisponíveis até haver integração verificada. [Consultar arquitetura e limitações](docs/mercado-sumba-contas-autenticadas.md).
 
 ## 3. Funcionalidades por perfil
 
