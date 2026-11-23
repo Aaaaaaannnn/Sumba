@@ -14,7 +14,7 @@ test('Visible account actions lead to actual Supabase portal instead of fake log
  assert.match(auth,/authScreen\(entryMode\)/);
  assert.match(auth,/Continuar com Facebook \(brevemente\)/);
  assert.match(auth,/disabled aria-disabled="true"/);
- assert.match(auth,/Continuar com Google/);
+ assert.match(auth,/const providers=\{google:'Google'\}/);
 });
 test('Guest must provide name and role; without it main demo is gated',()=>{
  assert.match(html,/id="sumbaVisitorForm"/);
