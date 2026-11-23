@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - .github/workflows/deploy-sumba-onboarding.yml
+      - public/index.html
+      - index.html
   workflow_dispatch:
 permissions:
   contents: read
@@ -21,7 +23,7 @@ jobs:
           node-version: '22'
       - name: Test demo without changing real authentication
         run: |
-          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs tests/sumba-onboarding-brand.test.cjs tests/sumba-cinematic-reference.test.cjs
+          node --test tests/sumba-v022.test.cjs tests/sumba-cestos-pagamento.test.cjs tests/sumba-onboarding-brand.test.cjs tests/sumba-cinematic-reference.test.cjs tests/sumba-entrada-visitante.test.cjs
           node tests/auth-contract.mjs
       - name: Check existing Cloudflare deploy credentials
         env:
@@ -50,7 +52,7 @@ jobs:
                 const url=base+p+(p==="/"?"?sumba_onboard_check="+Date.now()+"_"+attempt:"?v=20261123_"+attempt);
                 const response=await fetch(url,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
                 latest=await response.text();
-                const ok=response.ok&&(p==="/"?latest.includes("sumba-cinematic")&&latest.includes("#073e29"):latest.includes("data:image/webp;base64,")&&latest.length>10000);
+                const ok=response.ok&&(p==="/"?latest.includes("sumba-cinematic")&&latest.includes("sumbaVisitorForm")&&latest.includes("sumbaGuestBrowsing"):latest.includes("data:image/webp;base64,")&&latest.length>10000);
                 if(ok){console.log("Verified "+p+" ("+latest.length+" chars), attempt "+attempt);verified=true;break}
                 console.log("Retry "+p+": HTTP "+response.status+", bytes "+latest.length+", type "+(response.headers.get("content-type")||"?"));
                 await new Promise(resolve=>setTimeout(resolve,2500));
