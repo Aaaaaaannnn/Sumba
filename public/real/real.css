@@ -125,3 +125,15 @@ input.otp-input::selection{background:transparent;color:transparent}
  .otp-actions{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.otp-digit{transition:none}.sumba-otp-hero::after{display:none}}
+
+
+/* Guia inicial ligado ao utilizador, persistido na conta SUMBA */
+.sumba-first-guide{position:fixed;z-index:9999;inset:0;display:grid;place-items:center;padding:16px;box-sizing:border-box;background:rgba(5,35,24,.77);backdrop-filter:blur(3px)}
+.sumba-first-guide-card{width:min(100%,420px);max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;padding:clamp(22px,5vw,32px);border-radius:22px;background:#fff;color:#153e2b;box-shadow:0 18px 60px rgba(1,27,14,.3)}
+.sumba-first-guide-card .pill{display:inline-block;background:#e9f6dd;color:#17492e;font-weight:800;border-radius:20px;padding:7px 12px;font-size:12px}
+.sumba-first-guide-card h2{font-size:clamp(22px,6vw,29px);line-height:1.2;margin:18px 0 12px}
+.sumba-first-guide-card p{font-size:15px;line-height:1.6;margin:10px 0 20px}
+.sumba-guide-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.sumba-guide-actions button{min-height:50px;margin:0;font-weight:800}
+.social.facebook[disabled]{opacity:.6;cursor:not-allowed;border-style:dashed}
+@media(max-width:350px){.sumba-guide-actions{grid-template-columns:1fr}}

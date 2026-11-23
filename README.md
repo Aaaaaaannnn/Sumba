@@ -35,14 +35,22 @@ Os endereços acima identificam **o ambiente antigo**, preservado para compatibi
 **Percurso recomendado para os avaliadores:**
 
 1. Abrir a página inicial e explorar o carrossel, categorias, pesquisas e bancadas.
-2. Entrar no perfil do cliente com uma conta **simulada** ou navegar como visitante. Não utilizar palavras-passe pessoais.
+2. No ecrã inicial, **Criar conta** ou **Já tenho conta** encaminham para o acesso da SUMBA no Supabase (OTP, palavra-passe e Google; Facebook a disponibilizar). **Explorar como visitante** pede apenas nome e tipo de utilizador (cliente, produtor, empresa ou entregador).
 3. Adicionar produtos ao carrinho, criar outros **cestos**, mudar entre eles e separar produtos por bancada.
-4. Finalizar **um único cesto**, escolher levantamento ou entrega fictícia e introduzir, se desejado, um NIF inventado de 10 algarismos.
-5. No pagamento, selecionar **Multicaixa Express (simulação)**, introduzir um número fictício no formato `9XXXXXXXX` e observar a mudança automática do estado pendente para aprovado **sem pedido bancário**. Em alternativa, usar pagamento na entrega simulado.
+4. Na experiência de visitante, experimentar a organização de produtos e cestos; **a finalização de compras está bloqueada**, não são criadas encomendas nem enviados pagamentos.
+5. No acesso autenticado, testar perfis gravados no Supabase, o diretório de fornecedores, os dados de produtor/empresa e o tutorial personalizado. As compras e pagamentos efetivos dependem de integração comercial posterior.
 6. Consultar **Pedidos** para ver histórico, detalhes, estados e opções demonstrativas de cancelamento/recompra; experimentar os perfis Produtor e Empresa.
 7. Aceder à área de ajuda e tutoriais do próprio protótipo.
 
 **Aviso:** os dados de teste ficam no armazenamento local do navegador. Não são sincronizados entre dispositivos. Limpar os dados do site pode apagar os cestos e pedidos simulados.
+
+## Estado da separação de acessos
+
+O ecrã inicial apresenta dois percursos independentes. **Conta SUMBA:** o acesso em `https://zunga-auth.stivenluanda04.workers.dev/` usa Supabase Auth e perfis autorizados com RLS; ainda não partilha sessões com o protótipo demo. Google pode ser utilizado se o fornecedor OAuth estiver devidamente configurado; Facebook aparece como brevemente. O guia inicial por utilizador/perfil é persistido na tabela `sumba_tutorial_progress` do Supabase.
+
+**Visitante:** introduz nome e tipo de utilizador e entra apenas no ambiente local demonstrativo. Pode explorar produtos, bancadas e cestos fictícios, mas não pode concluir compras nem pagamentos. O tutorial de cada perfil aparece na primeira utilização e fica guardado no navegador. Um visitante não recebe privilégios de administração.
+
+**Limitação atual:** os módulos comerciais reais de produtos, pagamentos, encomendas, mensagens e logística ainda não estão todos ligados ao Supabase; o protótipo demonstrativo **não** foi transformado artificialmente em compras reais. Esta integração é uma etapa adicional de desenvolvimento, não um resultado já verificado.
 
 ## 3. Funcionalidades por perfil
 

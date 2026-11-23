@@ -1,5 +1,11 @@
 name: Deploy SUMBA Auth (manual)
 on:
+  push:
+    branches: [main]
+    paths:
+      - public/real/real.js
+      - public/real/real.css
+      - .github/workflows/deploy-sumba-auth.yml
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,10 +32,11 @@ jobs:
         run: |
           test "$HAS_TOKEN" = "true" && test "$HAS_ACCOUNT" = "true" || (echo "Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in repository secrets" && exit 1)
       - name: Deploy isolated authentication Worker
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.166.0"
           command: deploy --config wrangler.auth.jsonc
       - name: Verificar publicação e segurança HTTP
         run: node scripts/check-sumba-auth.mjs
