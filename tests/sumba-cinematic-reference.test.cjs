@@ -30,9 +30,12 @@ test('não existe fundo branco nem cartão entre fotografia e botões',()=>{
 test('carrossel preserva interação, imagens fornecidas e logótipo original',()=>{
  assert.match(html,/const SUMBA_ORIGINAL_BRAND='\/assets\/sumba-brand-original\.svg'/);
  assert.match(html,/sumbaWelcomePhotos\.market/);
- assert.match(html,/title:'Conhece as bancadas\.'[^\n]*file:sumbaWelcomePhotos\.market/);
+ assert.match(html,/title:'Compre diretamente dos agricultores\.'[^\n]*file:sumbaWelcomePhotos\.man/);
  assert.match(html,/data-auth="'\+act\+'"/);
  assert.ok(html.includes("'nextIntro'"));
+ assert.ok(html.includes("'intro-skip'"));
+ assert.ok(html.includes("Entrar na minha conta"));
+ assert.ok(html.includes("Entrar como visitante"));
  assert.ok(html.includes("'register'"));
  assert.ok(html.includes("'guest'"));
 });
