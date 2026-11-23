@@ -1,3 +1,9 @@
+# SUMBA — ajuste OTP do portal real (23/11/2026)
+
+- Ícone de envelope redesenhado com SVG, apenas na página do código real.
+- Email de acesso OTP passa a incluir um botão para abrir diretamente as seis caixas de verificação, preservando a validação do código no Supabase.
+- Sem alterações à demonstração pública, às credenciais SMTP, aos outros modelos de email ou aos dados.
+
 # SUMBA V0.26.0 — 23/11/2026 (autenticação real de teste)
 
 - Portal real isolado: login prioritário por OTP email com seis caixas visuais, teclado numérico, colagem e preenchimento automático suportado; acesso por palavra-passe continua opcional.
