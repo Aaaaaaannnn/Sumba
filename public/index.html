@@ -556,69 +556,31 @@ body.z17-admin.z17-collapsed .sidebar .brand.brand-lockup .brand-words{display:n
 }
 
 
-/* SUMBA | entrada fotográfica nítida: sem filtros, sem imagem deformada */
-#auth .authframe.sumba-cinematic .authphoto{
-  background:linear-gradient(180deg,#e8f1dc 0%,#b9d9b1 38%,#235a3b 76%,#073e29 100%)!important;
-}
-#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{
-  display:block!important;position:absolute!important;inset:0!important;
-  width:100%!important;height:100%!important;object-fit:cover!important;
-  object-position:50% 38%!important;max-width:none!important;
-  transform:none!important;filter:none!important;opacity:1!important;
-  clip-path:none!important;
-}
+/* SUMBA — fotografia nítida sem imagem esticada ou desfocada */
+#auth .authframe.sumba-cinematic .authphoto{background:linear-gradient(180deg,#ecf6e5 0%,#dbe9cf 27%,#9abf83 42%,#1d6b43 65%,#063d28 95%)!important}
+#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{display:none!important}
 #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{
-  display:none!important;
-}
+ display:block!important;position:absolute!important;inset:auto!important;
+ top:30%!important;left:0!important;width:100%!important;height:auto!important;max-height:none!important;
+ object-fit:contain!important;object-position:center!important;transform:none!important;
+ filter:none!important;opacity:1!important;
+ -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 76%,transparent 100%)!important;
+ mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 76%,transparent 100%)!important}
 #auth .authframe.sumba-cinematic .authphoto::after{
-  background:linear-gradient(180deg,
-    rgba(238,247,225,.24) 0%,
-    rgba(238,247,225,.08) 28%,
-    rgba(5,51,30,.06) 45%,
-    rgba(5,51,30,.34) 58%,
-    rgba(5,51,30,.78) 73%,
-    #073e29 92%,#073e29 100%)!important;
-}
-#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{
-  top:clamp(12px,2.5dvh,30px)!important;
-  max-height:31dvh!important;
-  align-items:flex-start!important;
-}
+ background:linear-gradient(180deg,transparent 0%,transparent 43%,rgba(8,58,36,.04) 53%,rgba(7,63,38,.48) 68%,#073e29 88%,#073e29 100%)!important}
+#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{top:clamp(22px,3.3dvh,42px)!important;max-height:36dvh!important}
 #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
-  display:block!important;
-  width:min(65vw,355px)!important;
-  max-width:82%!important;
-  height:auto!important;
-  max-height:30dvh!important;
-  object-fit:contain!important;
-  filter:drop-shadow(0 2px 5px rgba(249,255,242,.36))!important;
-}
-#auth .authframe.sumba-cinematic .authbody{
-  padding-bottom:max(24px,env(safe-area-inset-bottom));
-}
-#auth .authframe.sumba-cinematic .authbody h1,
-#auth .authframe.sumba-cinematic .authbody p{
-  text-shadow:0 1px 5px rgba(0,31,17,.35);
-}
+ width:min(67vw,380px)!important;height:auto!important;max-height:35dvh!important;
+ aspect-ratio:1/1;object-fit:contain!important;filter:drop-shadow(0 2px 5px rgba(248,255,242,.22))!important}
 #auth .authbody:has(#sumbaVisitorForm){background:#fff;color:#153d2a}
 #auth #sumbaVisitorForm{display:grid;gap:12px}
 #auth #sumbaVisitorForm .field{display:grid;gap:8px;font-weight:750}
-#auth #sumbaVisitorForm input,#auth #sumbaVisitorForm select{
-  width:100%;box-sizing:border-box;min-height:50px;padding:12px;
-  border:1px solid #c6d8c5;border-radius:12px;background:#fff;
-  color:#173d2d;font-size:16px
-}
+#auth #sumbaVisitorForm input,#auth #sumbaVisitorForm select{width:100%;box-sizing:border-box;min-height:50px;padding:12px;border:1px solid #c6d8c5;border-radius:12px;background:#fff;color:#173d2d;font-size:16px}
 #auth #sumbaVisitorForm .sumba-visitor-disclaimer{color:#516653;line-height:1.5;font-size:13px}
 #auth #sumbaVisitorForm .btn{width:100%;min-height:52px}
 @media(max-width:400px){
-  #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
-    width:min(67vw,270px)!important
-  }
-}
-@media(max-height:680px){
-  #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
-    max-height:27dvh!important
-  }
+ #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(72vw,290px)!important}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:31%!important}
 }
 
 

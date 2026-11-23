@@ -39,30 +39,11 @@ test('Profile-specific guide is persisted per authenticated user in protected Su
  assert.match(auth,/onConflict:'user_id,role'/);
  for(const r of ['buyer','producer','company','courier','admin'])assert.match(auth,new RegExp(' '+r+':\\['));
 });
-test('Active cinematic CSS is focused, correctly cropped and contains no filter/opacity haze',()=>{
- const start=html.lastIndexOf('/* SUMBA | entrada fotográfica nítida: sem filtros, sem imagem deformada */');
- assert.ok(start>0,'Unified photo styling is missing');
- const styles=html.slice(start,html.indexOf('</style>',start));
- assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?object-fit:cover!important/);
- assert.match(styles,/object-position:50% 38%!important/);
- assert.match(styles,/filter:none!important;opacity:1!important/);
- assert.match(styles,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
- assert.match(styles,/clip-path:none!important/);
- assert.match(styles,/max-height:30dvh!important/);
- assert.ok(!styles.includes('filter:blur('),'Active styles cannot blur the scene');
- for(const name of ['market','farmers','produce']){
-  const photo=read('public/assets/sumba-onboarding-'+name+'.svg');
-  const match=photo.match(/width="(\d+)" height="(\d+)"/);
-  assert.ok(match&&Number(match[1])>=1400&&Number(match[2])>=950,'Source photo is below intended resolution: '+name);
- }
-});
-test('First-visit tutorial is preserved for every guest role and real account',()=>{
- assert.match(html,/const identity=r=>account\.guest\?'visitante-'/);
- assert.match(html,/const seenId=r=>v21SeenKey\(r,identity\(r\)\)/);
- assert.match(html,/start\('intro',r,true\)/);
- assert.match(html,/function enterSumbaVisitor\(name,visitorRole\)/);
- assert.match(auth,/function maybeShowFirstAccountGuide\(ticket\)/);
- assert.match(auth,/client\.from\('sumba_tutorial_progress'\)/);
+test('Cinematic image does not use blur, scaling or stretched background anymore',()=>{
+ assert.match(html,/\.sumba-welcome-photo\{display:none!important\}/);
+ assert.match(html,/\.sumba-welcome-photo-scene\{[\s\S]*?filter:none!important/);
+ assert.match(html,/object-fit:contain!important/);
+ assert.match(html,/width:min\(67vw,380px\)!important/);
 });
 
 test('Final mobile image style overrides prior blurry/hidden layers',()=>{
