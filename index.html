@@ -584,37 +584,39 @@ body.z17-admin.z17-collapsed .sidebar .brand.brand-lockup .brand-words{display:n
 }
 
 
-/* Entrada Sumba: fotografia em foco, sem ampliacao desfocada nem nevoeiro.
-   O layout continua fotografico e os formulários permanecem em modo normal. */
-#auth .authframe.sumba-cinematic .authphoto{background:#e4f1db}
+/* SUMBA: fotografias originais em alta resolucao, sem desfoque nem esticamento */
+#auth .authframe.sumba-cinematic .authphoto{background:linear-gradient(180deg,#e2efd3 0%,#bed6af 35%,#427c50 67%,#073e29 100%)!important}
 #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{
-  position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;
-  object-position:center top;transform:none!important;filter:none!important;opacity:.8;
+ display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center 18%!important;max-width:none!important;
+ clip-path:inset(0 0 54% 0);opacity:.60!important;filter:none!important;transform:none!important;
 }
 #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{
-  position:absolute;display:block;left:-6%;top:31%;width:112%;height:auto;max-height:none;
-  object-fit:contain;object-position:center;opacity:1;transform:none!important;filter:none!important;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 7%,#000 83%,transparent 100%);
-  mask-image:linear-gradient(180deg,transparent 0%,#000 7%,#000 83%,transparent 100%);
+ display:block!important;position:absolute!important;inset:auto!important;left:-6%!important;top:32%!important;
+ width:112%!important;height:auto!important;max-height:none!important;
+ object-fit:contain!important;object-position:center!important;
+ transform:none!important;filter:none!important;opacity:1!important;
+ -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
+ mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
 }
 #auth .authframe.sumba-cinematic .authphoto::after{
-  background:linear-gradient(180deg,rgba(238,249,220,.42) 0%,rgba(238,249,220,.12) 28%,
-    rgba(238,249,220,0) 42%,rgba(3,56,30,.04) 48%,rgba(3,56,30,.32) 64%,#073e29 90%,#073e29 100%);
+ background:linear-gradient(180deg,rgba(238,249,225,.34) 0%,rgba(238,249,225,.08) 32%,transparent 45%,rgba(0,50,28,.03) 52%,rgba(0,50,28,.36) 70%,#073e29 90%,#073e29 100%)!important;
 }
 #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{
-  top:clamp(12px,2.4dvh,29px);max-height:32dvh;align-items:flex-start;
+ top:clamp(10px,2.0dvh,28px)!important;max-height:32dvh!important;align-items:flex-start!important;
 }
 #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
-  width:min(68vw,405px);max-height:32dvh;max-width:83%;height:auto;
-  filter:drop-shadow(0 2px 5px rgba(243,255,232,.28))!important;
+ display:block;width:min(69vw,405px)!important;max-width:82%!important;
+ height:auto!important;max-height:32dvh!important;object-fit:contain!important;
+ filter:drop-shadow(0 2px 5px rgba(241,255,232,.27))!important;
 }
 @media(max-width:400px){
- #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(69vw,275px)!important}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(68vw,275px)!important}
  #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:34%!important}
 }
 @media(max-height:680px){
- #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:28%}
- #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{max-height:29dvh}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:29%!important}
+ #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{max-height:28dvh!important}
 }
 
 </style></head><body>
@@ -780,7 +782,7 @@ if(regStep===1)body+=input('Nome completo','name',registration.name||'','require
 else if(regStep===2)body+=select('Província','province',provinces,registration.province||'Huíla')+input('Município ou cidade','city',registration.city||'','required maxlength="60" placeholder="Ex.: Lubango"')+select('Tipo de compra','buying',['Uso doméstico','Pequenas compras','Compras frequentes'],registration.buying||'Uso doméstico');
 else body+='<p>Escolhe as categorias que mais te interessam.</p><div class="interestgrid">'+cats.slice(1).map(c=>'<label class="interest">'+photoTag(photoFiles[categoriesPhoto[c]],c,160)+'<span>'+esc(c)+'</span><input type="checkbox" name="interests" value="'+esc(c)+'" '+((registration.interests||[]).includes(c)?'checked':'')+'></label>').join('')+'</div>';
 body+='<div class="err" id="authError" role="alert"></div>'+submit(regStep===3?'Concluir registo':'Continuar')+'</form>'+authButton(regStep===1?'Voltar':'Passo anterior','regBack','outline')}else if(authPage==='done'){title='Tudo pronto, '+(account.name.split(' ')[0]||'cliente')+'!';body='<p>A tua experiência está personalizada. Vamos conhecer o mercado?</p>'+authButton('Começar a explorar','finish')}
-$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">DEMONSTRAÇÃO</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
+$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'SUMBA · MERCADO AGRÍCOLA':authPage==='intro'?'CONHECE A SUMBA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
 const SUMBA_AUTH_URL='https://zunga-auth.stivenluanda04.workers.dev/';
 const SUMBA_VISITOR_KEY='sumba-visitor-session-v1';
 function sumbaRealAccess(flow='login'){location.assign(SUMBA_AUTH_URL+'?flow='+(flow==='register'?'register':'login'))}
