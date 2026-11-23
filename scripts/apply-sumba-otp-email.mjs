@@ -2,7 +2,7 @@
 // Não modifica SMTP, credenciais de fornecedores, URLs, domínios ou políticas RLS.
 import {readFile} from 'node:fs/promises';
 const REF='asxyjhaujsowmdrpkcqc';
-const URL='https://api.supabase.com/v1/projects/'+REF+'/config/auth';
+const API_URL='https://api.supabase.com/v1/projects/'+REF+'/config/auth';
 const required=['mailer_templates_magic_link_content','mailer_templates_confirmation_content','mailer_templates_recovery_content'];
 const templates={
  mailer_subjects_magic_link:'Código de acesso à SUMBA',
@@ -19,7 +19,7 @@ for(const key of required){
    throw Error('O modelo '+key+' precisa apresentar o código, não um magic link.');
 }
 const doApply=process.argv.includes('--apply');
-if(process.argv.some(a=>a!=='--apply'))throw Error('Uso: node scripts/apply-sumba-otp-email.mjs [--apply]');
+if(process.argv.slice(2).some(a=>a!=='--apply'))throw Error('Uso: node scripts/apply-sumba-otp-email.mjs [--apply]');
 console.log('Projeto Supabase: '+REF);
 console.log('Alterações previstas: email OTP, confirmação e recuperação em português, código de 6 dígitos.');
 console.log('Não se alteram SMTP/Brevo, callbacks OAuth, site_url, RLS, base de dados ou secrets.');
@@ -30,7 +30,7 @@ if(!doApply){
 const token=String(process.env.SUPABASE_ACCESS_TOKEN||'').trim();
 if(!token)throw Error('É necessário SUPABASE_ACCESS_TOKEN no ambiente local. Não partilhes a chave no chat.');
 const call=async(method,body)=>{
- const resp=await fetch(URL,{method,redirect:'error',signal:AbortSignal.timeout(25000),
+ const resp=await fetch(API_URL,{method,redirect:'error',signal:AbortSignal.timeout(25000),
    headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
    ...(body?{body:JSON.stringify(body)}:{})});
  if(!resp.ok)throw Error('Supabase Management API '+method+' HTTP '+resp.status+'. Confirma a autorização no dashboard.');
