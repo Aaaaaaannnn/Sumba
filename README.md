@@ -54,7 +54,7 @@ Os endereços acima identificam **o ambiente antigo**, preservado para compatibi
 | Administração | Interface demonstrativa de moderação, operações, relatórios e configuração; não representa permissões reais |
 | Entregador | Atribuição e acompanhamento fictícios de entregas e respetivo histórico |
 
-Uma área de **autenticação real em desenvolvimento** encontra-se em `public/real/`. Usa Supabase Auth, configurações de email e estruturas de administração e notificações, mas não é a sessão utilizada na demonstração principal. A autenticação real requer URLs de redirecionamento e fornecedores corretamente configurados e **não é pré-requisito** para avaliar a aplicação principal.
+Uma área de **autenticação real em desenvolvimento** encontra-se em `public/real/`. Usa Supabase Auth, configurações de email e estruturas de administração e notificações, mas não é a sessão utilizada na demonstração principal. A área piloto oferece login prioritário por OTP de seis dígitos e uma página de verificação personalizada com o logótipo SUMBA; os templates do email precisam de ser ativados no Supabase conforme [instruções específicas](docs/email-otp-piloto-real.md). A autenticação real requer URLs de redirecionamento e fornecedores corretamente configurados e **não é pré-requisito** para avaliar a aplicação principal.
 
 ## 4. Tecnologias e organização
 
