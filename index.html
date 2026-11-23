@@ -556,67 +556,100 @@ body.z17-admin.z17-collapsed .sidebar .brand.brand-lockup .brand-words{display:n
 }
 
 
-/* SUMBA — fotografia nítida sem imagem esticada ou desfocada */
-#auth .authframe.sumba-cinematic .authphoto{background:linear-gradient(180deg,#ecf6e5 0%,#dbe9cf 27%,#9abf83 42%,#1d6b43 65%,#063d28 95%)!important}
-#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{display:none!important}
-#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{
- display:block!important;position:absolute!important;inset:auto!important;
- top:30%!important;left:0!important;width:100%!important;height:auto!important;max-height:none!important;
- object-fit:contain!important;object-position:center!important;transform:none!important;
- filter:none!important;opacity:1!important;
- -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 76%,transparent 100%)!important;
- mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 76%,transparent 100%)!important}
-#auth .authframe.sumba-cinematic .authphoto::after{
- background:linear-gradient(180deg,transparent 0%,transparent 43%,rgba(8,58,36,.04) 53%,rgba(7,63,38,.48) 68%,#073e29 88%,#073e29 100%)!important}
-#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{top:clamp(22px,3.3dvh,42px)!important;max-height:36dvh!important}
-#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
- width:min(67vw,380px)!important;height:auto!important;max-height:35dvh!important;
- aspect-ratio:1/1;object-fit:contain!important;filter:drop-shadow(0 2px 5px rgba(248,255,242,.22))!important}
+
+/* SUMBA onboarding 2026: fotografia nítida, um único plano, logo central sem cartão.
+   Apenas o ecrã de boas-vindas e os diapositivos de introdução. */
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh{
+ background:#073e29!important;min-height:100dvh;min-height:100svh;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto{
+ background:linear-gradient(180deg,#e7f2de 0%,#d0e3c0 27%,#75a47b 51%,#104e34 75%,#073e29 100%)!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-welcome-photo{
+ display:block!important;position:absolute!important;inset:auto 0 auto 0!important;
+ top:36%!important;left:0!important;width:100%!important;height:61%!important;
+ max-width:none!important;max-height:none!important;
+ object-fit:cover!important;object-position:center 43%!important;
+ opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;
+ -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 8%,#000 85%,transparent 100%)!important;
+ mask-image:linear-gradient(180deg,transparent 0%,#000 8%,#000 85%,transparent 100%)!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-welcome-photo-scene{
+ display:none!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto::after{
+ background:linear-gradient(180deg,
+ rgba(232,246,220,.12) 0%,transparent 31%,
+ rgba(7,62,39,.03) 42%,rgba(5,53,33,.12) 55%,
+ rgba(4,50,29,.73) 72%,#073e29 92%,#073e29 100%)!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-auth-spotlight{
+ position:absolute!important;inset:auto 0 auto 0!important;
+ top:clamp(16px,3dvh,36px)!important;max-height:35dvh!important;
+ display:flex!important;align-items:flex-start!important;justify-content:center!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;padding:0!important;margin:0!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-auth-spotlight img{
+ width:min(74vw,390px)!important;max-width:86%!important;
+ height:auto!important;max-height:35dvh!important;object-fit:contain!important;
+ filter:drop-shadow(0 2px 5px rgba(244,255,233,.34))!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody{
+ width:min(100%,680px);padding:18px 22px max(28px,env(safe-area-inset-bottom));margin:auto auto 0;
+ background:transparent!important;color:white!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody h1{
+ font-size:clamp(28px,7vw,40px);line-height:1.12;margin:13px 0;
+ color:#fff!important;text-shadow:0 2px 6px rgba(4,38,23,.25);
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody p{
+ margin:0 0 16px;line-height:1.45;color:#fff!important;
+ font-size:clamp(15px,3.7vw,19px);
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody .btn{
+ min-height:53px;margin-top:10px;border-radius:13px;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody .btn.outline{
+ background:rgba(2,50,26,.22)!important;color:#fff!important;
+ border:2px solid rgba(255,255,255,.93)!important;
+}
+#auth .authframe.sumba-cinematic.sumba-onboarding-refresh .sumba-auth-close{
+ display:none!important;
+}
 #auth .authbody:has(#sumbaVisitorForm){background:#fff;color:#153d2a}
 #auth #sumbaVisitorForm{display:grid;gap:12px}
 #auth #sumbaVisitorForm .field{display:grid;gap:8px;font-weight:750}
-#auth #sumbaVisitorForm input,#auth #sumbaVisitorForm select{width:100%;box-sizing:border-box;min-height:50px;padding:12px;border:1px solid #c6d8c5;border-radius:12px;background:#fff;color:#173d2d;font-size:16px}
+#auth #sumbaVisitorForm input,#auth #sumbaVisitorForm select{
+ width:100%;box-sizing:border-box;min-height:50px;padding:12px;
+ border:1px solid #c6d8c5;border-radius:12px;background:#fff;color:#173d2d;font-size:16px
+}
 #auth #sumbaVisitorForm .sumba-visitor-disclaimer{color:#516653;line-height:1.5;font-size:13px}
 #auth #sumbaVisitorForm .btn{width:100%;min-height:52px}
 @media(max-width:400px){
- #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(72vw,290px)!important}
- #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:31%!important}
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-auth-spotlight img{
+  width:min(72vw,295px)!important;max-height:33dvh!important;
+ }
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-welcome-photo{
+  top:37%!important;height:59%!important;
+ }
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody{padding:12px 18px 24px}
 }
-
-
-/* SUMBA: fotografias originais em alta resolucao, sem desfoque nem esticamento */
-#auth .authframe.sumba-cinematic .authphoto{background:linear-gradient(180deg,#e2efd3 0%,#bed6af 35%,#427c50 67%,#073e29 100%)!important}
-#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo{
- display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
- object-fit:cover!important;object-position:center 18%!important;max-width:none!important;
- clip-path:inset(0 0 54% 0);opacity:.60!important;filter:none!important;transform:none!important;
-}
-#auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{
- display:block!important;position:absolute!important;inset:auto!important;left:-6%!important;top:32%!important;
- width:112%!important;height:auto!important;max-height:none!important;
- object-fit:contain!important;object-position:center!important;
- transform:none!important;filter:none!important;opacity:1!important;
- -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
- mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 88%,transparent 100%)!important;
-}
-#auth .authframe.sumba-cinematic .authphoto::after{
- background:linear-gradient(180deg,rgba(238,249,225,.34) 0%,rgba(238,249,225,.08) 32%,transparent 45%,rgba(0,50,28,.03) 52%,rgba(0,50,28,.36) 70%,#073e29 90%,#073e29 100%)!important;
-}
-#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight{
- top:clamp(10px,2.0dvh,28px)!important;max-height:32dvh!important;align-items:flex-start!important;
-}
-#auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{
- display:block;width:min(69vw,405px)!important;max-width:82%!important;
- height:auto!important;max-height:32dvh!important;object-fit:contain!important;
- filter:drop-shadow(0 2px 5px rgba(241,255,232,.27))!important;
-}
-@media(max-width:400px){
- #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{width:min(68vw,275px)!important}
- #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:34%!important}
+@media(min-width:700px){
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-welcome-photo{
+  top:0!important;height:100%!important;object-position:center 45%!important;
+  -webkit-mask-image:none!important;mask-image:none!important;
+ }
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto::after{
+  background:linear-gradient(180deg,rgba(233,247,224,.23),transparent 37%,rgba(3,43,25,.7) 78%,#073e29)!important;
+ }
 }
 @media(max-height:680px){
- #auth .authframe.sumba-cinematic .authphoto .sumba-welcome-photo-scene{top:29%!important}
- #auth .authframe.sumba-cinematic .authphoto .sumba-auth-spotlight img{max-height:28dvh!important}
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authphoto .sumba-auth-spotlight img{
+  max-height:27dvh!important;
+ }
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody h1{font-size:25px}
+ #auth .authframe.sumba-cinematic.sumba-onboarding-refresh .authbody .btn{min-height:44px}
 }
 
 </style></head><body>
@@ -754,8 +787,8 @@ let account={name:'',email:'',phone:'',province:'Huíla',city:'',interests:[],bu
 try{const v=JSON.parse(localStorage.getItem(customerKey)||'null');if(v&&typeof v==='object')account={...account,...v,interests:Array.isArray(v.interests)?v.interests:[]}}catch{}
 const saveAccount=()=>{try{localStorage.setItem(customerKey,JSON.stringify(account));return true}catch{return false}};
 let authPage='welcome',introStep=0,registration={},regStep=1,coachIndex=0,editingPrefs=false,selectedStall=null;
-const sumbaWelcomePhotos={market:'/assets/sumba-onboarding-market.svg',farmers:'/assets/sumba-onboarding-farmers.svg',produce:'/assets/sumba-onboarding-produce.svg'};
-const slides=[{title:'Do campo à tua mesa.',desc:'Encontra alimentos frescos e descobre os produtos disponíveis na tua região.',file:sumbaWelcomePhotos.farmers},{title:'Conhece as bancadas.',desc:'Explora catálogos, compara preços e descobre produtores agrícolas.',file:sumbaWelcomePhotos.market},{title:'Compra ao teu ritmo.',desc:'Guarda favoritos, acompanha pedidos e recebe sugestões com base nos teus interesses.',file:sumbaWelcomePhotos.produce}];
+const sumbaWelcomePhotos={market:'/assets/sumba-onboarding-market.svg',farmers:'/assets/sumba-onboarding-farmers.svg',produce:'/assets/sumba-onboarding-produce.svg',woman:'/assets/sumba-farmer-woman.svg',man:'/assets/sumba-farmer-man.svg'};
+const slides=[{title:'Compre diretamente dos agricultores.',desc:'Descobre quem cultiva, conhece os produtos e aproxima o campo da tua mesa.',file:sumbaWelcomePhotos.man},{title:'Valoriza quem trabalha a terra.',desc:'Por trás de cada colheita há famílias e muito trabalho. Dá visibilidade aos produtores.',file:sumbaWelcomePhotos.woman},{title:'Mais escolhas. Mais proximidade.',desc:'Encontra agricultores, explora ofertas e compara produtos num só lugar.',file:sumbaWelcomePhotos.market}];
 function authButton(label,act,style=''){return '<button class="btn '+style+'" type="button" data-auth="'+act+'">'+esc(label)+'</button>'}
 function openAuth(page='welcome'){if(page==='welcome')editingPrefs=false;authPage=page;$('#auth').classList.remove('hide');document.body.style.overflow='hidden';$('.app').inert=true;$('#bottom').inert=true;renderAuth()}
 function hideAuth(){if(!account.guest){openAuth('welcome');return}$('#auth').classList.add('hide');document.body.style.overflow='';$('.app').inert=false;$('#bottom').inert=false}
@@ -764,9 +797,8 @@ function hideAuth(){if(!account.guest){openAuth('welcome');return}$('#auth').cla
 const SUMBA_ICON='/assets/sumba-icon.svg';
 const SUMBA_ORIGINAL_BRAND='/assets/sumba-brand-original.svg';
 function sumbaAuthPhoto(file,alt){
- const src=String(file||'').startsWith('/assets/sumba-onboarding-')?file:sumbaWelcomePhotos.market;
- return '<img class="sumba-welcome-photo" src="'+esc(src)+'" alt="" loading="eager" decoding="async" fetchpriority="high">'+
- '<img class="sumba-welcome-photo-scene" src="'+esc(src)+'" alt="'+esc(alt)+'" loading="eager" decoding="async">';
+ const src=Object.values(sumbaWelcomePhotos).includes(String(file||''))?file:sumbaWelcomePhotos.market;
+ return '<img class="sumba-welcome-photo" src="'+esc(src)+'" alt="'+esc(alt)+'" loading="eager" decoding="async" fetchpriority="high">';
 }
 function sumbaAuthSpotlight(){
  return '<div class="sumba-auth-spotlight" aria-label="SUMBA — Do campo à sua mesa.">'+
@@ -777,12 +809,12 @@ function sumbaProfileBrand(){
  '<span><strong>SUMBA</strong><small>Do campo à sua mesa.</small></span></div>';
 }
 
-function renderAuth(){let title='',body='',file=sumbaWelcomePhotos.market;if(authPage==='welcome'){title='Bem-vindo à SUMBA';body='<p>O mercado agrícola angolano no teu telemóvel.</p>'+authButton('Criar conta','real-register')+authButton('Já tenho conta','real-login','outline')+authButton('Explorar como visitante','guest','outline')}else if(authPage==='visitor'){title='Como queres explorar?';body='<p>Indica o teu nome e escolhe o teu perfil para visitar a demonstração.</p><form id="sumbaVisitorForm"><label class="field">O teu nome<input name="visitorName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required placeholder="Como devemos chamar-te?"></label><label class="field">Tipo de utilizador<select name="visitorRole" required><option value="buyer">Cliente</option><option value="producer">Produtor agrícola</option><option value="company">Empresa</option><option value="courier">Entregador</option></select></label><p class="sumba-visitor-disclaimer">Os dados e operações são demonstrativos. Não é possível concluir compras ou pagamentos.</p><button type="submit" class="btn">Entrar na demonstração</button></form>'+authButton('Voltar','visitor-back','outline')}else if(authPage==='intro'){const s=slides[introStep];title=s.title;file=s.file;body='<p>'+esc(s.desc)+'</p><div class="dots">'+slides.map((_,i)=>'<i class="'+(i===introStep?'on':'')+'"></i>').join('')+'</div>'+authButton(introStep===slides.length-1?'Começar':'Seguinte','nextIntro')+authButton('Saltar introdução','register','outline')}else if(authPage==='login'){title='Entra na tua conta';body='<div class="notice">Ambiente demonstrativo: nenhuma credencial será verificada no servidor. Não introduzas palavras-passe pessoais.</div><form id="demoLogin">'+input('Email ou telemóvel fictício','email',account.email||account.phone||'cliente@sumba.test','type="text" required placeholder="cliente@sumba.test ou +2449XXXXXXXX"')+input('Palavra-passe fictícia','password','','type="password" autocomplete="off" minlength="4" required')+'<div class="err" id="authError" role="alert"></div>'+submit('Entrar')+'</form>'+authButton('Entrar com conta demo','quick')+authButton('Esqueci a palavra-passe','recover','outline')+authButton('Criar conta','register','outline')+'<div class="demo-social">'+authButton('Continuar com Google','social-google','outline')+authButton('Continuar com Facebook','social-facebook','outline')+'</div>'}else if(authPage==='recover'){title='Recuperar acesso';body='<p>Neste ambiente de demonstração não precisas de recuperar uma palavra-passe. Podes entrar com uma palavra-passe fictícia ou utilizar os botões sociais simulados.</p>'+authButton('Voltar ao login','login')}else if(authPage==='register'){title=regStep===1?'Cria a tua conta':regStep===2?'Onde fazes compras?':'O que procuras?';file=regStep===1?sumbaWelcomePhotos.market:regStep===2?sumbaWelcomePhotos.farmers:sumbaWelcomePhotos.produce;body='<div class="dots">'+[1,2,3].map(i=>'<i class="'+(i===regStep?'on':'')+'"></i>').join('')+'</div><div class="notice">Passo '+regStep+' de 3 · Registo simulado. Não uses palavras-passe reais, números nem dados confidenciais.</div><form id="demoRegister">';
+function renderAuth(){let title='',body='',file=sumbaWelcomePhotos.woman;if(authPage==='welcome'){ title='O campo mais perto de ti.';body='<p>Conhece quem produz os alimentos da tua mesa.</p>'+authButton('Criar conta','real-register')+authButton('Entrar na minha conta','real-login','outline')+authButton('Entrar como visitante','guest','outline')}else if(authPage==='visitor'){title='Como queres explorar?';body='<p>Indica o teu nome e escolhe o teu perfil para visitar a demonstração.</p><form id="sumbaVisitorForm"><label class="field">O teu nome<input name="visitorName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required placeholder="Como devemos chamar-te?"></label><label class="field">Tipo de utilizador<select name="visitorRole" required><option value="buyer">Cliente</option><option value="producer">Produtor agrícola</option><option value="company">Empresa</option><option value="courier">Entregador</option></select></label><p class="sumba-visitor-disclaimer">Os dados e operações são demonstrativos. Não é possível concluir compras ou pagamentos.</p><button type="submit" class="btn">Entrar na demonstração</button></form>'+authButton('Voltar','visitor-back','outline')}else if(authPage==='intro'){const s=slides[introStep];title=s.title;file=s.file;body='<p>'+esc(s.desc)+'</p><div class="dots">'+slides.map((_,i)=>'<i class="'+(i===introStep?'on':'')+'"></i>').join('')+'</div>'+authButton(introStep===slides.length-1?'Começar':'Seguinte','nextIntro')+authButton('Saltar introdução','intro-skip','outline')}else if(authPage==='login'){title='Entra na tua conta';body='<div class="notice">Ambiente demonstrativo: nenhuma credencial será verificada no servidor. Não introduzas palavras-passe pessoais.</div><form id="demoLogin">'+input('Email ou telemóvel fictício','email',account.email||account.phone||'cliente@sumba.test','type="text" required placeholder="cliente@sumba.test ou +2449XXXXXXXX"')+input('Palavra-passe fictícia','password','','type="password" autocomplete="off" minlength="4" required')+'<div class="err" id="authError" role="alert"></div>'+submit('Entrar')+'</form>'+authButton('Entrar com conta demo','quick')+authButton('Esqueci a palavra-passe','recover','outline')+authButton('Criar conta','register','outline')+'<div class="demo-social">'+authButton('Continuar com Google','social-google','outline')+authButton('Continuar com Facebook','social-facebook','outline')+'</div>'}else if(authPage==='recover'){title='Recuperar acesso';body='<p>Neste ambiente de demonstração não precisas de recuperar uma palavra-passe. Podes entrar com uma palavra-passe fictícia ou utilizar os botões sociais simulados.</p>'+authButton('Voltar ao login','login')}else if(authPage==='register'){title=regStep===1?'Cria a tua conta':regStep===2?'Onde fazes compras?':'O que procuras?';file=regStep===1?sumbaWelcomePhotos.market:regStep===2?sumbaWelcomePhotos.farmers:sumbaWelcomePhotos.produce;body='<div class="dots">'+[1,2,3].map(i=>'<i class="'+(i===regStep?'on':'')+'"></i>').join('')+'</div><div class="notice">Passo '+regStep+' de 3 · Registo simulado. Não uses palavras-passe reais, números nem dados confidenciais.</div><form id="demoRegister">';
 if(regStep===1)body+=input('Nome completo','name',registration.name||'','required maxlength="80" placeholder="Ex.: Maria Demo"')+input('Email de exemplo','email',registration.email||'','type="email" required placeholder="maria@sumba.test"')+input('Telefone fictício (opcional)','phone',registration.phone||'','type="tel" maxlength="16"')+input('Palavra-passe fictícia','password','','type="password" autocomplete="off" minlength="4" required placeholder="Cria uma palavra-passe de teste"')+input('Confirmar palavra-passe','confirm','','type="password" autocomplete="off" required')+'<p class="muted">A palavra-passe introduzida não será armazenada.</p>'+termsCheckbox();
 else if(regStep===2)body+=select('Província','province',provinces,registration.province||'Huíla')+input('Município ou cidade','city',registration.city||'','required maxlength="60" placeholder="Ex.: Lubango"')+select('Tipo de compra','buying',['Uso doméstico','Pequenas compras','Compras frequentes'],registration.buying||'Uso doméstico');
 else body+='<p>Escolhe as categorias que mais te interessam.</p><div class="interestgrid">'+cats.slice(1).map(c=>'<label class="interest">'+photoTag(photoFiles[categoriesPhoto[c]],c,160)+'<span>'+esc(c)+'</span><input type="checkbox" name="interests" value="'+esc(c)+'" '+((registration.interests||[]).includes(c)?'checked':'')+'></label>').join('')+'</div>';
 body+='<div class="err" id="authError" role="alert"></div>'+submit(regStep===3?'Concluir registo':'Continuar')+'</form>'+authButton(regStep===1?'Voltar':'Passo anterior','regBack','outline')}else if(authPage==='done'){title='Tudo pronto, '+(account.name.split(' ')[0]||'cliente')+'!';body='<p>A tua experiência está personalizada. Vamos conhecer o mercado?</p>'+authButton('Começar a explorar','finish')}
-$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'SUMBA · MERCADO AGRÍCOLA':authPage==='intro'?'CONHECE A SUMBA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
+$('#auth').innerHTML='<div class="authframe'+((authPage==='welcome'||authPage==='intro')?' sumba-cinematic sumba-onboarding-refresh':'')+'"><div class="authphoto">'+sumbaAuthPhoto(file,'Fotografia ilustrativa de produtos agrícolas')+sumbaAuthSpotlight()+'</div><div class="authbody"><button type="button" class="sumba-auth-close" data-demo-close aria-label="Fechar">×</button><span class="pill">'+(authPage==='welcome'?'AGRICULTURA ANGOLANA':authPage==='intro'?'DO CAMPO À TUA MESA':'DEMONSTRAÇÃO')+'</span><h1>'+esc(title)+'</h1>'+body+'</div></div>';motion($('#auth .authbody'),'auth');revealPhotos($('#auth'))}
 const SUMBA_AUTH_URL='https://zunga-auth.stivenluanda04.workers.dev/';
 const SUMBA_VISITOR_KEY='sumba-visitor-session-v1';
 function sumbaRealAccess(flow='login'){location.assign(SUMBA_AUTH_URL+'?flow='+(flow==='register'?'register':'login'))}
@@ -810,7 +842,7 @@ function loginDemo(email,password){
  enterCustomer();return true;
 }
 function err(t){const n=$('#authError');if(n)n.textContent=t}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-auth]');if(!b)return;const act=b.dataset.auth;if(act==='real-register'||act==='real-login'){sumbaRealAccess(act==='real-register'?'register':'login');return}if(act==='visitor-back'){authPage='welcome'}else if(act==='intro'){introStep=0;authPage='intro'}else if(act==='nextIntro'){if(++introStep>=slides.length){regStep=1;authPage='register'}}else if(act==='register'){sumbaRealAccess('register');return}else if(act==='regBack'){if(editingPrefs&&regStep===2){editingPrefs=false;hideAuth();return}if(regStep>1)regStep--;else authPage='welcome'}else if(act==='quick'){sumbaRealAccess('login');return}else if(act==='social-google'||act==='social-facebook'){const provider=act==='social-google'?'Google':'Facebook';account={...account,name:provider==='Google'?'Conta Google (exemplo)':'Conta Facebook (exemplo)',email:provider.toLowerCase()+'@sumba.test',tutorial:true};enterCustomer();return}else if(act==='guest'){authPage='visitor'}else if(act==='finish'){sumbaRealAccess('register');return}else if(act==='login'||act==='recover'){sumbaRealAccess(act==='login'?'login':'register');return}else if(act==='logout'){account.signed=false;account.guest=false;try{sessionStorage.removeItem(SUMBA_VISITOR_KEY)}catch{}saveAccount();openAuth('welcome');return}else if(act==='tutorial'){startCoach();return}else if(act==='editPrefs'){regStep=2;editingPrefs=true;registration={...account};authPage='register';openAuth('register');return}renderAuth()});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-auth]');if(!b)return;const act=b.dataset.auth;if(act==='real-register'||act==='real-login'){sumbaRealAccess(act==='real-register'?'register':'login');return}if(act==='visitor-back'){authPage='welcome'}else if(act==='intro'){introStep=0;authPage='intro'}else if(act==='nextIntro'){if(++introStep>=slides.length){introStep=0;authPage='welcome'}}else if(act==='intro-skip'){introStep=0;authPage='welcome'}else if(act==='register'){sumbaRealAccess('register');return}else if(act==='regBack'){if(editingPrefs&&regStep===2){editingPrefs=false;hideAuth();return}if(regStep>1)regStep--;else authPage='welcome'}else if(act==='quick'){sumbaRealAccess('login');return}else if(act==='social-google'||act==='social-facebook'){const provider=act==='social-google'?'Google':'Facebook';account={...account,name:provider==='Google'?'Conta Google (exemplo)':'Conta Facebook (exemplo)',email:provider.toLowerCase()+'@sumba.test',tutorial:true};enterCustomer();return}else if(act==='guest'){authPage='visitor'}else if(act==='finish'){sumbaRealAccess('register');return}else if(act==='login'||act==='recover'){sumbaRealAccess(act==='login'?'login':'register');return}else if(act==='logout'){account.signed=false;account.guest=false;try{sessionStorage.removeItem(SUMBA_VISITOR_KEY)}catch{}saveAccount();openAuth('welcome');return}else if(act==='tutorial'){startCoach();return}else if(act==='editPrefs'){regStep=2;editingPrefs=true;registration={...account};authPage='register';openAuth('register');return}renderAuth()});
 document.addEventListener('submit',e=>{const f=e.target;if(f.id==='sumbaVisitorForm'){e.preventDefault();const data=new FormData(f);if(!enterSumbaVisitor(data.get('visitorName'),data.get('visitorRole')))toast('Indica o teu nome e escolhe o perfil.');return}if(f.id!=='demoLogin'&&f.id!=='demoRegister')return;e.preventDefault();const v=formData(f);if(f.id==='demoLogin'){if(!loginDemo(v.email,v.password))err('Introduz um email ou número fictício válido e uma palavra-passe de teste.');return}if(regStep===1){if(v.acceptTerms!=='on'){err('Aceita os termos para criar conta.');return}if(String(v.password||'').length<4||v.confirm!==v.password){err('Escolhe uma palavra-passe fictícia de pelo menos quatro caracteres e confirma-a.');return}if(!v.name.trim()){err('Introduz um nome fictício.');return}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())){err('Introduz um endereço de email com formato válido.');return}registration={name:v.name.trim(),email:sumbaDemoEmail(v.email),phone:v.phone.trim(),acceptedTerms:true};regStep=2}else if(regStep===2){if(!v.city.trim()){err('Introduz um município.');return}Object.assign(registration,{province:v.province,city:v.city.trim(),buying:v.buying});regStep=3}else{registration.interests=new FormData(f).getAll('interests');if(editingPrefs){account={...account,...registration};editingPrefs=false;db.province=account.province;save();saveAccount();hideAuth();navigate('profile');toast('Preferências atualizadas');return}account={...account,...registration,signed:false,guest:false,tutorial:false};recordTerms('buyer');saveAccount();sumbaDemoEvent('account','Conta criada','O registo demonstrativo da SUMBA foi concluído.',true);authPage='done'}renderAuth()});
 function oldCustomerProfile(){const name=account.name||'Visitante';return '<div class="panel"><div class="accounthead"><div class="accountavatar">'+esc(name.slice(0,1).toUpperCase())+'</div><div><h3>'+esc(name)+'</h3><div class="muted">'+esc(account.email||'Sem conta')+' · '+esc(account.city||account.province||'')+'</div></div></div><p class="muted">Interesses: '+esc(account.interests.join(', ')||'Ainda não definidos')+'</p><div class="actions">'+authButton('Editar preferências','editPrefs','outline small')+authButton('Ver tutorial','tutorial','outline small')+authButton(account.signed?'Terminar sessão':'Entrar ou criar conta','logout','outline small')+'</div></div><div class="panel credit">Fotografias ilustrativas, não representam produtores verificados. <a href="/photo-credits.html" target="_blank" rel="noopener">Créditos e licenças</a>.</div>'}
 const oldCoachSteps=[{selector:'#query',title:'Pesquisa o que precisas',text:'Escreve o nome de um produto, município ou bancada.'},{selector:'.catphotos',title:'Escolhe uma categoria',text:'Usa as categorias rápidas para encontrar os teus produtos favoritos.'},{selector:'.photo',title:'Descobre produtos',text:'Vê fotografias, preços e detalhes. O coração guarda o produto nos favoritos.'},{selector:'[data-go="stalls"]',title:'Visita as bancadas',text:'Descobre os produtores e consulta os catálogos disponíveis.'},{selector:'[data-go="orders"]',title:'Acompanha os pedidos',text:'Consulta o estado das tuas encomendas. Nesta versão são simulações.'}];

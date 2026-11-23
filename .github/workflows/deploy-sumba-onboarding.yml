@@ -46,14 +46,14 @@ jobs:
         run: |
           node --input-type=module -e '
             const base="https://zunga.stivenluanda04.workers.dev";
-            const paths=["/","/assets/sumba-brand-original.svg","/assets/sumba-onboarding-market.svg","/assets/sumba-onboarding-farmers.svg","/assets/sumba-onboarding-produce.svg"];
+            const paths=["/","/assets/sumba-brand-original.svg","/assets/sumba-onboarding-market.svg","/assets/sumba-onboarding-farmers.svg","/assets/sumba-onboarding-produce.svg","/assets/sumba-farmer-woman.svg","/assets/sumba-farmer-man.svg"];
             for (const p of paths) {
               let verified=false,latest="";
               for (let attempt=1;attempt<=8;attempt++) {
                 const url=base+p+(p==="/"?"?sumba_onboard_check="+Date.now()+"_"+attempt:"?v=20261123_"+attempt);
                 const response=await fetch(url,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
                 latest=await response.text();
-                const ok=response.ok&&(p==="/"?latest.includes("sumba-cinematic")&&latest.includes("sumbaVisitorForm")&&latest.includes("sumbaGuestBrowsing"):latest.includes("data:image/webp;base64,")&&latest.length>10000);
+                const ok=response.ok&&(p==="/"?latest.includes("sumba-onboarding-refresh")&&latest.includes("Compre diretamente dos agricultores.")&&latest.includes("sumbaVisitorForm")&&latest.includes("sumbaGuestBrowsing"):latest.includes("data:image/webp;base64,")&&latest.length>10000);
                 if(ok){console.log("Verified "+p+" ("+latest.length+" chars), attempt "+attempt);verified=true;break}
                 console.log("Retry "+p+": HTTP "+response.status+", bytes "+latest.length+", type "+(response.headers.get("content-type")||"?"));
                 await new Promise(resolve=>setTimeout(resolve,2500));

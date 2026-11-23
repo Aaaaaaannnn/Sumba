@@ -7,7 +7,7 @@ test('Both SUMBA main entries are synchronized and syntactically valid',()=>{
 });
 test('Visible account actions lead to actual Supabase portal instead of fake login',()=>{
  assert.match(html,/authButton\('Criar conta','real-register'\)/);
- assert.match(html,/authButton\('Já tenho conta','real-login','outline'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
  assert.match(html,/const SUMBA_AUTH_URL='https:\/\/zunga-auth\.stivenluanda04\.workers\.dev\/'/);
  assert.match(html,/location\.assign\(SUMBA_AUTH_URL\+'\?flow='/);
  assert.match(auth,/const entryMode=new URLSearchParams\(location\.search\)/);
@@ -39,26 +39,34 @@ test('Profile-specific guide is persisted per authenticated user in protected Su
  assert.match(auth,/onConflict:'user_id,role'/);
  for(const r of ['buyer','producer','company','courier','admin'])assert.match(auth,new RegExp(' '+r+':\\['));
 });
-test('Cinematic image does not use blur, scaling or stretched background anymore',()=>{
- assert.match(html,/\.sumba-welcome-photo\{display:none!important\}/);
- assert.match(html,/\.sumba-welcome-photo-scene\{[\s\S]*?filter:none!important/);
- assert.match(html,/object-fit:contain!important/);
- assert.match(html,/width:min\(67vw,380px\)!important/);
-});
-
-test('Final mobile image style overrides prior blurry/hidden layers',()=>{
- const start=html.lastIndexOf('/* SUMBA: fotografias originais em alta resolucao');
- assert.ok(start>0,'High resolution override missing');
+test('Full-screen welcome keeps one sharp photograph and a proportional central logo',()=>{
+ const start=html.lastIndexOf('/* SUMBA onboarding 2026: fotografia nítida, um único plano, logo central sem cartão.');
+ assert.ok(start>0,'New onboarding styles must be the final active rules');
  const styles=html.slice(start,html.indexOf('</style>',start));
- assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?display:block!important/);
- assert.match(styles,/\.sumba-welcome-photo-scene\{[\s\S]*?filter:none!important/);
- assert.match(styles,/\.sumba-welcome-photo-scene\{[\s\S]*?object-fit:contain!important/);
- assert.match(styles,/max-height:32dvh!important/);
- assert.ok(!styles.includes('filter:blur('),'No blur should remain in the active mobile override');
- for(const name of ['market','farmers','produce']){
-  const photo=read('public/assets/sumba-onboarding-'+name+'.svg');
-  const match=photo.match(/width="(\d+)" height="(\d+)"/);
-  assert.ok(match&&Number(match[1])>=1400&&Number(match[2])>=950,'Photo is not high resolution: '+name);
+ assert.match(styles,/\.sumba-welcome-photo\{[\s\S]*?filter:none!important/);
+ assert.match(styles,/\.sumba-welcome-photo-scene\{\s*display:none!important/);
+ assert.match(styles,/object-fit:cover!important/);
+ assert.match(styles,/max-height:35dvh!important/);
+ assert.ok(!styles.includes('filter:blur('));
+ assert.match(html,/sumba-onboarding-refresh/);
+ assert.match(html,/const SUMBA_ORIGINAL_BRAND='\/assets\/sumba-brand-original\.svg'/);
+ assert.match(html,/title:'Compre diretamente dos agricultores\.'/);
+ assert.match(html,/title:'Valoriza quem trabalha a terra\.'/);
+ assert.match(html,/title:'Mais escolhas\. Mais proximidade\.'/);
+ assert.match(html,/authButton\('Entrar como visitante','guest','outline'\)/);
+ assert.match(html,/authButton\('Criar conta','real-register'\)/);
+ assert.match(html,/authButton\('Entrar na minha conta','real-login','outline'\)/);
+ assert.match(html,/if\(\+\+introStep>=slides\.length\)\{introStep=0;authPage='welcome'\}/);
+ assert.match(html,/authButton\('Saltar introdução','intro-skip','outline'\)/);
+});
+test('New photographs are original, high quality and embedded locally',()=>{
+ for(const name of ['woman','man']){
+  const photo=read('public/assets/sumba-farmer-'+name+'.svg');
+  const size=photo.match(/width="(\d+)" height="(\d+)"/);
+  assert.ok(size&&Number(size[1])>=1500&&Number(size[2])>=1000);
+  assert.match(photo,/href="data:image\/webp;base64,/);
  }
- assert.match(html,/SUMBA · MERCADO AGRÍCOLA/);
+ assert.match(html,/sumbaWelcomePhotos\.woman/);
+ assert.match(html,/sumbaWelcomePhotos\.man/);
+ assert.equal(html.match(/sumba-welcome-photo" src=/g)?.length,1);
 });
