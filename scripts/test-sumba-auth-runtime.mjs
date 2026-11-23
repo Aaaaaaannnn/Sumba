@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 const path=fileURLToPath(new URL('../public/real/real.js',import.meta.url));
 const src=readFileSync(path,'utf8');
-const patched=src.replace(/start\(\);\s*\}\)\(\);\s*$/,"globalThis.__sumbaTest={setClient:c=>client=c,execute,requestCode,otpScreen,restorePending,clearPending,authError,socialButtons};})();");
+const patched=src.replace(/start\(\);\s*\}\)\(\);\s*$/,"globalThis.__sumbaTest={setClient:c=>client=c,execute,requestCode,otpScreen,restorePending,clearPending,resumeOtpFromEmailLink,authError,socialButtons};})();");
 assert.notEqual(patched,src,'Teste não conseguiu aceder ao módulo');
 let now=1732000000000;
 const saved=new Map();
@@ -27,7 +27,7 @@ const auth={
  signInWithPassword:async x=>(calls.push(['password',x]),success({}))
 };
 const client={auth,from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>success(null)})})})};
-const ctx=vm.createContext({console,document,window:{ZUNGA_REAL_CONFIG:{oauth:{google:false,facebook:false}}},location:{origin:'https://zunga-auth.stivenluanda04.workers.dev'},sessionStorage,FormData,Date:{now:()=>now},setInterval:()=>1,clearInterval:()=>{},setTimeout:()=>{},URLSearchParams,history:{}});
+const ctx=vm.createContext({console,document,window:{ZUNGA_REAL_CONFIG:{oauth:{google:false,facebook:false}}},location:{origin:'https://zunga-auth.stivenluanda04.workers.dev',pathname:'/'},sessionStorage,FormData,Date:{now:()=>now},setInterval:()=>1,clearInterval:()=>{},setTimeout:()=>{},URLSearchParams,history:{}});
 vm.runInContext(patched,ctx,{filename:'real.js'});
 const app=ctx.__sumbaTest;app.setClient(client);
 let checks=0;const check=(x,m)=>{assert.ok(x,m);checks++};
@@ -58,4 +58,15 @@ check(app.socialButtons().includes('Continuar com Google'),'OAuth Google permane
 await app.execute(form('authForm','login',{email:'teste@example.test'}));
 check(calls.at(-1)[0]==='signInWithOtp'&&calls.at(-1)[1].options.shouldCreateUser===false,'email login defaults to OTP without creating accounts');
 check(app.authError({code:'otp_expired'}).includes('expirado'),'erro de código amigável');
+
+app.clearPending();
+ctx.location.hash='#email-otp=teste%2Bnovo%40example.test';
+ctx.history.replaceState=(...args)=>{ctx.history.replacedWith=args.at(-1)};
+check(app.resumeOtpFromEmailLink(),'valid direct email link accepted');
+check(ctx.history.replacedWith==='https://zunga-auth.stivenluanda04.workers.dev/','email removed from URL');
+app.otpScreen();
+check(elements.get('content').innerHTML.includes('teste+novo@example.test'),'direct email link opens six-digit verification UI');
+await app.execute(form('otpForm','',{token:'123456'}));
+check(calls.filter(x=>x[0]==='verify').at(-1)[1].email==='teste+novo@example.test','linked email verified using server-side OTP');
+
 console.log('SUMBA Auth runtime: '+checks+' verificações simuladas aprovadas. SMTP e login real não testados.');
