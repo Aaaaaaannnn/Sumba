@@ -182,17 +182,37 @@ async function load(){
   profile=checked(await client.from('zunga_profiles').select('*').eq('user_id',user.id).maybeSingle());if(ticket!==generation)return;
   if(!profile){onboarding();notice('Completa o perfil para continuar.');return}
   await dashboard(ticket);
-  if(ticket===generation)await maybeShowFirstAccountGuide(ticket);
+  if(ticket===generation && new URLSearchParams(location.search).get('view')==='services')await maybeShowFirstAccountGuide(ticket);
  }catch(e){if(ticket!==generation)return;notice('Não foi possível carregar os dados. Verifica a ligação e a configuração da base de dados.',true);screen('<div class="panel"><h2>Ligação indisponível</h2>'+button('Tentar novamente','reload')+button('Terminar sessão','logout')+'</div>')}
 }
 async function dashboard(ticket){
+ if(new URLSearchParams(location.search).get('view') !== 'services'){
+  let avatar='';
+  if(profile.avatar_path){
+   const result=await client.storage.from('zunga-avatars').createSignedUrl(profile.avatar_path,300);
+   avatar=result.data?.signedUrl||'';
+  }
+  if(ticket!==generation)return;
+  screen('<section class="panel"><h1>A minha conta</h1><form id="editProfile">'+
+   (avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'')+
+   label('Nome','name',profile.display_name,'required minlength="2" maxlength="80" autocomplete="name"')+
+   label('Email','email',user.email||'','type="email" readonly')+
+   label('Telefone','contactPhone',profile.contact_phone??user.phone??'','type="tel" maxlength="32" autocomplete="tel"')+
+   label('Província','province',profile.province,'maxlength="80"')+
+   label('Município','city',profile.city,'maxlength="80"')+
+   '<label>Foto de perfil (até 2 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label>'+
+   '<button type="submit">Guardar perfil</button></form>'+
+   (profile.avatar_path?button('Remover foto','removeAvatar'):'')+
+   '</section><div class="actions"><a href="?view=services">Serviços da conta</a>'+button('Terminar sessão','logout')+'</div>');
+  notice('');
+  return;
+ }
  let stall=null,company=null,avatar='',catalog=[];
  if(profile.role==='producer')stall=checked(await client.from('zunga_stalls').select('*').eq('owner_id',user.id).maybeSingle());
  if(profile.role==='company')company=checked(await client.from('zunga_companies').select('*').eq('owner_id',user.id).maybeSingle());
  if(profile.avatar_path){const r=await client.storage.from('zunga-avatars').createSignedUrl(profile.avatar_path,300);if(!r.error)avatar=r.data.signedUrl}
  const identities=checked(await client.auth.getUserIdentities()).identities.map(i=>i.provider);catalog=checked(await client.from('zunga_stalls').select('id,name,province,city,description').eq('published',true).order('name').limit(50));if(ticket!==generation)return;
- screen('<div class="hero"><div class="sumba-real-profile-brand"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">'+esc(roles[profile.role])+'</span><h1>Olá, '+esc(profile.display_name)+'</h1><p>Explora fornecedores, gere o teu perfil e utiliza os serviços disponíveis na SUMBA.</p><p>Produtos, cestos e pedidos aos fornecedores são sincronizados com a tua conta. A finalização de compras e pagamentos ainda não está disponível.</p></div><div class="panel"><div class="row">'+(avatar?'<img class="avatar" alt="Foto de perfil" src="'+esc(avatar)+'">':'<div class="avatar avatar-fallback">'+esc(profile.display_name[0])+'</div>')+'<div><h2>'+esc(profile.display_name)+'</h2><span class="muted">'+esc(user.email||user.phone||'Identidade verificada')+'</span></div></div><form id="editProfile">'+label('Nome','name',profile.display_name,'required minlength="2" maxlength="80"')+label('Província','province',profile.province,'maxlength="80"')+label('Município','city',profile.city,'maxlength="80"')+textarea('Apresentação','bio',profile.bio)+'<label>Foto de perfil (até 1 MB)<input type="file" name="avatar" accept="image/jpeg,image/png,image/webp"></label><button type="submit">Guardar perfil</button></form>'+(profile.avatar_path?button('Remover foto','removeAvatar'):'')+'</div>'+
- (profile.role==='producer'?'<div class="panel"><h2>A minha bancada</h2><form id="stall" data-exists="'+!!stall+'">'+label('Nome comercial','name',stall?.name,'required minlength="2" maxlength="100"')+label('Província','province',stall?.province||profile.province,'required minlength="2" maxlength="80"')+label('Município','city',stall?.city||profile.city,'required minlength="2" maxlength="80"')+textarea('Descrição','description',stall?.description,1000)+'<label class="check"><input type="checkbox" name="published" '+(stall?.published?'checked':'')+'> Publicar nome, localização e descrição no diretório</label><button type="submit">Guardar bancada</button></form></div>':'')+
+ screen('<a href="?">Voltar à minha conta</a>'+ (profile.role==='producer'?'<div class="panel"><h2>A minha bancada</h2><form id="stall" data-exists="'+!!stall+'">'+label('Nome comercial','name',stall?.name,'required minlength="2" maxlength="100"')+label('Província','province',stall?.province||profile.province,'required minlength="2" maxlength="80"')+label('Município','city',stall?.city||profile.city,'required minlength="2" maxlength="80"')+textarea('Descrição','description',stall?.description,1000)+'<label class="check"><input type="checkbox" name="published" '+(stall?.published?'checked':'')+'> Publicar nome, localização e descrição no diretório</label><button type="submit">Guardar bancada</button></form></div>':'')+
  (profile.role==='company'?'<div class="panel"><h2>A minha empresa</h2><form id="company" data-exists="'+!!company+'">'+label('Nome comercial','name',company?.name,'required minlength="2" maxlength="100"')+label('Setor','sector',company?.sector,'maxlength="100"')+label('Província','province',company?.province||profile.province,'maxlength="80"')+label('Município','city',company?.city||profile.city,'maxlength="80"')+'<button type="submit">Guardar empresa</button></form></div>':'')+
  '<div class="panel"><h2>Segurança da conta</h2><p class="muted">Para alterar o email, poderá ser necessário confirmar a operação tanto no endereço actual como no novo.</p><form id="changeEmail">'+label('Novo email de acesso','newEmail','','type="email" required autocomplete="email" maxlength="254"')+'<button type="submit" class="outline">Solicitar alteração de email</button></form><p class="muted">Para recuperar a palavra-passe, termina a sessão e escolhe Recuperar acesso.</p></div>'+
  '<div class="panel"><h2>Métodos de acesso</h2><p class="muted">Vincula um método adicional à mesma conta. A confirmação é feita pelo fornecedor, nunca pela aplicação.</p><div class="socials">'+socialButtons(true,identities)+'</div><p class="muted">Métodos associados: '+esc(identities.map(i=>providers[i]|| (i==='email'?'Email':i)).join(', '))+'</p></div>'+
@@ -301,8 +321,8 @@ async function execute(f){
  if(!profile)throw Error('Completa o perfil.');
  if(f.id==='changeEmail'){const email=s('newEmail').toLowerCase();if(email===user.email?.toLowerCase()){notice('Este já é o teu email.',true);return}checked(await client.auth.updateUser({email},{emailRedirectTo:redirect}));notice('Se o pedido foi aceite, consulta os emails de confirmação antes de utilizar o novo endereço.');return}
  if(f.id==='editProfile'){
-  const change={display_name:s('name'),province:s('province'),city:s('city'),bio:s('bio')},file=v.get('avatar');
-  if(file?.size){if(file.size>1048576||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Escolhe JPG, PNG ou WebP até 1 MB.');const path=user.id+'/avatar';checked(await client.storage.from('zunga-avatars').upload(path,file,{upsert:true,contentType:file.type}));change.avatar_path=path}
+  const change={display_name:s('name'),province:s('province'),city:s('city'),contact_phone:s('contactPhone')},file=v.get('avatar');
+  if(file?.size){if(file.size>2097152||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Escolhe JPG, PNG ou WebP até 2 MB.');const path=user.id+'/avatar';checked(await client.storage.from('zunga-avatars').upload(path,file,{upsert:true,contentType:file.type}));change.avatar_path=path}
   checked(await client.from('zunga_profiles').update(change).eq('user_id',user.id).select('user_id').single())
  }else if(f.id==='stall'&&profile.role==='producer'){
   const data={name:s('name'),province:s('province'),city:s('city'),description:s('description'),published:v.has('published')};const table=client.from('zunga_stalls');checked(await(f.dataset.exists==='true'?table.update(data).eq('owner_id',user.id).select('id').single():table.insert({...data,owner_id:user.id}).select('id').single()))

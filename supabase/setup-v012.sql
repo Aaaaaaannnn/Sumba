@@ -55,9 +55,13 @@ create policy company_read_owner on public.zunga_companies for select to authent
 create policy company_create_owner on public.zunga_companies for insert to authenticated with check ((select auth.uid())=owner_id and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and exists(select 1 from public.zunga_profiles p where p.user_id=(select auth.uid()) and p.role='company'));
 create policy company_edit_owner on public.zunga_companies for update to authenticated using ((select auth.uid())=owner_id and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and exists(select 1 from public.zunga_profiles p where p.user_id=(select auth.uid()) and p.role='company')) with check ((select auth.uid())=owner_id and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and exists(select 1 from public.zunga_profiles p where p.user_id=(select auth.uid()) and p.role='company'));
 -- Private avatars only, no listing or editing another account's files.
-insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values ('zunga-avatars','zunga-avatars',false,1048576,array['image/jpeg','image/png','image/webp']);
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values ('zunga-avatars','zunga-avatars',false,2097152,array['image/jpeg','image/png','image/webp']);
 create policy zunga_avatar_read on storage.objects for select to authenticated using (bucket_id='zunga-avatars' and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and name=(select auth.uid())::text || '/avatar');
 create policy zunga_avatar_create on storage.objects for insert to authenticated with check (bucket_id='zunga-avatars' and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and name=(select auth.uid())::text || '/avatar');
 create policy zunga_avatar_update on storage.objects for update to authenticated using (bucket_id='zunga-avatars' and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and name=(select auth.uid())::text || '/avatar') with check (bucket_id='zunga-avatars' and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and name=(select auth.uid())::text || '/avatar');
 create policy zunga_avatar_remove on storage.objects for delete to authenticated using (bucket_id='zunga-avatars' and not coalesce((select (auth.jwt()->>'is_anonymous')::boolean),false) and name=(select auth.uid())::text || '/avatar');
 commit;
+
+alter table public.zunga_profiles add column if not exists contact_phone text check (length(contact_phone) <= 32);
+grant update(contact_phone) on public.zunga_profiles to authenticated;
+update storage.buckets set file_size_limit=2097152 where id='zunga-avatars';
