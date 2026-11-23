@@ -1,3 +1,4 @@
+# Deploy authenticated OTP UX (SVG envelope + verification link); publish isolated Worker before applying the updated email template.
 # Activation is intentionally scoped to the real-auth Worker, with Supabase templates applied only after publication checks.
 name: Activate SUMBA real email OTP (one-time)
 on:
