@@ -25,6 +25,13 @@
 - Logótipo de maior dimensão sobre a própria fotografia, com sobreposição suave para legibilidade e formato responsivo.
 - Não alterados autenticação real, backend Supabase, Brevo, pagamentos ou dados de demonstração.
 
+# SUMBA — produtos, cestos e pedidos persistentes (23/11/2026)
+
+- Adicionadas quatro tabelas Supabase protegidas por RLS para produtos de produtores, cestos privados, contactos com fornecedores e mensagens entre as partes.
+- Contas autenticadas têm um mercado sem produtos fictícios, com publicação de produtos, cesto e contacto comercial registados no servidor.
+- Nenhuma cobrança, encomenda definitiva ou logística foi ativada; pagamentos continuam indisponíveis nesta área.
+- Testes de segurança SQL e regressão do mercado, com documentação separada.
+
 # SUMBA — ajuste OTP do portal real (23/11/2026)
 
 - Ícone de envelope redesenhado com SVG, apenas na página do código real.
