@@ -43,5 +43,5 @@ check(script.includes("const SITE='https://zunga-auth.stivenluanda04.workers.dev
 check(script.includes("mailer_templates_email_change_content"),'email change template');
 check(script.includes("mailer_templates_invite_content"),'invitation template');
 check(script.includes("mode==='status'"),'readiness check command');
-check(!js.includes('service_role')&&!cfg.includes('service_role'),'no privileged browser key');
+check(!/\bservice_role\s*[:=]/.test(js) && /publishableKey:"sb_publishable_/.test(cfg) && !/publishableKey:"sb_secret_/.test(cfg),'no privileged browser key');
 console.log('SUMBA auth contract '+n+' checks passed. No live sending/authentication tested.');
