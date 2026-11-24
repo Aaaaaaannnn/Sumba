@@ -6,19 +6,18 @@ const validConfig=c=>c.enabled===true&&c.routes?.some?.(r=>r.origin===location.o
 const redirect=location.origin+location.pathname;
 const entryMode=new URLSearchParams(location.search).get('flow')==='register'?'register':'login';
 const providers={google:'Google'};
-const otpTypes={register:'email',otp:'email',reset:'recovery'};
+const otpTypes={register:'email',reset:'recovery'};
 const pendingKey='sumba-auth-otp-v2';
 let pending=null,nextSend=0,otpTimer=null;
 
 const isEmail=value=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 const isPhone=value=>/^\+[1-9]\d{7,14}$/.test(value);
-let authChannel='email';
 const restorePending=()=>{try{
  const x=JSON.parse(sessionStorage.getItem(pendingKey)||'null');
- if(x&&['register','reset','otp'].includes(x.mode)&&['email','phone'].includes(x.channel)&&
+ if(x&&['register','reset','phone-change'].includes(x.mode)&&['email','phone'].includes(x.channel)&&
  (x.channel==='email'?isEmail(x.identifier):isPhone(x.identifier))&&x.expiresAt>Date.now()&&x.expiresAt<=Date.now()+601000){
   pending={mode:x.mode,identifier:x.identifier,channel:x.channel};
-  authChannel=x.channel;nextSend=Math.max(0,Math.min(x.nextSend||0,Date.now()+60000));
+  nextSend=Math.max(0,Math.min(x.nextSend||0,Date.now()+60000));
  }
 }catch{}};
 const setPending=(mode,identifier,channel)=>{pending={mode,identifier,channel};
@@ -34,7 +33,7 @@ function resumeOtpFromEmailLink(){
  let identifier;
  try{identifier=decodeURIComponent(location.hash.slice(prefix.length)).trim().toLowerCase()}catch{return false}
  if(!isEmail(identifier))return false;
- setPending('otp',identifier,'email');nextSend=0;
+ setPending('register',identifier,'email');nextSend=0;
  history.replaceState?.(null,'',redirect); // remove the email from browser history/navigation URL
  return true;
 }
@@ -45,7 +44,7 @@ const screen=html=>{if(otpTimer){clearInterval(otpTimer);otpTimer=null}$('conten
 const label=(name,key,value='',attrs='')=>'<label>'+esc(name)+'<input name="'+key+'" value="'+esc(value)+'" '+attrs+'></label>';
 const textarea=(name,key,value='',max=600)=>'<label>'+esc(name)+'<textarea name="'+key+'" maxlength="'+max+'">'+esc(value)+'</textarea></label>';
 const button=(title,act)=>'<button type="button" class="outline" data-action="'+act+'">'+esc(title)+'</button>';
-const terms='<details><summary>Condições de utilização</summary><p>A SUMBA é uma plataforma em desenvolvimento. Perfis, bancadas, produtos, cestos e contactos com fornecedores são guardados na conta autenticada. Compras concluídas, pagamentos, cobranças, garantias de entrega e contratos ainda não são processados pelo sistema. O email ou o número de telemóvel é usado para autenticação; nome, localização aproximada, apresentação e foto são usados no perfil. Bancadas publicadas exibem publicamente nome comercial, localização e descrição. Não introduzas dados sensíveis, documentos, contactos de terceiros ou conteúdo ilegal. Usa apenas conteúdo que tens direito a publicar. As condições e a política de privacidade definitivas serão publicadas antes do lançamento comercial. A eliminação da conta deverá ser disponibilizada antes do lançamento público; para testes, solicita apoio ao responsável pelo piloto.</p></details>';
+const terms='<details><summary>Condições de utilização</summary><p>A SUMBA é uma plataforma em desenvolvimento. Perfis, bancadas, produtos, cestos e contactos com fornecedores são guardados na conta autenticada. Compras concluídas, pagamentos, cobranças, garantias de entrega e contratos ainda não são processados pelo sistema. O email ou o número de telemóvel é usado para autenticação; nome, localização aproximada, apresentação e foto são usados no perfil. Bancadas publicadas exibem publicamente nome comercial, localização e descrição. O número de BI é recolhido no registo e guardado numa área privada. Não publiques documentos, contactos de terceiros ou conteúdo ilegal. Usa apenas conteúdo que tens direito a publicar. As condições e a política de privacidade definitivas serão publicadas antes do lançamento comercial. A eliminação da conta deverá ser disponibilizada antes do lançamento público; para testes, solicita apoio ao responsável pelo piloto.</p></details>';
 const agree=()=>terms+'<label class="check"><input type="checkbox" name="agree" required> Li e aceito as condições do piloto.</label>';
 
 
@@ -57,28 +56,39 @@ function socialButtons(link=false,identities=[]){
 }
 
 
-function authScreen(mode='login',identifier='',channel=authChannel){
- document.getElementById('sumbaNotifications')?.remove();
- authChannel=channel==='phone'?'phone':'email';
- const login=mode==='login'||mode==='password',register=mode==='register',reset=mode==='reset',passwordLogin=mode==='password';
- const password=passwordLogin||register,phone=authChannel==='phone';
- const tabs='<div class="auth-tabs" role="group" aria-label="Método de acesso"><button type="button" class="'+(!phone?'selected':'')+'" data-action="channel-email" aria-pressed="'+(!phone)+'">Email</button><button type="button" class="'+(phone?'selected':'')+'" data-action="channel-phone" aria-pressed="'+phone+'">Telemóvel</button></div>';
- const field=phone?
-  label('Número de telemóvel','phone',identifier,'type="tel" inputmode="tel" placeholder="+2449XXXXXXXX" pattern="\\+[1-9][0-9]{7,14}" required autocomplete="tel" maxlength="16"'):
-  label('Email','email',identifier,'type="email" required autocomplete="email" maxlength="254"');
- screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-icon.svg" alt="Emblema da SUMBA" width="132" height="132"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><span class="pill">CONTA SUMBA</span><h1>'+
- (login?(passwordLogin?'Entrar com palavra-passe':'Entra na SUMBA'):register?'Cria a tua conta':reset?'Recuperar acesso':'Entrar com código')+
- '</h1><p>Uma conta pessoal, protegida e confirmada por '+(phone?'SMS.':'email.')+'</p></div>'+
- '<div class="panel auth-panel">'+tabs+
- '<form id="authForm" data-mode="'+mode+'" data-channel="'+authChannel+'">'+field+
- (password?label('Palavra-passe','password','','type="password" required '+(register?'minlength="12" ':'')+'maxlength="128" autocomplete="'+(register?'new-password':'current-password')+'"'):'')+
- (register?label('Confirmar palavra-passe','confirm','','type="password" required minlength="12" maxlength="128" autocomplete="new-password"')+agree():'')+
- '<button type="submit">'+(login?(passwordLogin?'Entrar com palavra-passe':'Receber código de 6 dígitos'):register?'Criar conta':reset?'Receber código de recuperação':'Enviar código de acesso')+'</button></form>'+
- '<div class="actions">'+(login?(passwordLogin?button('Entrar com código','login'):button('Usar palavra-passe','password'))+button('Esqueci a palavra-passe','reset')+button('Criar conta','register'):button('Voltar ao login','login'))+'</div>'+
- ((login||register)?'<div class="or"><span>ou</span></div><div class="socials">'+socialButtons()+'</div>':'')+
- '<p class="muted">'+(phone?'Usa o formato internacional, por exemplo +2449XXXXXXXX. O envio depende da activação do serviço SMS.':'A confirmação e os códigos são enviados pelo serviço de email da SUMBA.')+'</p></div>');
-}
+const productCategories=['Cesta Básica','Cereais','Tubérculos','Hortícolas','Frutas','Leguminosas','Outros'];
+const normalizePhone=value=>{const number=String(value||'').replace(/[\s()-]/g,'');return /^9\d{8}$/.test(number)?'+244'+number:number;};
+const passwordField=(labelText,key,creating=false)=>'<label>'+labelText+'<input name="'+key+'" type="password" required '+(creating?'minlength="12" ':'')+'maxlength="128" autocomplete="'+(creating?'new-password':'current-password')+'"></label>';
+const togglePassword=()=>'<label class="check"><input type="checkbox" data-password-visibility> Mostrar palavra-passe</label>';
+const registrationDetails=()=>user?.user_metadata?.sumba_registration||null;
+let skipPhoneStep=false;
 
+function authScreen(mode='login',identifier=''){
+ $('sumbaNotifications')?.remove();
+ const register=mode==='register',reset=mode==='reset';
+ const contact=register?
+  label('E-mail','email',identifier,'type="email" required autocomplete="email" maxlength="254"')+
+  label('Número de telefone','phone','','type="tel" inputmode="tel" placeholder="+2449XXXXXXXX" required autocomplete="tel" maxlength="24"'):
+  label('E-mail ou número de telefone','identifier',identifier,'type="text" required autocomplete="username" maxlength="254"');
+ const details=register?passwordField('Confirmar palavra-passe','confirm',true)+togglePassword()+
+  label('Número do BI','bi','','type="text" required maxlength="14" autocapitalize="characters" placeholder="000000000LA000"')+
+  label('Província','province','','required minlength="2" maxlength="80" autocomplete="address-level1"')+
+  label('Município','city','','required minlength="2" maxlength="80" autocomplete="address-level2"')+agree():'';
+ screen('<div class="hero"><div class="auth-hero-identity"><img src="./assets/sumba-icon.svg" alt="Emblema da SUMBA" width="132" height="132"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div><h1>'+
+  (register?'Cria a tua conta':reset?'Esqueci a palavra-passe':'Entrar na minha conta')+'</h1>'+
+  (register?'<p>Confirma o e-mail com o código que vais receber após o registo.</p>':'')+'</div>'+
+  '<div class="panel auth-panel"><form id="authForm" data-mode="'+mode+'">'+contact+
+  (reset?'':passwordField('Palavra-passe','password',register))+details+
+  '<button type="submit">'+(register?'Criar conta':reset?'Receber código de recuperação':'Entrar')+'</button></form>'+
+  '<div class="actions">'+(register||reset?button('Já tenho conta · Entrar','login'):button('Esqueci a palavra-passe','reset')+button('Criar conta','register'))+'</div></div>');
+}
+function registrationPhoneScreen(phone){
+ screen('<h1>Confirmar o telefone</h1><div class="panel"><p>Confirma '+esc(phone)+' por SMS para poderes entrar com o número de telefone.</p><div class="actions">'+button('Enviar código por SMS','verify-registration-phone')+button('Continuar com e-mail','skip-registration-phone')+'</div></div>');
+}
+function productPreferencesScreen(){
+ screen('<h1>Os teus produtos preferidos</h1><div class="panel"><p>Escolhe as categorias que mais te interessam.</p><form id="productPreferences">'+productCategories.map(category=>'<label class="check"><input type="checkbox" name="category" value="'+esc(category)+'"> '+esc(category)+'</label>').join('')+
+ '<button type="submit">Guardar preferências</button>'+button('Agora não','skip-product-preferences')+'</form></div>');
+}
 
 function otpScreen(){
  if(!pending)return authScreen();
@@ -96,7 +106,7 @@ function otpScreen(){
  '<button class="otp-submit" type="submit">Confirmar código</button></form>'+
  '<div class="otp-divider"></div><div class="actions otp-actions">'+
  '<button type="button" class="outline" data-action="resend" id="resendCode">Reenviar código</button>'+
- button('Alterar '+(phone?'número':'email'),'change-identifier')+'</div>'+
+ (mode==='phone-change'?button('Continuar com e-mail','skip-registration-phone'):button('Alterar '+(phone?'número':'email'),'change-identifier'))+'</div>'+
  '<p class="muted otp-security">O código é de utilização única e tem validade limitada. Nunca o partilhes.</p></div>');
  const input=$('otpCode'),slots=Array.from(document.querySelectorAll('.otp-digit'));
  const update=()=>{
@@ -130,11 +140,11 @@ function otpScreen(){
 
 function authError(e){
  const code=String(e?.code||''),message=String(e?.message||'').toLowerCase();
- if(['invalid_credentials','email_not_confirmed','phone_not_confirmed'].includes(code))return 'Não foi possível entrar. Confirma a identidade e a palavra-passe, ou usa um código.';
+ if(['invalid_credentials','email_not_confirmed','phone_not_confirmed'].includes(code))return 'Não foi possível entrar. Confirma a palavra-passe e se o e-mail ou telefone já foi verificado.';
  if(['otp_expired','otp_disabled','bad_code_verifier','flow_state_not_found','flow_state_expired'].includes(code))return 'Código inválido ou expirado. Solicita um novo código.';
  if(['over_email_send_rate_limit','over_request_rate_limit','over_sms_send_rate_limit'].includes(code)||e?.status===429)return 'Aguarda antes de solicitar outro código.';
  if(['sms_provider_disabled','phone_provider_disabled','sms_send_failed','sms_send_error','sms_not_configured'].includes(code)||message.includes('sms provider')||message.includes('sms not enabled')||message.includes('phone signups are disabled'))
-  return 'O envio de SMS ainda não está activo. É necessário configurar um fornecedor SMS no Supabase.';
+  return 'O envio de SMS ainda não está activo. Podes continuar a usar o e-mail.';
  if(['provider_disabled','oauth_provider_not_supported'].includes(code)||message.includes('provider is not enabled'))
   return 'O login com Google precisa de ser activado e configurado no Supabase.';
  if(['manual_linking_disabled','identity_already_exists','identity_not_found'].includes(code))return 'Este método já está associado a outra conta ou ainda não pode ser vinculado.';
@@ -145,13 +155,16 @@ function authError(e){
 
 
 async function requestCode(mode,identifier,channel='email',resend=false){
- if(!['register','otp','reset'].includes(mode))throw Error('invalid-mode');
+ if(!['register','reset','phone-change'].includes(mode))throw Error('invalid-mode');
  if(Date.now()<nextSend)throw {code:'over_request_rate_limit'};
  if(channel==='phone'){
   if(!isPhone(identifier))throw {code:'invalid_phone'};
   if(mode==='register'){
    if(!resend)throw Error('invalid-mode');
    checked(await client.auth.resend({type:'sms',phone:identifier}));
+  }else if(mode==='phone-change'){
+   if(resend)checked(await client.auth.resend({type:'phone_change',phone:identifier}));
+   else checked(await client.auth.updateUser({phone:identifier}));
   }else{
    checked(await client.auth.signInWithOtp({phone:identifier,options:{shouldCreateUser:false,channel:'sms'}}));
   }
@@ -161,7 +174,7 @@ async function requestCode(mode,identifier,channel='email',resend=false){
    if(!resend)throw Error('invalid-mode');
    checked(await client.auth.resend({type:'signup',email:identifier,options:{emailRedirectTo:redirect}}));
   }else if(mode==='reset')checked(await client.auth.resetPasswordForEmail(identifier,{redirectTo:redirect}));
-  else checked(await client.auth.signInWithOtp({email:identifier,options:{shouldCreateUser:false,emailRedirectTo:redirect}}));
+
  }
  nextSend=Date.now()+60000;
  setPending(mode,identifier,channel);otpScreen();
@@ -169,9 +182,10 @@ async function requestCode(mode,identifier,channel='email',resend=false){
 }
 
 function onboarding(){
- screen('<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+'<h1>Completa o teu perfil</h1><div class="panel"><p>Conta autenticada. Escolhe o teu tipo de acesso. Administração e entregas são atribuídas pelo responsável, nunca por auto-registo.</p><form id="onboarding">'+label('Nome','name','','required minlength="2" maxlength="80" autocomplete="name"')+'<label>Tipo de conta<select name="role"><option value="buyer">Cliente</option><option value="producer">Fornecedor</option><option value="company">Empresa</option></select></label>'+label('Província','province','','maxlength="80"')+label('Município','city','','maxlength="80"')+agree()+'<button type="submit">Guardar perfil</button></form></div>'+button('Terminar sessão','logout'));
+ const details=registrationDetails();
+ screen('<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+'<h1>Completa o teu perfil</h1><div class="panel"><p>Conta autenticada. Escolhe o teu tipo de acesso. Administração e entregas são atribuídas pelo responsável, nunca por auto-registo.</p><form id="onboarding">'+label('Nome','name','','required minlength="2" maxlength="80" autocomplete="name"')+'<label>Tipo de conta<select name="role"><option value="buyer">Cliente</option><option value="producer">Fornecedor</option><option value="company">Empresa</option></select></label>'+label('Província','province',details?.province||'','maxlength="80"')+label('Município','city',details?.city||'','maxlength="80"')+(details?.accepted===true?'':agree())+'<button type="submit">Guardar perfil</button></form></div>'+button('Terminar sessão','logout'));
 }
-function recoveryScreen(){screen('<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+'<h1>Nova palavra-passe</h1><div class="panel"><form id="recovery">'+label('Nova palavra-passe','password','','type="password" minlength="12" required autocomplete="new-password"')+label('Confirmar palavra-passe','confirm','','type="password" minlength="12" required autocomplete="new-password"')+'<button type="submit">Atualizar palavra-passe</button></form></div>')}
+function recoveryScreen(){screen('<div class="auth-hero-identity compact"><img src="./assets/sumba-icon.svg" alt="Emblema SUMBA"><div><strong>SUMBA</strong><small>Do campo à sua mesa.</small></div></div>'+'<h1>Nova palavra-passe</h1><div class="panel"><form id="recovery">'+label('Nova palavra-passe','password','','type="password" minlength="12" required autocomplete="new-password"')+label('Confirmar palavra-passe','confirm','','type="password" minlength="12" required autocomplete="new-password"')+togglePassword()+'<button type="submit">Atualizar palavra-passe</button></form></div>')}
 const checked=r=>{if(r.error)throw r.error;return r.data};
 async function load(){
  const ticket=++generation;
@@ -181,6 +195,13 @@ async function load(){
   user=result.data.user;if(!user.email_confirmed_at&&!user.phone_confirmed_at&&!user.identities?.some(i=>i.provider==='google')){await client.auth.signOut();user=null;profile=null;clearPending();authScreen();notice('Confirma primeiro o email.',true);return}if(recovery){recoveryScreen();notice('Define uma nova palavra-passe.');return}
   profile=checked(await client.from('zunga_profiles').select('*').eq('user_id',user.id).maybeSingle());if(ticket!==generation)return;
   if(!profile){onboarding();notice('Completa o perfil para continuar.');return}
+  const registration=registrationDetails();
+  if(registration&&profile.product_preferences==null){
+   if(pending?.mode==='phone-change'){otpScreen();return}
+   const confirmedPhone=normalizePhone(user.phone?.startsWith('+')?user.phone:'+'+(user.phone||''));
+   if(!skipPhoneStep&&isPhone(registration.phone)&&(!user.phone_confirmed_at||confirmedPhone!==registration.phone)){registrationPhoneScreen(registration.phone);notice();return}
+   productPreferencesScreen();notice();return;
+  }
   await dashboard(ticket);
   if(ticket===generation && new URLSearchParams(location.search).get('view')==='services')await maybeShowFirstAccountGuide(ticket);
  }catch(e){if(ticket!==generation)return;notice('Não foi possível carregar os dados. Verifica a ligação e a configuração da base de dados.',true);screen('<div class="panel"><h2>Ligação indisponível</h2>'+button('Tentar novamente','reload')+button('Terminar sessão','logout')+'</div>')}
@@ -289,29 +310,42 @@ document.addEventListener('click',e=>{
  if(action==='skip'||action==='next')run(()=>completeAccountGuide());
 });
 
+async function saveProductPreferences(categories){
+ if(!user||!profile)return;
+ checked(await client.from('zunga_profiles').update({product_preferences:categories}).eq('user_id',user.id).select('user_id').single());
+ await load();
+}
+document.addEventListener('change',event=>{
+ if(!event.target.matches('[data-password-visibility]'))return;
+ for(const input of event.target.form.querySelectorAll('[name="password"],[name="confirm"]'))input.type=event.target.checked?'text':'password';
+});
+
 async function execute(f){
  const v=new FormData(f),s=k=>String(v.get(k)||'').trim(),p=k=>String(v.get(k)||'');
 
  if(f.id==='authForm'){
-  const mode=f.dataset.mode,channel=f.dataset.channel==='phone'?'phone':'email';
-  const identifier=s(channel==='phone'?'phone':'email').toLowerCase();
-  if(!(channel==='phone'?isPhone(identifier):isEmail(identifier))){
-   notice(channel==='phone'?'Escreve o número no formato internacional (+2449XXXXXXXX).':'Introduz um email válido.',true);return;
-  }
+  const mode=f.dataset.mode;
   if(mode==='register'){
-   if(!v.has('agree')||p('password')!==p('confirm')||p('password').length<12){notice('Aceita as condições e confirma a palavra-passe com pelo menos 12 caracteres.',true);return}
+   const email=s('email').toLowerCase(),phone=normalizePhone(s('phone')),bi=s('bi').toUpperCase();
+   if(!isEmail(email)||!isPhone(phone)){notice('Introduz um e-mail e um número de telefone válidos.',true);return}
+   if(!/^[0-9]{9}[A-Z]{2}[0-9]{3}$/.test(bi)){notice('Introduz o número do BI no formato indicado.',true);return}
+   if(!v.has('agree')||p('password')!==p('confirm')||p('password').length<12||s('province').length<2||s('city').length<2){
+    notice('Confirma a palavra-passe, a localização e as condições de utilização.',true);return;
+   }
    if(Date.now()<nextSend)throw {code:'over_request_rate_limit'};
-   const credentials=channel==='phone'?{phone:identifier,password:p('password')}:
-    {email:identifier,password:p('password'),options:{emailRedirectTo:redirect}};
-   const result=checked(await client.auth.signUp(credentials));
-   if(result.session){await client.auth.signOut();notice('O servidor aceitou a conta sem confirmação. A verificação é obrigatória; contacta o suporte.',true);return}
+   const result=checked(await client.auth.signUp({email,password:p('password'),options:{emailRedirectTo:redirect,data:{
+    sumba_registration:{phone,province:s('province'),city:s('city'),accepted:true},sumba_registration_bi:bi
+   }}}));
+   if(result.session){await client.auth.signOut();notice('A confirmação por código está indisponível. Contacta o apoio.',true);return}
    nextSend=Date.now()+60000;
-   setPending(mode,identifier,channel);
-   otpScreen();notice('Se o registo foi aceite, consulta o teu '+(channel==='phone'?'SMS.':'email.'));return;
+   setPending('register',email,'email');otpScreen();notice('Se o registo foi aceite, consulta o teu e-mail.');return;
   }
-  if(mode==='reset'||mode==='otp'||mode==='login'){await requestCode(mode==='login'?'otp':mode,identifier,channel);return}
-  if(mode!=='password')return;
-  clearPending();
+  const value=s('identifier'),channel=value.includes('@')?'email':'phone';
+  const identifier=channel==='email'?value.toLowerCase():normalizePhone(value);
+  if(!(channel==='phone'?isPhone(identifier):isEmail(identifier))){notice('Introduz um e-mail ou telefone válido.',true);return;}
+  if(mode==='reset'){await requestCode('reset',identifier,channel);return}
+  if(mode!=='login')return;
+  clearPending();skipPhoneStep=false;
   checked(await client.auth.signInWithPassword(channel==='phone'?{phone:identifier,password:p('password')}:{email:identifier,password:p('password')}));
   await load();return;
  }
@@ -321,16 +355,17 @@ async function execute(f){
   if(!pending||!(/^\d{6}$/).test(s('token'))){notice('Introduz um código de seis algarismos.',true);$('otpCode')?.focus();return}
   const {mode,identifier,channel}=pending,resetting=mode==='reset';
   recovery=resetting;
-  const options=channel==='phone'?{phone:identifier,token:s('token'),type:'sms'}:
+  const options=channel==='phone'?{phone:identifier,token:s('token'),type:mode==='phone-change'?'phone_change':'sms'}:
    {email:identifier,token:s('token'),type:otpTypes[mode]};
-  try{const result=checked(await client.auth.verifyOtp(options));if(!result.session)throw {code:'otp_expired'};clearPending();await load()}catch(e){recovery=false;throw e}
+  try{const result=checked(await client.auth.verifyOtp(options));if(!result.session&&mode!=='phone-change')throw {code:'otp_expired'};if(mode==='phone-change')skipPhoneStep=true;clearPending();await load()}catch(e){recovery=false;throw e}
   return;
  }
 
  if(f.id==='recovery'){if(p('password')!==p('confirm')){notice('As palavras-passe não coincidem.',true);return}if(!recovery||p('password').length<12){notice('A recuperação não está activa ou a palavra-passe é curta.',true);return}checked(await client.auth.updateUser({password:p('password')}));recovery=false;clearPending();const result=await client.auth.signOut({scope:'global'});if(result.error){screen('<div class="panel"><h1>Palavra-passe alterada</h1><p>Não foi possível terminar todas as sessões. Tenta terminar a sessão novamente.</p>'+button('Terminar sessão','logout')+'</div>');notice('A alteração foi guardada; o logout não foi confirmado.',true);return}user=null;profile=null;authScreen();notice('Palavra-passe alterada. Entra novamente.');return}
  if(!user)throw Error('Inicia sessão.');
- if(f.id==='onboarding'){if(!v.has('agree')||!['buyer','producer','company'].includes(s('role')))throw Error('Confirma o tipo de conta e as condições.');checked(await client.from('zunga_profiles').insert({user_id:user.id,role:s('role'),display_name:s('name'),province:s('province'),city:s('city'),terms_version:'pilot-1'}));await load();return}
+ if(f.id==='onboarding'){const details=registrationDetails();if((!v.has('agree')&&details?.accepted!==true)||!['buyer','producer','company'].includes(s('role')))throw Error('Confirma o tipo de conta e as condições.');checked(await client.from('zunga_profiles').insert({user_id:user.id,role:s('role'),display_name:s('name'),province:s('province'),city:s('city'),terms_version:'pilot-1',...(isPhone(details?.phone||'')?{contact_phone:details.phone}:{})}));await load();return}
  if(!profile)throw Error('Completa o perfil.');
+ if(f.id==='productPreferences'){await saveProductPreferences(v.getAll('category').filter(category=>productCategories.includes(category)));return}
  if(f.id==='changeEmail'){const email=s('newEmail').toLowerCase();if(email===user.email?.toLowerCase()){notice('Este já é o teu email.',true);return}checked(await client.auth.updateUser({email},{emailRedirectTo:redirect}));notice('Se o pedido foi aceite, consulta os emails de confirmação antes de utilizar o novo endereço.');return}
  if(f.id==='editProfile'){
   const change={display_name:s('name'),province:s('province'),city:s('city'),contact_phone:s('contactPhone')},file=v.get('avatar');
@@ -344,19 +379,26 @@ async function execute(f){
  await load();if(profile)notice('Alterações guardadas no servidor.');
 }
 async function run(work){if(busy)return;busy=true;const previous=Array.from(document.querySelectorAll('button')).map(b=>[b,b.disabled]);previous.forEach(([b])=>b.disabled=true);try{await work()}catch(e){notice(authError(e),true)}finally{busy=false;previous.forEach(([b,disabled])=>{b.disabled=disabled});const resend=$('resendCode');if(resend)resend.disabled=Date.now()<nextSend}}
-document.addEventListener('submit',e=>{if(!['authForm','otpForm','onboarding','editProfile','changeEmail','stall','company','recovery'].includes(e.target.id))return;e.preventDefault();run(()=>execute(e.target))});
+document.addEventListener('submit',e=>{if(!['authForm','otpForm','onboarding','editProfile','changeEmail','stall','company','recovery','productPreferences'].includes(e.target.id))return;e.preventDefault();run(()=>execute(e.target))});
 
 document.addEventListener('click',e=>{
  const action=e.target.closest('[data-action]')?.dataset.action;
  if(!action||busy)return;
- if(action==='channel-email'||action==='channel-phone'){
-  authScreen($('authForm')?.dataset.mode||'login','',action==='channel-phone'?'phone':'email');notice();return;
- }
- if(['login','password','register','reset','otp','change-identifier'].includes(action)){
-  const previous=pending,channel=previous?.channel||authChannel,mode=action==='change-identifier'?previous?.mode||'login':action;
-  clearPending();authScreen(mode,'',channel);notice();return;
+ if(['login','register','reset','change-identifier'].includes(action)){
+  const previous=pending;
+  clearPending();
+  if(action==='change-identifier'&&previous?.mode==='phone-change'){
+   registrationPhoneScreen(previous.identifier);notice();return;
+  }
+  authScreen(action==='change-identifier'?previous?.mode||'login':action,previous?.identifier||'');notice();return;
  }
  run(async()=>{
+  if(action==='verify-registration-phone'){
+   const phone=registrationDetails()?.phone;
+   if(user&&profile&&isPhone(phone||''))await requestCode('phone-change',phone,'phone');return;
+  }
+  if(action==='skip-registration-phone'){skipPhoneStep=true;clearPending();productPreferencesScreen();notice();return}
+  if(action==='skip-product-preferences'){await saveProductPreferences([]);return}
   if(action==='resend'&&pending){await requestCode(pending.mode,pending.identifier,pending.channel,true);return}
   if(action.startsWith('oauth-')||action.startsWith('link-')){
    const provider=action.split('-')[1];if(!Object.hasOwn(providers,provider))return;

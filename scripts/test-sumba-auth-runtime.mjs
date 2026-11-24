@@ -32,7 +32,7 @@ vm.runInContext(patched,ctx,{filename:'real.js'});
 const app=ctx.__sumbaTest;app.setClient(client);
 let checks=0;const check=(x,m)=>{assert.ok(x,m);checks++};
 const form=(id,mode,values)=>({id,dataset:{mode},values});
-await app.execute(form('authForm','register',{email:'teste@example.test',password:'abcdefgh1234',confirm:'abcdefgh1234',agree:'yes'}));
+await app.execute(form('authForm','register',{email:'teste@example.test',phone:'923456789',bi:'000000000LA000',province:'Huíla',city:'Lubango',password:'abcdefgh1234',confirm:'abcdefgh1234',agree:'yes'}));
 check(calls.at(-1)[0]==='signup','signup enviado ao backend');
 check(elements.get('content').innerHTML.includes('otpForm'),'formulário de código visível');
 check(JSON.parse(saved.get('sumba-auth-otp-v2')).mode==='register','modo guardado sem token');
@@ -46,8 +46,7 @@ check(otp.value==='876543','paste six digits at once');
 await app.execute(form('otpForm','',{token:'123456'}));
 check(calls.at(-1)[1].type==='email','tipo de confirmação correcto');
 check(!saved.has('sumba-auth-otp-v2'),'estado limpo depois de confirmar');
-now+=61000;await app.requestCode('otp','teste@example.test');
-check(calls.at(-1)[1].options.shouldCreateUser===false,'login OTP não cria utilizadores');
+
 app.clearPending();now+=61000;await app.requestCode('reset','teste@example.test');
 await app.execute(form('otpForm','',{token:'123456'}));
 check(calls.filter(x=>x[0]==='verify').at(-1)[1].type==='recovery','recuperação verificada pelo servidor');
@@ -55,8 +54,8 @@ await app.execute(form('recovery','',{password:'abcdefgh5678',confirm:'abcdefgh5
 check(calls.at(-1)[0]==='signOut'&&calls.at(-1)[1].scope==='global','logout global após reset');
 check(!saved.has('sumba-auth-otp-v2'),'sem código no browser após reset');
 check(app.socialButtons().includes('Continuar com Google'),'OAuth Google permanece disponível como alternativa');
-await app.execute(form('authForm','login',{email:'teste@example.test'}));
-check(calls.at(-1)[0]==='signInWithOtp'&&calls.at(-1)[1].options.shouldCreateUser===false,'email login defaults to OTP without creating accounts');
+await app.execute(form('authForm','login',{identifier:'teste@example.test',password:'abcdefgh1234'}));
+check(calls.at(-1)[0]==='password'&&calls.at(-1)[1].email==='teste@example.test','login usa e-mail e palavra-passe');
 check(app.authError({code:'otp_expired'}).includes('expirado'),'erro de código amigável');
 
 app.clearPending();
