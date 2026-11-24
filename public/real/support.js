@@ -91,7 +91,7 @@ export async function mountSupport(client,root,user,{operator=false,initial=null
   await loadHistory();
   const name=row?.account_name||recipientName||(operator?'Conversa com utilizador':'Apoio SUMBA');
   layout.dataset.open='true';
-  thread.innerHTML='<header class="inbox-header"><div class="inbox-thread-title">'+icon('back','back','Voltar às conversas','inbox-back')+'<span class="inbox-avatar" aria-hidden="true">'+esc(inboxInitial(name))+'</span><h3>'+esc(name)+'</h3></div>'+icon('refresh','refresh','Atualizar conversa')+'</header>'+
+  thread.innerHTML='<header class="inbox-header"><div class="inbox-thread-title">'+icon('back','back','Voltar às conversas','inbox-back')+'<button type="button" class="inbox-avatar inbox-profile" data-support="profile" aria-label="Ver perfil de '+esc(name)+'" title="Ver perfil">'+esc(inboxInitial(name))+'</button><h3>'+esc(name)+'</h3></div>'+icon('refresh','refresh','Atualizar conversa')+'</header>'+
    '<button type="button" class="outline" data-support="older" hidden>Carregar mensagens anteriores</button>'+
    '<div class="inbox-history" data-support-history tabindex="0" aria-label="Histórico de mensagens"></div>'+
    (canSend?'<form data-support-form class="inbox-composer"><textarea name="message" aria-label="Mensagem" placeholder="Escreve uma mensagem…" required maxlength="2000" rows="1"></textarea><button type="submit">Enviar</button></form>':
@@ -104,6 +104,11 @@ export async function mountSupport(client,root,user,{operator=false,initial=null
   if(!button||!root.contains(button))return;
   run(async()=>{
    switch(button.dataset.support){
+    case 'profile': {
+     if(!selected)return;
+     const {openConversationProfile}=await import('./conversation-profile.js');
+     await openConversationProfile(client,'support',selected,button);return;
+    }
     case 'refresh': await list();await open();break;
     case 'more': listLimit+=50;await list();break;
     case 'open':

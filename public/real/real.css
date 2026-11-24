@@ -250,3 +250,9 @@ input.otp-input::selection{background:transparent;color:transparent}
 .sumba-inbox .inbox-back{display:none!important}
 @media(max-width:760px){.sumba-inbox[data-open=true] .inbox-sidebar,.sumba-inbox[data-open=false] .inbox-thread{display:none}.sumba-inbox button.inbox-back{display:grid!important}}
 @media(min-width:761px){.sumba-inbox{grid-template-columns:minmax(235px,1fr) minmax(0,1.9fr)}.sumba-inbox.inbox-single{grid-template-columns:minmax(0,1fr)}}
+
+.sumba-inbox button.inbox-profile,.sumba-profile-trigger{display:grid;place-items:center;width:44px;height:44px;min-width:44px;padding:0;border:1px solid #8aa999;border-radius:15px;background:#eaf3e9;color:#204f3a;cursor:pointer;font:inherit;font-weight:700}
+.sumba-chat-profile-dialog{border:1px solid #c7d8ce;border-radius:18px;padding:20px;width:min(91vw,440px);color:#172d25;background:white}
+.sumba-chat-profile-dialog::backdrop{background:#112d2590}
+.sumba-chat-profile-dialog dt{font-weight:700}
+.sumba-chat-profile-dialog dd{margin:0 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}

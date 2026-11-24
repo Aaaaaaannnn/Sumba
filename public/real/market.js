@@ -27,7 +27,8 @@ export async function mountMarket(client,root,user,profile){
   const inbox=state.inquiries.length?state.inquiries.map(q=>{
    const product=state.products.find(p=>p.id===q.product_id);
    const messages=state.messages.filter(m=>m.inquiry_id===q.id);
-   return '<article class="sumba-live-inquiry"><header><strong>'+escapeHtml(product?.name||'Produto')+'</strong><span>'+statusLabel(q.status)+'</span></header>'+
+   const title=isSeller?'Ver perfil do cliente':'Ver perfil da bancada';
+   return '<article class="sumba-live-inquiry"><header><button type="button" class="sumba-profile-trigger" data-live-action="conversation-profile" data-id="'+escapeHtml(q.id)+'" title="'+title+'" aria-label="'+title+'"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M5 20v-2a7 7 0 0 1 14 0v2"/></svg></button><strong>'+escapeHtml(product?.name||'Produto')+'</strong><span>'+statusLabel(q.status)+'</span></header>'+
    '<p>Quantidade solicitada: '+escapeHtml(q.quantity)+'</p><p>'+escapeHtml(q.note)+'</p>'+
    (q.response?'<p><strong>Resposta:</strong> '+escapeHtml(q.response)+'</p>':'')+
    '<div class="sumba-live-messages">'+messages.map(m=>'<p><strong>'+ (m.sender_id===user.id?'Eu':'Outra parte')+':</strong> '+escapeHtml(m.body)+'</p>').join('')+'</div>'+
@@ -111,6 +112,10 @@ export async function mountMarket(client,root,user,profile){
  root.addEventListener('click',e=>{
   const b=e.target.closest?.('[data-live-action]');if(!b||!root.contains(b))return;
   const action=b.dataset.liveAction,id=b.dataset.id;
+  if(action==='conversation-profile'){
+   if(state.inquiries.some(row=>row.id===id))void import('./conversation-profile.js').then(({openConversationProfile})=>openConversationProfile(client,'market',id,b)).catch(()=>{state.error='Não foi possível carregar o perfil.';render()});
+   return;
+  }
   if(action==='open-request'){state.activeRequest=state.activeRequest===id?null:id;render();return;}
   if(action==='refresh'){void doAction(refresh);return;}
   if(action==='add-cart'){const input=root.querySelector('[data-product-qty="'+CSS.escape(id)+'"]');void doAction(()=>addCart(id,input?.value));return;}

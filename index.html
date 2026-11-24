@@ -738,6 +738,12 @@ body.z17-admin.z17-collapsed .sidebar .brand.brand-lockup .brand-words{display:n
 .sumba-inbox .inbox-back{display:none!important}
 @media(max-width:760px){.sumba-inbox[data-open=true] .inbox-sidebar,.sumba-inbox[data-open=false] .inbox-thread{display:none}.sumba-inbox button.inbox-back{display:grid!important}}
 @media(min-width:761px){.sumba-inbox{grid-template-columns:minmax(235px,1fr) minmax(0,1.9fr)}.sumba-inbox.inbox-single{grid-template-columns:minmax(0,1fr)}}
+</style><style>
+.sumba-inbox button.inbox-profile,.sumba-profile-trigger{display:grid;place-items:center;width:44px;height:44px;min-width:44px;padding:0;border:1px solid #8aa999;border-radius:15px;background:#eaf3e9;color:#204f3a;cursor:pointer;font:inherit;font-weight:700}
+.sumba-chat-profile-dialog{border:1px solid #c7d8ce;border-radius:18px;padding:20px;width:min(91vw,440px);color:#172d25;background:white}
+.sumba-chat-profile-dialog::backdrop{background:#112d2590}
+.sumba-chat-profile-dialog dt{font-weight:700}
+.sumba-chat-profile-dialog dd{margin:0 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}
 </style></head><body>
 <div class="app"><aside class="sidebar"><div class="brand brand-lockup"><span class="brand-mark" aria-hidden="true"><img src="/assets/sumba-icon.svg" alt="" width="40" height="48" decoding="async"></span><span class="brand-words"><strong>SUMBA</strong><small>Do campo à sua mesa.</small></span></div><nav class="nav" id="nav"></nav><div class="sidefoot">🇦🇴 Mercado agrícola angolano<br>SUMBA · Do campo à sua mesa.</div></aside><div class="shell"><header class="top"><div class="brand mobilebrand brand-lockup"><span class="brand-mark" aria-hidden="true"><img src="/assets/sumba-icon.svg" alt="" width="40" height="48" decoding="async"></span><span class="brand-words"><strong>SUMBA</strong><small>Do campo à sua mesa.</small></span></div><div class="desktopheading"><strong>Mercado agrícola</strong><br><small id="topLabel"></small></div><div class="role" id="sumbaPreviewRole" hidden><label for="role" class="muted">Perfil</label><select id="role"><option value="buyer">Cliente</option><option value="producer">Produtor</option><option value="company">Empresa</option><option value="admin">Administrador demo</option><option value="courier">Entregador demo</option></select></div><button type="button" class="sumba-notification-link" id="sumbaNotificationLink" data-demo-notifications aria-label="Notificações SUMBA"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 8-3 8-3 10h18c0-2-3-2-3-10zM10 21h4"/></svg><span id="sumbaNotificationAlert" class="sumba-notification-alert" hidden></span></button><button type="button" class="sumba-account-link" id="sumbaAccountLink" data-demo-login aria-label="Entrar ou criar conta de demonstração">Entrar</button></header><main class="content" id="view"></main></div></div><nav class="bottom" id="bottom"></nav><dialog class="dialog" id="dialog" aria-labelledby="dialogTitle"><div class="dialoghead"><h2 id="dialogTitle"></h2><button type="button" class="close" id="closeDialog" aria-label="Voltar" title="Voltar"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M5 12h14"/></svg></button></div><div id="dialogBody"></div></dialog><div id="toast" class="toast hide" role="status"></div><button id="cartDock" class="cartdock" data-go="cart"></button><section id="auth" class="auth hide" aria-label="Entrada na SUMBA"></section><div id="coach" class="coach hide" role="dialog" aria-modal="true" aria-label="Tutorial guiado"></div><dialog id="zungaPicker" aria-labelledby="zpickerTitle"><div class="zpicker-handle" aria-hidden="true"></div><header class="zpicker-header"><div><h2 id="zpickerTitle">Selecionar</h2><small>Escolhe uma opção</small></div><button type="button" class="zpicker-close" id="zpickerClose" aria-label="Fechar seleção"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div id="zpickerSearchBox" class="zpicker-search hide"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="zpickerSearch" type="search" aria-label="Pesquisar opções" placeholder="Pesquisar..." autocomplete="off"></div><div class="zpicker-list" id="zpickerList" role="group" aria-label="Opções disponíveis"></div><footer class="zpicker-footer">SUMBA · Toca numa opção para confirmar</footer></dialog>
 <script>
@@ -1292,8 +1298,8 @@ function operationalForm(id=''){if(!formKinds[role])return;const f=studio.forms.
 function fileDownload(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 function exportForm(id,format){const f=studio.forms.find(x=>x.id===id&&(x.role===role||role==='admin'));if(!f)return;const rows=[['SUMBA — '+f.kind],['Demonstração — sem validade fiscal'],['Referência',f.ref],['Data',f.date],['Responsável',f.person],['Produto',f.product],['Quantidade',f.qty],['Unidade',f.unit],['Origem',f.origin],['Destino',f.destination],['Observações',f.note]];fileDownload(v9ReportBlob(format,{title:f.kind,rows}),'SUMBA-ficha-'+f.id+'.'+format)}
 let activeChat='';
-function threads(){return Array.from(new Set(studio.messages.map(m=>m.thread).concat(studio.handoffs.map(h=>h.thread)))).filter(t=>role==='admin'||role==='producer'&&(t.endsWith(':mine')||t==='producer:support')||role==='buyer'&&t.startsWith('buyer:')||role==='company'&&t.startsWith('company:')||role==='courier'&&t==='courier:support')}
-function allowedThread(t){if(role==='admin')return threads().includes(t)||['buyer','producer','company','courier'].some(r=>t===r+':support');if(role==='producer')return t.endsWith(':mine')&&/^(buyer|company):mine$/.test(t)||t==='producer:support';if(role==='courier')return t==='courier:support';return t.startsWith(role+':')&&(t.endsWith(':support')||allStalls().some(s=>t===role+':'+s.id))}
+function threads(){return Array.from(new Set(studio.messages.map(m=>m.thread).concat(studio.handoffs.map(h=>h.thread)))).filter(t=>role==='admin'||role==='producer'&&(t.endsWith(':mine')||t==='producer:support')||role==='buyer'&&t.startsWith('buyer:')||role==='company'&&t.startsWith('company:')||role==='courier'&&['courier:support','courier:mine'].includes(t))}
+function allowedThread(t){if(role==='admin')return threads().includes(t)||['buyer','producer','company','courier'].some(r=>t===r+':support');if(role==='producer')return /^(buyer|company|courier):mine$/.test(t)||t==='producer:support';if(role==='courier')return ['courier:support','courier:mine'].includes(t);return t.startsWith(role+':')&&(t.endsWith(':support')||allStalls().some(s=>t===role+':'+s.id))}
 function threadName(t){const [r,s]=t.split(':');return role==='producer'&&s==='mine'?roleNames[r]+' local':role==='admin'?roleNames[r]+' · '+(allStalls().find(x=>x.id===s)?.name||'Apoio'):s==='support'?'Apoio SUMBA':allStalls().find(x=>x.id===s)?.name||'Conversa'}
 function openChat(s){const t=role==='buyer'||role==='company'?role+':'+s:s;if(!allowedThread(t))return;activeChat=t;close();navigate('chat')}
 function autoReply(text){const t=norm(text);if(/preco|stock|produto|catalogo/.test(t))return 'Consulta o catálogo da bancada para ver preços e disponibilidade. Os valores são demonstrativos.';if(/entrega|prazo|pedido|rastre/.test(t))return 'Consulta Pedidos para acompanhar o estado local. Não existe rastreamento ou prazo confirmado.';if(/pagamento|pagar|recibo/.test(t))return 'A SUMBA ainda não realiza pagamentos. Os comprovativos são apenas demonstrativos.';if(/ola|bom dia|boa tarde|boa noite/.test(t))return 'Olá! Posso orientar-te sobre catálogo, pedidos e comprovativos. Como posso ajudar?';return ''}
@@ -1329,7 +1335,7 @@ function demoMarkRead(id){
 }
 function demoInboxRows(recent){
  const customer=['buyer','company'].includes(role);
- const available=customer?[role+':support',...allStalls().map(s=>role+':'+s.id)]:role==='admin'?Object.keys(roleNames).filter(r=>r!=='admin').map(r=>r+':support'):[role+':support'];
+ const available=customer?[role+':support',...allStalls().map(s=>role+':'+s.id)]:role==='admin'?Object.keys(roleNames).filter(r=>r!=='admin').map(r=>r+':support'):role==='courier'?['courier:support','courier:mine']:role==='producer'?['producer:support','courier:mine']:[role+':support'];
  const contacts=[...new Set([...available,...recent.map(item=>item.id)])].filter(allowedThread).map(id=>({id}));
  const query=norm(demoInboxSearch);
  const items=(demoInboxNew?contacts:recent).filter(item=>
@@ -1338,6 +1344,23 @@ function demoInboxRows(recent){
   const {id,last,date}=item,name=threadName(id),unread=demoUnread(item);
   return '<button type="button" class="inbox-row" data-sumba-thread="'+esc(id)+'" aria-current="'+(id===activeChat)+'"><span class="inbox-avatar" aria-hidden="true">'+esc(inboxInitial(name))+'</span><span class="inbox-copy"><strong>'+esc(name)+'</strong><small>'+esc(last?(last.from===role?'Tu: ':'')+last.text:'Abrir conversa')+'</small></span><span class="inbox-meta"><time class="inbox-time">'+esc(inboxTime(date))+'</time>'+(unread?'<span class="inbox-dot" role="img" aria-label="Não lida"></span>':'')+'</span></button>';
  }).join('')||'<p class="inbox-empty">'+(query?'Nenhuma conversa corresponde à pesquisa.':demoInboxUnread&&!demoInboxNew?'Estás em dia com as mensagens.':'Ainda não há conversas recentes.')+'</p>';
+}
+function showDemoChatProfile(id){
+ if(!id||!allowedThread(id))return;
+ const [participant,stallId]=id.split(':');
+ const stall=allStalls().find(row=>row.id===stallId);
+ if(role!=='admin'&&!(role==='producer'&&stallId==='mine')&&stall){showStall(stall.id);return}
+ if(stallId==='support'&&role!=='admin'){
+  show('Apoio SUMBA','<p>Atendimento e ajuda com a tua conta e os teus pedidos.</p>');
+  return;
+ }
+ const base=participant==='buyer'?account:participant==='producer'?producerAccount:participant==='company'?db.company:{};
+ const person={...base,...studio.profiles[participant]};
+ const name=person.name||roleNames[participant]||'Utilizador';
+ const profileRows=[['Tipo',roleNames[participant]],['Localização',[person.city,person.province].filter(Boolean).join(', ')],['Apresentação',person.bio]];
+ if(role==='admin')profileRows.push(['E-mail',person.email],['Telefone',person.phone]);
+ const fields=profileRows.filter(([,value])=>value).map(([label,value])=>'<p><strong>'+esc(label)+'</strong><br>'+esc(value)+'</p>').join('');
+ show(name,'<div class="panel">'+fields+'</div>'+(role==='admin'&&stall?'<button type="button" class="btn outline" data-sumba-chat-stall="'+esc(stall.id)+'">Ver bancada · '+esc(stall.name)+'</button>':''));
 }
 function chatPage(){
  if(!allowedThread(activeChat))activeChat='';
@@ -1353,7 +1376,7 @@ function chatPage(){
  const waiting=studio.handoffs.find(h=>h.thread===activeChat&&['waiting','assigned'].includes(h.status));
  const name=activeChat?threadName(activeChat):'';
  const back='<button type="button" class="inbox-icon inbox-back" data-demo-inbox="back" aria-label="Voltar às conversas">'+inboxSvg('back')+'</button>';
- const thread=activeChat?'<section class="inbox-card inbox-thread"><div class="inbox-header"><div class="inbox-thread-title">'+back+'<span aria-hidden="true" class="inbox-avatar">'+esc(inboxInitial(name))+'</span><div><h3>'+esc(name)+'</h3>'+(waiting?'<small>'+(waiting.status==='assigned'?'Conversa assumida':'A aguardar operador')+'</small>':'')+'</div></div></div>'+
+ const thread=activeChat?'<section class="inbox-card inbox-thread"><div class="inbox-header"><div class="inbox-thread-title">'+back+'<button type="button" class="inbox-avatar inbox-profile" data-demo-inbox="profile" aria-label="Ver perfil de '+esc(name)+'" title="Ver perfil">'+esc(inboxInitial(name))+'</button><div><h3>'+esc(name)+'</h3>'+(waiting?'<small>'+(waiting.status==='assigned'?'Conversa assumida':'A aguardar operador')+'</small>':'')+'</div></div></div>'+
   '<div class="inbox-history sumba-chat-history" tabindex="0" aria-label="Histórico de mensagens">'+(messages.length?messages.map(m=>'<article class="inbox-bubble '+(m.from===role?'mine':'')+'"><p>'+esc(m.text)+'</p><small>'+esc((m.from===role?'Tu':roleNames[m.from]||(m.from==='assistant'?'Assistente':m.from))+' · '+new Date(m.date).toLocaleString('pt-AO'))+'</small></article>').join(''):'<p class="inbox-empty">Escreve a primeira mensagem.</p>')+'</div>'+
   '<form id="studioMessage" class="inbox-composer"><textarea name="text" rows="1" maxlength="800" required aria-label="Mensagem" placeholder="Escreve uma mensagem…"></textarea>'+submit('Enviar')+'</form><div class="inbox-extra">'+(role!=='admin'&&!waiting?studioBtn('Pedir operador','handoff'):'')+(['producer','admin'].includes(role)&&waiting?.status==='waiting'?studioBtn('Assumir conversa','claim',waiting.id):'')+'</div></section>':'<section class="inbox-card inbox-thread"><p class="inbox-empty">Abre uma conversa para veres as mensagens.</p></section>';
  return heading('Mensagens','Conversas neste dispositivo')+(role==='admin'?'<div class="actions"><button class="btn outline" data-sumba-broadcast="message">Mensagem global</button><button class="btn outline" data-sumba-broadcast="notice">Aviso global</button><a class="btn outline" href="'+SUMBA_AUTH_URL+'?view=services">Atendimento de contas reais</a></div>':'')+'<div class="sumba-inbox" data-open="'+!!activeChat+'">'+list+thread+'</div>';
@@ -1374,6 +1397,7 @@ document.addEventListener('click',e=>{
   activeChat=thread.dataset.sumbaThread;demoInboxNew=false;demoInboxSearch='';demoInboxUnread=false;render();scrollSumbaChat();document.querySelector('.inbox-history')?.focus();return;
  }
  const command=e.target.closest('[data-demo-inbox]')?.dataset.demoInbox;
+ if(command==='profile'){showDemoChatProfile(activeChat);return}
  if(command==='notices'){sumbaOpenDemoNotices();return}
  if(command){
   if(command==='back'||command==='new')activeChat='';
@@ -1384,6 +1408,8 @@ document.addEventListener('click',e=>{
   if(command==='new')document.querySelector('[data-demo-chat-search]')?.focus();
   return;
  }
+ const stall=e.target.closest('[data-sumba-chat-stall]');
+ if(stall&&role==='admin'){showStall(stall.dataset.sumbaChatStall);return}
  const broadcast=e.target.closest('[data-sumba-broadcast]');
  if(broadcast&&role==='admin')show(broadcast.dataset.sumbaBroadcast==='notice'?'Aviso global':'Mensagem global','<form id="sumbaDemoBroadcast" data-kind="'+esc(broadcast.dataset.sumbaBroadcast)+'">'+input('Assunto','subject','','required maxlength="140"')+'<label class="field">Mensagem<textarea name="message" required maxlength="800" rows="4"></textarea></label>'+submit('Publicar neste dispositivo')+'</form>');
 });
